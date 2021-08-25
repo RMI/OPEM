@@ -19,21 +19,18 @@ def calculate_opem_transport(transport_distance) -> TransportResults:
 
 def calculate_transport_emissions(transport_ef: TransportEF, transport_distance: TransportDistance):
 
+    # these will be handled by object methods
 
-def calculate_transport_ef(pipeline: PipelineEF, rail: RailEF, heavy_duty_truck: HeavyDutyTruckEF, tanker_barge: TankerBargeEF) -> TransportEF:
-    calculate_pipeline_ef()
-    calculate_rail_ef():
-    calculate_tanker_barge_ef():
-    calculate_heavy_duty_truck_ef():
+    # def calculate_transport_ef(pipeline: PipelineEF, rail: RailEF, heavy_duty_truck: HeavyDutyTruckEF, tanker_barge: TankerBargeEF) -> TransportEF:
+    #     calculate_pipeline_ef()
+    #     calculate_rail_ef():
+    #     calculate_tanker_barge_ef():
+    #     calculate_heavy_duty_truck_ef():
 
+    # def calculate_pipeline_ef():
 
-def calculate_pipeline_ef():
+    # def calculate_rail_ef():
 
+    # def calculate_tanker_barge_ef():
 
-def calculate_rail_ef():
-
-
-def calculate_tanker_barge_ef():
-
-
-def calculate_heavy_duty_truck_ef():
+    # def calculate_heavy_duty_truck_ef():
