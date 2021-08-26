@@ -1,2 +1,5 @@
-key1, value1
-key2, value2
+product_name,Field Name A
+transport_mode,Pipeline_Emissions,Transport_Fuel,Natural Gas
+transport_mode,Pipeline_Emissions,Distance_Traveled_km,5
+transport_fuel_share,Pipeline,Natural Gas,8.29
+transport_fuel_share,Pipeline,LNG,9.1
