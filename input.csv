@@ -1,2 +1,5 @@
-key1, value1
-key2, value2
+product_name,Algeria Hassi R’Mel
+transport_mode,Pipeline_Emissions,Transport_Fuel,Natural Gas
+transport_mode,Pipeline_Emissions,Distance_Traveled_km,1
+transport_fuel_share,Pipeline,Natural Gas,0.55
+transport_fuel_share,Pipeline,LNG,0.9
