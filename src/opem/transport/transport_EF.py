@@ -48,25 +48,6 @@ class TransportEF:
 
         # this allows us to get input from a dict generated from another dataclass
         initialize_from_dataclass(self, user_input)
-        # for key in user_input.keys():
-        #     if key in asdict(self).keys():
-        #         for path in visit_dict(user_input[key]):
-        #             # print(user_input[key])
-
-        #             if len(path[0]) == 1:
-        #                 print('path length = 1')
-        #                 print(user_input[key])
-        #                 setattr(self, key, user_input[key][path[0]])
-        #             else:
-
-        #                 keys_length = len(path[0]) - 1
-        #             # get a reference to the object the holds the key/value pair we want to mutate
-        #                 ref = self.nested_access(
-        #                     dict=getattr(self, key), keys=path[0][0:keys_length])
-
-        #                 ref[path[0][-1]] = path[-1]
-        # print('results')
-        # print(self.transport_fuel_share)
 
     def calculate_transport_ef(self):
         pass
