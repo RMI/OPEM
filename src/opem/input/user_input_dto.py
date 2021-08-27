@@ -45,79 +45,63 @@ class UserInputDto:
     # user inputs transport model scope
     # table: Refinery product transport + Mode of transport
     refinery_product_transport_mode_of_transport: DefaultDict = field(default_factory=lambda: {"Pipeline Emissions": {
-                                        "Transport Fuel": "Natural Gas", "Distance Traveled (km)": 2414}})
-
-    refinery_product_transport_mode_of_transport: DefaultDict = field(default_factory=lambda: {"Rail Emissions": {
-                                        "Transport Fuel": "Diesel", "Distance Traveled (km)": 0}})
-
-    refinery_product_transport_mode_of_transport: DefaultDict = field(default_factory=lambda: {"Heavy-Duty Truck Emissions": {
-                                        "Transport Fuel": "Diesel", "Distance Traveled (km)": 380}})
-    
-    refinery_product_transport_mode_of_transport: DefaultDict = field(default_factory=lambda: {"Ocean Tanker Emissions": {
-                                        "Transport Fuel": "Bunker Fuel", "Distance Traveled (km)": 0}})
-    
-    refinery_product_transport_mode_of_transport: DefaultDict = field(default_factory=lambda: {"Barge Emissions": {
+                                        "Transport Fuel": "Natural Gas", "Distance Traveled (km)": 2414},
+                                "Rail Emissions": {
+                                        "Transport Fuel": "Diesel", "Distance Traveled (km)": 0},
+                                "Heavy-Duty Truck Emissions": {
+                                        "Transport Fuel": "Diesel", "Distance Traveled (km)": 380},
+    "Ocean Tanker Emissions": {
+                                        "Transport Fuel": "Bunker Fuel", "Distance Traveled (km)": 0},
+    "Barge Emissions": {
                                         "Transport Fuel": "Residual Oil", "Distance Traveled (km)": 0}})
 
     # table: Field NGL transport
     field_ngl_transport_mode_of_transport: DefaultDict = field(default_factory=lambda: {"Pipeline Emissions": {
-                                        "Transport Fuel": "Natural Gas", "Distance Traveled (km)": 2414}})
-
-    field_ngl_transport_mode_of_transport: DefaultDict = field(default_factory=lambda: {"Rail Emissions": {
-                                        "Transport Fuel": "Diesel", "Distance Traveled (km)": 0}})
-
-    field_ngl_transport_mode_of_transport: DefaultDict = field(default_factory=lambda: {"Heavy-Duty Truck Emissions": {
-                                        "Transport Fuel": "Diesel", "Distance Traveled (km)": 380}})
-    
-    field_ngl_transport_mode_of_transport: DefaultDict = field(default_factory=lambda: {"Ocean Tanker Emissions": {
-                                        "Transport Fuel": "Bunker Fuel", "Distance Traveled (km)": 0}})
-    
-    field_ngl_transport_mode_of_transport: DefaultDict = field(default_factory=lambda: {"Barge Emissions": {
+                                        "Transport Fuel": "Natural Gas", "Distance Traveled (km)": 2414},
+            "Rail Emissions": {
+                                        "Transport Fuel": "Diesel", "Distance Traveled (km)": 0},
+            "Heavy-Duty Truck Emissions": {
+                                        "Transport Fuel": "Diesel", "Distance Traveled (km)": 380},
+            "Ocean Tanker Emissions": {
+                                        "Transport Fuel": "Bunker Fuel", "Distance Traveled (km)": 0},
+            "Barge Emissions": {
                                         "Transport Fuel": "Residual Oil", "Distance Traveled (km)": 0}})
  
-    transport_fuel_share: DefaultDict = field(default_factory=lambda: {"Pipeline": {
-        "Natural Gas": 0.11}})
+    # transport_fuel_share: DefaultDict = field(default_factory=lambda: {"Pipeline": {
+    #     "Natural Gas": 0.11}})
     transport_fuel_options: List[str] = field(default_factory=lambda: ["Natural Gas", "LNG Diesel", "Bunker Fuel Residual Oil",
                                                                        "LPG DME FTD Biodiesel", "Renewable Diesel", "Renewable Gasoline", "Hydrogen", "Ethanol", "Methanol"])
     # user inputs combustion model scope
     # table: Refinery product combustion + Product Slate
     refinery_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Gasoline": {
-                                        "% Combusted": 1.0}})
-
-    refinery_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Jet Fuel": {
-                                        "% Combusted": 1.0}})
-
-    refinery_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Diesel": {
-                                        "% Combusted": 1.0}})
-    
-    refinery_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Fuel Oil": {
-                                        "% Combusted": 1.0}})
-    
-    refinery_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Coke": {
-                                        "% Combusted": 1.0}})
-    
-    refinery_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Residual Fuels": {
-                                        "% Combusted": 1.0}})
-  
-    refinery_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Liquefied Petroleum Gases (LPG)": {
+                                        "% Combusted": 1.0},
+                            "Jet Fuel": {
+                                        "% Combusted": 1.0},
+"Diesel": {
+                                        "% Combusted": 1.0},
+    "Fuel Oil": {
+                                        "% Combusted": 1.0},
+    "Coke": {
+                                        "% Combusted": 1.0},
+    "Residual Fuels": {
+                                        "% Combusted": 1.0},
+  "Liquefied Petroleum Gases (LPG)": {
                                         "% Combusted": 1.0}})
     
     # table: Field product combustion (combination of all Field * Combustion tables) + Product Slate
     field_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Coke": {
-                                        "% Combusted": 1.0}})
+                                        "% Combusted": 1.0},
+    "Natural Gas": {
+                                        "% Combusted": 1.0},
+ "Ethane": {
+                                        "% Combusted": 1.0},
     
-    field_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Natural Gas": {
-                                        "% Combusted": 1.0}})
- 
-    field_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Ethane": {
-                                        "% Combusted": 1.0}})
+"Propane": {
+                                        "% Combusted": 1.0},
     
-    field_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Propane": {
-                                        "% Combusted": 1.0}})
+"Butane": {
+                                        "% Combusted": 1.0},
     
-    field_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Butane": {
-                                        "% Combusted": 1.0}})
-    
-    field_product_combustion_product_slate: DefaultDict = field(default_factory=lambda: {"Pentanes Plus": {
+"Pentanes Plus": {
                                         "% Combusted": 1.0}})
 
