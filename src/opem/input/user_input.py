@@ -18,12 +18,17 @@ from opem import input
 def initialize_model_inputs(get_input_func, validate_input_func):
 
     all_input = get_input_func(validate_input)
-    try:
-        all_input_dto = UserInputDto(input_list=all_input)
-    except ValueError:
-        print('Problem initializing user input. Please check your input parameters')
-        raise
-    return all_input_dto
+
+    # SHORTCUT--bypass user_input_dto and go straight to the 
+    # model objects. That means this returns the list
+    # of lists we read from the csv
+    
+    # try:
+    #     all_input_dto = UserInputDto(input_list=all_input)
+    # except ValueError:
+    #     print('Problem initializing user input. Please check your input parameters')
+    #     raise
+    return all_input
 
 ############################################
 
