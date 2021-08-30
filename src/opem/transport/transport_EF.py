@@ -1,25 +1,13 @@
-
-from dataclasses import InitVar, asdict, dataclass, field
+from dataclasses import InitVar, dataclass, field
 from typing import DefaultDict
-import collections
+from opem.transport.heavy_duty_truck_EF import HeavyDutyTruckEF
+from opem.transport.pipeline_EF import PipelineEF
+from opem.transport.rail_EF import RailEF
+from opem.transport.tanker_barge_EF import TankerBargeEF
 
-from opem.utils import initialize_from_dataclass, visit_dict, nested_access, initialize_from_list
+from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells
 
-
-# @dataclass
-# class TankerBargeEF:
-#     def __post_init__():
-#         calculate_tanker_barge_ef()
-
-#     def calculate_tanker_barge__ef()
-
-
-# @dataclass
-# class HeavyDutyTruckEF:
-#     def __post_init__():
-#         calculate_heavy_duty_truck_ef()
-
-#     def calculate_heavy_duty_truck_ef()
+# Define functions for filling calculated cells in the tables here
 
 
 @dataclass
@@ -40,57 +28,19 @@ class TransportEF:
     def calculate_transport_ef(self):
         pass
 
+    pipeline_ef: PipelineEF
+    rail_ef: RailEF
+    heavy_duty_truck_ef: HeavyDutyTruckEF
+    tanker_barge_ef: TankerBargeEF
     # will this cause problems if I try to pass in a list?
     user_input: InitVar[DefaultDict] = {}
-    # TransportEF sheet, table: Transport Emission Factors by Process Fuel (g CO2eq. per kgkm)
-    # only manual input column
+
+    # TransportEF sheet, table: Transport Emission Factors
     # CALCULATED
-    transport_emission_factors_by_process_fuel_g_CO2eq_per_kgkm: DefaultDict = field(default_factory=lambda: {"Pipeline Emissions": {
-        "Manual Input": None},
-        "Rail Emissions": {
-        "Manual Input": None},
-        "Heavy-Duty Truck Emissions": {
-        "Manual Input": None},
-        "Ocean Tanker Emissions": {
-        "Manual Input": None},
-        "Barge Emissions": {
-        "Manual Input": None}})
+    transport_emission_factors: DefaultDict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport Emission Factors'))
 
     # TransportEF sheet, subtable: Manual Input
     # fraction of fuel type for each transport mode
-    fraction_of_fuel_type_for_transport_mode: DefaultDict = field(default_factory=lambda: {"Pipeline": {
-        "Natural Gas": None, "LNG": None,	"Diesel": None,
-        "Bunker Fuel": None,	"Residual Oil":	None, "LPG": None,
-        "DME": None,	"FTD": None,	"Biodiesel": None,
-        "Renewable Diesel": None,	"Renewable Gasoline": None,
-        "Hydrogen": None,	"Ethanol":	None, "Methanol": None},
-
-        "Rail Emissions": {
-        "Natural Gas": None, "LNG": None,	"Diesel": None,
-        "Bunker Fuel": None,	"Residual Oil":	None, "LPG": None,
-        "DME": None,	"FTD": None,	"Biodiesel": None,
-        "Renewable Diesel": None,	"Renewable Gasoline": None,
-        "Hydrogen": None,	"Ethanol":	None, "Methanol": None},
-
-        "Heavy-Duty Truck Emissions": {
-        "Natural Gas": None, "LNG": None,	"Diesel": None,
-        "Bunker Fuel": None,	"Residual Oil":	None, "LPG": None,
-        "DME": None,	"FTD": None,	"Biodiesel": None,
-        "Renewable Diesel": None,	"Renewable Gasoline": None,
-        "Hydrogen": None,	"Ethanol":	None, "Methanol": None},
-
-        "Ocean Tanker Emissions": {
-        "Natural Gas": None, "LNG": None,	"Diesel": None,
-        "Bunker Fuel": None,	"Residual Oil":	None, "LPG": None,
-        "DME": None,	"FTD": None,	"Biodiesel": None,
-        "Renewable Diesel": None,	"Renewable Gasoline": None,
-        "Hydrogen": None,	"Ethanol":	None, "Methanol": None},
-
-        "Barge Emissions": {
-        "Natural Gas": None, "LNG": None,	"Diesel": None,
-        "Bunker Fuel": None,	"Residual Oil":	None, "LPG": None,
-        "DME": None,	"FTD": None,	"Biodiesel": None,
-        "Renewable Diesel": None,	"Renewable Gasoline": None,
-        "Hydrogen": None,	"Ethanol":	None, "Methanol": None},
-
-    })
+    fraction_of_fuel_type_for_transport_mode: DefaultDict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport Process Fuel Share'))
