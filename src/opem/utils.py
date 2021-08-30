@@ -9,6 +9,7 @@ import pkg_resources
 
 def fill_calculated_cells(target_table_ref, func_to_apply, included_rows=[], included_cols=[], excluded_rows=[], excluded_cols=[], other_tables_keymap={}, other_table_refs=None):
     print("in calc function")
+    print(included_cols)
     if (included_rows and excluded_rows):
         raise ValueError(
             "Please only pass arguments for one of excluded_rows/included_rows, not both")
@@ -23,10 +24,15 @@ def fill_calculated_cells(target_table_ref, func_to_apply, included_rows=[], inc
                 and (not excluded_rows or (row_key not in excluded_rows)) and (not included_rows or (row_key in included_rows)):
             # handle column that needs special treatment
             for col_key in row.keys():
+                print(col_key)
+                print(included_cols)
+                print(col_key in included_cols)
                 if (not excluded_cols or (col_key not in excluded_cols)) and (not included_cols or (col_key in included_cols)):
                     # get a reference to current cell and write calculated value
+                    print(row[col_key])
                     row[col_key] = func_to_apply(
                         row_key, col_key, target_table_ref, other_table_refs, other_tables_keymap)
+                    print(row[col_key])
 
 
 def build_dict_from_defaults(table_name):
@@ -36,7 +42,11 @@ def build_dict_from_defaults(table_name):
     dict["full_table_name"] = table_name
     dict['row_index_name'] = headers[0]
     for row in table_array[1:]:
-        dict[row[0]] = {k: float(v) for (k, v) in zip(headers[1:], row[1:])}
+        if row[0] != '':
+            print(table_name)
+            print(row)
+            dict[row[0]] = {k: float(v)
+                            for (k, v) in filter(lambda x: True if (x[0] != '' and x[1] != '') else False, zip(headers[1:], row[1:]))}
     return dict
 
 

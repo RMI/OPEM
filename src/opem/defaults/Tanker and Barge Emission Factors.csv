@@ -1,10 +1,10 @@
 ﻿Mode of Transportation,Bunker Fuel,Residual Oil,Diesel,Natural Gas,LPG,DME,FTD,Biodiesel,Renewable Diesel,Renewable Gasoline,Hydrogen
-Ocean Tanker Forward Journey,None,None,None,None,None,None,None,None,None,None,None
-Ocean Tanker Backhaul,None,None,None,None,None,None,None,None,None,None,None
-Ocean Tanker Emissions,None,None,None,None,None,None,None,None,None,None,None
-Barge Forward Journey,None,None,None,None,None,None,None,None,None,None,None
-Barge Backhaul,None,None,None,None,None,None,None,None,None,None,None
-Barge Emissions,None,None,None,None,None,None,None,None,None,None,None
+Ocean Tanker Forward Journey,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN
+Ocean Tanker Backhaul,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN
+Ocean Tanker Emissions,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN
+Barge Forward Journey,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN
+Barge Backhaul,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN
+Barge Emissions,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN
 ,,,,,,,,,,,
 ,,,,,,,,,,,
 ,,,,,,,,,,,

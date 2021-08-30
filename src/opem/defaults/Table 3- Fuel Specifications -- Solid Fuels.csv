@@ -1,46 +1,24 @@
 ﻿Fuel,"User Selection: LHV or HHV, Btu/ton","LHV, Btu/ton","HHV, Btu/ton","Density, grams/ton","C ratio, (% by wt)","S ratio, (ppm by wt)","S ratio, Actual ratio by wt",LHV/HHV
-Coal mix for electricity generation,None,"19,474,169","20,673,610",,58.6%,"10,456",None,None
-Bituminous coal,None,"22,639,320","23,633,493",,61.2%,"15,352",None,None
-Subbituminous coal,None,"16,085,444","17,449,320",,53.7%,"3,568",None,None
-Lignite coal,None,"10,805,183","12,992,302",,49.1%,"9,064",None,None
-Synthetic coal,None,"22,639,320","23,633,493",,80.6%,"16,143",None,None
-Waste coal,None,"9,945,646","11,958,783",,32.6%,"9,064",None,None
-Petcoke,None,"26,949,429","28,595,925",,86.7%,"45,138",None,None
-Tire-derived fuel,None,"26,664,354","28,293,434",,48.8%,"45,138",None,None
-Coking coal,None,"24,599,422","25,679,670",,74.7%,"11,800",None,None
-Willow,None,"15,396,000","16,524,000",,48.7%,500,None,None
-Poplar,None,"15,929,000","17,062,000",,50.1%,200,None,None
-Switchgrass,None,"14,447,000","15,583,000",,46.6%,"1,100",None,None
-Miscanthus,None,"15,342,000","16,377,000",,47.6%,800,None,None
-Corn stover,None,"14,716,000","15,774,000",,46.7%,"1,000",None,None
-Forest residue,None,"17,289,000","17,906,000",,50.3%,400,None,None
-Sugarcane straw,None,"13,454,049","15,774,000",,50.0%,,None,None
-Sugarcane bagasse,None,"12,381,771","14,062,678",,46.3%,,None,None
-Bio-char,None,"18,916,911","18,916,911",,51.2%,0,None,None
-Grain sorghum bagasse,None,"12,781,599","14,131,556",,39.3%,0,None,None
-Sweet sorghum bagasse,None,"14,409,931","15,305,245",,42.0%,0,None,None
-Forage sorghum bagasse,None,"14,409,931","15,305,245",,42.0%,0,None,None
-Municipal solid waste (defined by EISA),None,"11,209,639","13,583,445",,49.2%,"1,765",None,None
-Convertible municipal solid waste,None,"14,155,275","16,144,033",,50.5%,"1,787",None,None
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
-,,,,,,,,
+Coal mix for electricity generation,NaN,19474169,20673610,NaN,0.586,10456,NaN,NaN
+Bituminous coal,NaN,22639320,23633493,NaN,0.612,15352,NaN,NaN
+Subbituminous coal,NaN,16085444,17449320,NaN,0.537,3568,NaN,NaN
+Lignite coal,NaN,10805183,12992302,NaN,0.491,9064,NaN,NaN
+Synthetic coal,NaN,22639320,23633493,NaN,0.806,16143,NaN,NaN
+Waste coal,NaN,9945646,11958783,NaN,0.326,9064,NaN,NaN
+Petcoke,NaN,26949429,28595925,NaN,0.867,45138,NaN,NaN
+Tire-derived fuel,NaN,26664354,28293434,NaN,0.488,45138,NaN,NaN
+Coking coal,NaN,24599422,25679670,NaN,0.747,11800,NaN,NaN
+Willow,NaN,15396000,16524000,NaN,0.487,500,NaN,NaN
+Poplar,NaN,15929000,17062000,NaN,0.501,200,NaN,NaN
+Switchgrass,NaN,14447000,15583000,NaN,0.466,1100,NaN,NaN
+Miscanthus,NaN,15342000,16377000,NaN,0.476,800,NaN,NaN
+Corn stover,NaN,14716000,15774000,NaN,0.467,1000,NaN,NaN
+Forest residue,NaN,17289000,17906000,NaN,0.503,400,NaN,NaN
+Sugarcane straw,NaN,13454049,15774000,NaN,0.5,NaN,NaN,NaN
+Sugarcane bagasse,NaN,12381771,14062678,NaN,0.463,NaN,NaN,NaN
+Bio-char,NaN,18916911,18916911,NaN,0.512,0,NaN,NaN
+Grain sorghum bagasse,NaN,12781599,14131556,NaN,0.393,0,NaN,NaN
+Sweet sorghum bagasse,NaN,14409931,15305245,NaN,0.42,0,NaN,NaN
+Forage sorghum bagasse,NaN,14409931,15305245,NaN,0.42,0,NaN,NaN
+Municipal solid waste (defined by EISA),NaN,11209639,13583445,NaN,0.492,1765,NaN,NaN
+Convertible municipal solid waste,NaN,14155275,16144033,NaN,0.505,1787,NaN,NaN

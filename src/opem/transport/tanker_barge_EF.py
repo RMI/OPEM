@@ -40,12 +40,12 @@ class TankerBargeEF:
     # Tanker & Barge EF sheet, table: Horsepower Requirements for Ocean Tanker and Barges: Calculated With Cargo Capacity (hp)
     # Calculated
     cargo_payload: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Horsepower Requirements for Ocean Tanker and Barges: Calculated With Cargo Capacity (hp)'))
+        default_factory=lambda: build_dict_from_defaults('Horsepower Requirements for Ocean Tanker and Barges- Calculated With Cargo Capacity (hp)'))
 
     # Tanker & Barge EF sheet, table: Calculation of Energy Consumption for Ocean Tanker and Barge :: average speed
     # User Input
     tanker_barge_average_speed: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Average Speed (miles/hour)'))
+        default_factory=lambda: build_dict_from_defaults('Average Speed (miles:hour)'))
 
     # Tanker & Barge EF sheet, table: Calculation of Energy Consumption for Ocean Tanker and Barge :: Energy Consumption -- Trip From Product Origin to Destination
     # User Input
@@ -59,10 +59,10 @@ class TankerBargeEF:
     tanker_barge_energy_consumption_destination_to_origin: DefaultDict = field(
         default_factory=lambda: build_dict_from_defaults('Energy Consumption -- Trip From Product Destination Back to Origin'))
 
-    # Tanker & Barge EF sheet, table: Energy Intensity of Transport (Btu/kgkm)
+    # Tanker & Barge EF sheet, table: Energy Intensity of Transport (Btu:kgkm)
     # Calculated
     tanker_barge_energy_intensity_transport: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Energy Intensity of Transport (Btu/kgkm)'))
+        default_factory=lambda: build_dict_from_defaults('Energy Intensity of Transport (Btu:kgkm)'))
 
     # Tanker & Barge EF sheet, table: Emission Factors of Fuel Combustion: Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Ocean Tanker
     # Static
@@ -84,25 +84,25 @@ class TankerBargeEF:
     tanker_barge_emissions_factors_combustion_destination_origin_barge: DefaultDict = field(
         default_factory=lambda: build_dict_from_defaults('Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation- Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned) -- Barge'))
 
-    # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g CO2 eq./kgkm) -- Ocean Tanker Forward Journey
+    # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g CO2 eq.:kgkm) -- Ocean Tanker Forward Journey
     # Calculated
     tanker_barge_emissions_factors_transport_forward_journey_ocean_tanker: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Ocean Tanker Emissions From Transport (g CO2 eq./kgkm) -- Ocean Tanker Forward Journey'))
+        default_factory=lambda: build_dict_from_defaults('Ocean Tanker Emissions From Transport (g CO2 eq.:kgkm) -- Ocean Tanker Forward Journey'))
 
-    # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g CO2 eq./kgkm) -- Ocean Tanker Backhaul
+    # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g CO2 eq.:kgkm) -- Ocean Tanker Backhaul
     # Calculated
     tanker_barge_emissions_factors_transport_backhaul_ocean_tanker: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Ocean Tanker Emissions From Transport (g CO2 eq./kgkm) -- Ocean Tanker Backhaul'))
+        default_factory=lambda: build_dict_from_defaults('Ocean Tanker Emissions From Transport (g CO2 eq.:kgkm) -- Ocean Tanker Backhaul'))
 
-    # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g CO2 eq./kgkm) -- Barge Forward Journey
+    # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g CO2 eq.:kgkm) -- Barge Forward Journey
     # Calculated
     tanker_barge_emissions_factors_transport_forward_journey_barge: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Barge Emissions From Transport (g CO2 eq./kgkm) -- Barge Forward Journey'))
+        default_factory=lambda: build_dict_from_defaults('Barge Emissions From Transport (g CO2 eq.:kgkm) -- Barge Forward Journey'))
 
-    # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g CO2 eq./kgkm) -- Barge Backhaul
+    # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g CO2 eq.:kgkm) -- Barge Backhaul
     # Calculated
     tanker_barge_emissions_factors_transport_backhaul_barge: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Barge Emissions From Transport (g CO2 eq./kgkm) -- Barge Backhaul'))
+        default_factory=lambda: build_dict_from_defaults('Barge Emissions From Transport (g CO2 eq.:kgkm) -- Barge Backhaul'))
 
     # Tanker & Barge EF sheet, table: Marine Fuel Properties and Consumption (Residual Oil)
     # Calculated
