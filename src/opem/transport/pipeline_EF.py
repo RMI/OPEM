@@ -29,10 +29,10 @@ class PipelineEF:
     pipeline_emission_factors: DefaultDict = field(
         default_factory=lambda: build_dict_from_defaults('Pipeline Emission Factors'))
 
-    # PipelineEF sheet, table: Energy Intensity of Pipeline Transportation (Btu/ton-mile)
+    # PipelineEF sheet, table: Energy Intensity of Pipeline Transportation (Btu:ton-mile)
     # USER INPUT
     energy_intensity_of_pipeline_transportation: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Energy Intensity of Pipeline Transportation (Btu/ton-mile)'))
+        default_factory=lambda: build_dict_from_defaults('Energy Intensity of Pipeline Transportation (Btu:ton-mile)'))
 
     # PipelineEF sheet, table: Share of Pipeline Technologies Used
     # USER INPUT
@@ -49,10 +49,10 @@ class PipelineEF:
     # STATIC
 
     pipeline_emission_factors_combustion_pipeline_recip_engine_current: DefaultDict = field(default_factory=lambda: build_dict_from_defaults(
-        'Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Reciprocating Engine: Current'))
+        'Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Reciprocating Engine- Current'))
 
     # PipelineEF sheet, table: Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Reciprocating Engine: Future
     # STATIC
 
     pipeline_emission_factors_combustion_pipeline_recip_engine_future: DefaultDict = field(default_factory=lambda: build_dict_from_defaults(
-        'Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Reciprocating Engine: Future'))
+        'Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Reciprocating Engine- Future'))

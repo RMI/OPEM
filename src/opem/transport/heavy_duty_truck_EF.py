@@ -7,6 +7,156 @@ from opem.utils import initialize_from_dataclass, initialize_from_list, build_di
 # Define functions for filling calculated cells in the tables here
 
 
+def co2_for_class8_diesel(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+
+    return (other_table_refs[1]['U.S. conventional diesel']['Density, grams/gal']/other_table_refs[0][other_tables_keymap['trip_econ']]["Fuel Economy (miles/diesel gallon)"]*other_table_refs[1]['U.S. conventional diesel']['C ratio, (% by wt)']
+            - (target_table_ref["VOC"]
+               ["Class 8B Diesel Truck Emission Factors (g/mi.)"]*other_table_refs[2]["Carbon ratio of VOC"]["ratio"] +
+               target_table_ref["CO"]["Class 8B Diesel Truck Emission Factors (g/mi.)"] *
+               other_table_refs[2]["Carbon ratio of CO"]["ratio"] +
+               target_table_ref["CH4"]["Class 8B Diesel Truck Emission Factors (g/mi.)"] *
+               other_table_refs[2]["Carbon ratio of CH4"]["ratio"])) / other_table_refs[2]["Carbon ratio of CO2"]["ratio"]
+
+
+def emission_factors_calc_fill_middle(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+    other_table_col_key = col_key
+    other_table_row_key = row_key
+    if other_tables_keymap:
+        if "col_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
+            other_table_col_key = (lambda col_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"][col_key] if col_key in
+                                   other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"].keys() else other_table_col_key)(col_key)
+        if "row_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
+            other_table_row_key = (lambda row_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"][row_key] if row_key in
+                                   other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"].keys() else other_table_row_key)(row_key)
+    return target_table_ref[row_key]['Diesel'] * other_table_refs[0][other_table_row_key][other_table_col_key]
+
+
+def co2_for_renew_diesel_forward(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+    hv = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["User Selection: LHV or HHV, Btu/gal"]
+    density = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["Density, grams/gal"]
+    c_ratio = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["C ratio, (% by wt)"]
+    if other_table_refs[0] == 1:
+        hv = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["User Selection: LHV or HHV, Btu/gal"]
+        density = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["Density, grams/gal"]
+        c_ratio = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["C ratio, (% by wt)"]
+    elif other_table_refs[0] == 3:
+        hv = other_table_refs[1]["Renewable diesel III (PNNL-HTL)"]["User Selection: LHV or HHV, Btu/gal"]
+        density = other_table_refs[1]["Renewable diesel III (PNNL-HTL)"]["Density, grams/gal"]
+
+    # There might be a problem with this formula, originating from the workbook
+    return (1000000/hv*density*c_ratio - (target_table_ref["VOC"]["Renewable Diesel"] *
+                                          other_table_refs[2]["Carbon ratio of VOC"]["ratio"]+target_table_ref["CO"]["Renewable Diesel"] *
+                                          other_table_refs[2]["Carbon ratio of CO"]["ratio"] +
+                                          target_table_ref["N2O"]["Renewable Diesel"] *
+                                          other_table_refs[2]["Carbon ratio of CH4"]["ratio"])) / other_table_refs[2]["Carbon ratio of CO2"]["ratio"]
+
+
+def co2_for_renew_diesel_backward(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+    hv = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["User Selection: LHV or HHV, Btu/gal"]
+    density = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["Density, grams/gal"]
+    c_ratio = other_table_refs[3]["Natural gas"]["C ratio, (% by wt)"]
+    if other_table_refs[0] == 1:
+        hv = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["User Selection: LHV or HHV, Btu/gal"]
+        density = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["Density, grams/gal"]
+
+    elif other_table_refs[0] == 3:
+        hv = other_table_refs[1]["Renewable diesel III (PNNL-HTL)"]["User Selection: LHV or HHV, Btu/gal"]
+        density = other_table_refs[1]["Renewable diesel III (PNNL-HTL)"]["Density, grams/gal"]
+
+    # There might be a problem with this formula, originating from the workbook
+    return (1000000/hv*density*c_ratio - (target_table_ref["VOC"]["Renewable Diesel"] *
+                                          other_table_refs[2]["Carbon ratio of VOC"]["ratio"]+target_table_ref["CO"]["Renewable Diesel"] *
+                                          other_table_refs[2]["Carbon ratio of CO"]["ratio"] +
+                                          target_table_ref["N2O"]["Renewable Diesel"] *
+                                          other_table_refs[2]["Carbon ratio of CH4"]["ratio"])) / other_table_refs[2]["Carbon ratio of CO2"]["ratio"]
+
+
+def so2_for_renew_diesel_forward(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+    hv = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["User Selection: LHV or HHV, Btu/gal"]
+    density = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["Density, grams/gal"]
+    c_ratio = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["C ratio, (% by wt)"]
+    if other_table_refs[0] == 1:
+        hv = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["User Selection: LHV or HHV, Btu/gal"]
+        density = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["Density, grams/gal"]
+        c_ratio = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["C ratio, (% by wt)"]
+    elif other_table_refs[0] == 3:
+        hv = other_table_refs[1]["Renewable diesel III (PNNL-HTL)"]["User Selection: LHV or HHV, Btu/gal"]
+        density = other_table_refs[1]["Renewable diesel III (PNNL-HTL)"]["Density, grams/gal"]
+
+    # There might be a problem with this formula, originating from the workbook
+    return (1000000/hv*density*c_ratio - (target_table_ref["VOC"]["Renewable Diesel"] *
+                                          other_table_refs[2]["Carbon ratio of VOC"]["ratio"]+target_table_ref["CO"]["Renewable Diesel"] *
+                                          other_table_refs[2]["Carbon ratio of CO"]["ratio"] +
+                                          target_table_ref["N2O"]["Renewable Diesel"] *
+                                          other_table_refs[2]["Carbon ratio of CH4"]["ratio"])) / other_table_refs[2]["Carbon ratio of CO2"]["ratio"]
+
+
+def so2_for_renew_diesel_backward(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+    hv = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["User Selection: LHV or HHV, Btu/gal"]
+    density = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["Density, grams/gal"]
+    c_ratio = other_table_refs[3]["Natural gas"]["C ratio, (% by wt)"]
+    if other_table_refs[0] == 1:
+        hv = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["User Selection: LHV or HHV, Btu/gal"]
+        density = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["Density, grams/gal"]
+
+    elif other_table_refs[0] == 3:
+        hv = other_table_refs[1]["Renewable diesel III (PNNL-HTL)"]["User Selection: LHV or HHV, Btu/gal"]
+        density = other_table_refs[1]["Renewable diesel III (PNNL-HTL)"]["Density, grams/gal"]
+
+    # There might be a problem with this formula, originating from the workbook
+    return (1000000/hv*density*c_ratio - (target_table_ref["VOC"]["Renewable Diesel"] *
+                                          other_table_refs[2]["Carbon ratio of VOC"]["ratio"]+target_table_ref["CO"]["Renewable Diesel"] *
+                                          other_table_refs[2]["Carbon ratio of CO"]["ratio"] +
+                                          target_table_ref["N2O"]["Renewable Diesel"] *
+                                          other_table_refs[2]["Carbon ratio of CH4"]["ratio"])) / other_table_refs[2]["Carbon ratio of CO2"]["ratio"]
+
+
+def co2_emissions_factors_most_fuels(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+    # fuel columns are transposed in constants table
+    other_table_col_key = row_key
+    other_table_row_key = col_key
+
+    if other_tables_keymap and other_table_refs[0]["full_table_name"] in other_tables_keymap.keys():
+        if "col_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
+            other_table_col_key = (lambda row_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"][row_key] if row_key in
+                                   other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"].keys() else other_table_col_key)(row_key)
+        if "row_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
+            other_table_row_key = (lambda col_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"][col_key] if col_key in
+                                   other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"].keys() else other_table_row_key)(col_key)
+
+    hv = other_table_refs[0][other_table_row_key][
+        "User Selection: LHV or HHV, Btu/gal"]
+    density = other_table_refs[0][other_table_row_key]["Density, grams/gal"]
+    c_ratio = other_table_refs[0][other_table_row_key]["C ratio, (% by wt)"]
+
+    return (1000000/hv*density*c_ratio - (target_table_ref["VOC"][col_key] *
+                                          other_table_refs[1]["Carbon ratio of VOC"]["ratio"]+target_table_ref["CO"][col_key] *
+                                          other_table_refs[1]["Carbon ratio of CO"]["ratio"] +
+                                          target_table_ref["N2O"][col_key] *
+                                          other_table_refs[1]["Carbon ratio of CH4"]["ratio"])) / other_table_refs[1]["Carbon ratio of CO2"]["ratio"]
+
+
+def so2_emissions_factors(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+    # fuel columns are transposed in constants table
+    other_table_col_key = row_key
+    other_table_row_key = col_key
+
+    if other_tables_keymap and other_table_refs[0]["full_table_name"] in other_tables_keymap.keys():
+        if "col_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
+            other_table_col_key = (lambda row_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"][row_key] if row_key in
+                                   other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"].keys() else other_table_col_key)(row_key)
+        if "row_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
+            other_table_row_key = (lambda col_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"][col_key] if col_key in
+                                   other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"].keys() else other_table_row_key)(col_key)
+
+    hv = other_table_refs[0][other_table_row_key][
+        "User Selection: LHV or HHV, Btu/gal"]
+    density = other_table_refs[0][other_table_row_key]["Density, grams/gal"]
+    s_ratio = other_table_refs[0][other_table_row_key]["S ratio, Actual ratio by wt"]
+
+    return (1000000/hv*density*s_ratio/other_table_refs[1]["Sulfur ratio of SO2"]["ratio"])
+
+
 def emission_factors_calc(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
     # handle mapping the rows and columns of the target table to the rows and columns of other tables below
     # this example has only one other table and only maps columns
@@ -17,17 +167,18 @@ def emission_factors_calc(row_key, col_key, target_table_ref=None, other_table_r
     # there might be more keys: other_table_col_key1, other_table_col_key2, etc.
     other_table_col_key = col_key
     other_table_row_key = row_key
-    if other_tables_keymap:
-        other_table_col_key = (lambda col_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"][col_key] if col_key in
-                               other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"].keys() else other_table_col_key)(col_key)
-
-        other_table_row_key = (lambda row_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"][row_key] if row_key in
-                               other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"].keys() else other_table_row_key)(row_key)
+    if other_tables_keymap and other_table_refs[0]["full_table_name"] in other_tables_keymap.keys():
+        if "col_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
+            other_table_col_key = (lambda col_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"][col_key] if col_key in
+                                   other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"].keys() else other_table_col_key)(col_key)
+        if "row_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
+            other_table_row_key = (lambda row_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"][row_key] if row_key in
+                                   other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"].keys() else other_table_row_key)(row_key)
     return target_table_ref[row_key]["Diesel"] * \
         other_table_refs[0][other_table_row_key][other_table_col_key]
 
 
-def emission_factors_calc2(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+def emission_factors_calc_diesel(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
     # handle mapping the rows and columns of the target table to the rows and columns of other tables below
     # this example has only one other table and only maps columns
     # each table will need custom logic to handle rows/columns and however many other tables are passed in
@@ -37,24 +188,19 @@ def emission_factors_calc2(row_key, col_key, target_table_ref=None, other_table_
     # there might be more keys: other_table_col_key1, other_table_col_key2, etc.
     other_table_col_key = col_key
     other_table_row_key = row_key
-    if other_tables_keymap:
-        other_table_col_key = (lambda col_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"][col_key] if col_key in
-                               other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"].keys() else other_table_col_key)(col_key)
-
-        other_table_row_key = (lambda row_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"][row_key] if row_key in
-                               other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"].keys() else other_table_row_key)(row_key)
-
-    print('test')
-
-    print(target_table_ref[row_key]['Class 8B Diesel Truck Emission Factors (g/mi.)'] *
-          other_table_refs[0][
-        'Trip From Product Origin to Destination']['Fuel Economy (miles/diesel gallon)'])
+    if other_tables_keymap and other_table_refs[0]["full_table_name"] in other_tables_keymap.keys():
+        if "col_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
+            other_table_col_key = (lambda col_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"][col_key] if col_key in
+                                   other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"].keys() else other_table_col_key)(col_key)
+        if "row_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
+            other_table_row_key = (lambda row_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"][row_key] if row_key in
+                                   other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"].keys() else other_table_row_key)(row_key)
     return target_table_ref[row_key]['Class 8B Diesel Truck Emission Factors (g/mi.)'] * \
         other_table_refs[0][
-            'Trip From Product Origin to Destination']['Fuel Economy (miles/diesel gallon)']
+        other_tables_keymap['trip_econ']]['Fuel Economy (miles/diesel gallon)']
 
 
-@dataclass
+@ dataclass
 class HeavyDutyTruckEF:
 
     def __post_init__(self, user_input):
@@ -66,23 +212,154 @@ class HeavyDutyTruckEF:
             initialize_from_list(self, user_input)
         else:
             raise ValueError("Please pass a list or dictionary to initialize")
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_origin_to_destination,
+                              func_to_apply=co2_for_class8_diesel,
+                              included_cols=[
+                                  "Class 8B Diesel Truck Emission Factors (g/mi.)"],
+                              included_rows=['CO2'], other_table_refs=[self.truck_fuel_economy_and_resultant_energy_consumption,
+                                                                       self.constants.table_3_fuel_specifications_liquid_fuels,
+                                                                       self.constants.table_4_carbon_and_sulfer_ratios],
+                              # hack the keymap to use same function for forward and backward trip
+                              other_tables_keymap={"trip_econ": "Trip From Product Origin to Destination"})
 
-        fill_calculated_cells(target_table_ref=self.emission_factors_of_fuel_combustion_origin_to_destination,
-                              func_to_apply=emission_factors_calc2, included_cols=[
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_destination_to_origin,
+                              func_to_apply=co2_for_class8_diesel,
+                              included_cols=[
+                                  "Class 8B Diesel Truck Emission Factors (g/mi.)"],
+                              included_rows=['CO2'], other_table_refs=[self.truck_fuel_economy_and_resultant_energy_consumption,
+                                                                       self.constants.table_3_fuel_specifications_liquid_fuels,
+                                                                       self.constants.table_4_carbon_and_sulfer_ratios],
+                              # hack the keymap to use same function for forward and backward trip
+                              other_tables_keymap={"trip_econ": "Trip From Product Destination Back to Origin"})
+
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_origin_to_destination,
+                              func_to_apply=emission_factors_calc_diesel, included_cols=[
+                                  "Diesel"],
+                              other_table_refs=[
+                                  self.truck_fuel_economy_and_resultant_energy_consumption, ],
+                              # hack the keymap to use same function for forward and backward trip
+                              other_tables_keymap={"trip_econ": "Trip From Product Origin to Destination"})
+
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_destination_to_origin,
+                              func_to_apply=emission_factors_calc_diesel, included_cols=[
                                   'Diesel'],
-                              other_table_refs=[self.fuel_economy_and_resultant_energy_consumption])
+                              other_table_refs=[
+                                  self.truck_fuel_economy_and_resultant_energy_consumption, ],
+                              # hack the keymap to use same function for forward and backward trip
+                              other_tables_keymap={"trip_econ": "Trip From Product Destination Back to Origin"})
 
-        fill_calculated_cells(target_table_ref=self.emission_factors_of_fuel_combustion_origin_to_destination,
-                              func_to_apply=emission_factors_calc, excluded_rows=[
-                                  'SOx', 'CO2'],
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_origin_to_destination,
+                              func_to_apply=emission_factors_calc_fill_middle,
+                              excluded_rows=["SOx", "CO2"],
                               excluded_cols=[
-                                  'Class 8B Diesel Truck Emission Factors (g/mi.)', 'Diesel'],
+                                  "Class 8B Diesel Truck Emission Factors (g/mi.)", "Diesel"],
+                              other_table_refs=[
+                                  self.emission_ratios_by_fuel_type_relative_to_baseline_fuel, ],
                               other_tables_keymap={f"{self.emission_ratios_by_fuel_type_relative_to_baseline_fuel['full_table_name']}": {
                                   "row_keymap": {}, "col_keymap": {'Ethanol': 'E90', 'Methanol': 'M90'}}},
-                              other_table_refs=[self.emission_ratios_by_fuel_type_relative_to_baseline_fuel])
+                              )
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_destination_to_origin,
+                              func_to_apply=emission_factors_calc_fill_middle,
+                              excluded_rows=["SOx", "CO2"],
+                              excluded_cols=[
+                                  "Class 8B Diesel Truck Emission Factors (g/mi.)", "Diesel"],
+                              other_table_refs=[
+                                  self.emission_ratios_by_fuel_type_relative_to_baseline_fuel, ],
+                              other_tables_keymap={f"{self.emission_ratios_by_fuel_type_relative_to_baseline_fuel['full_table_name']}": {
+                                  "row_keymap": {}, "col_keymap": {'Ethanol': 'E90', 'Methanol': 'M90'}}},
+                              )
 
-        print('finished post_init')
-        print(self.emission_factors_of_fuel_combustion_origin_to_destination)
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_origin_to_destination,
+                              func_to_apply=co2_for_renew_diesel_forward,
+                              included_cols=[
+                                  "Renewable Diesel"],
+                              included_rows=['CO2'], other_table_refs=[self.select_biodiesel,
+                                                                       self.constants.table_3_fuel_specifications_liquid_fuels,
+                                                                       self.constants.table_4_carbon_and_sulfer_ratios,
+                                                                       self.constants.table_3_fuel_specifications_gaseous_fuels])
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_destination_to_origin,
+                              func_to_apply=co2_for_renew_diesel_backward,
+                              included_cols=[
+                                  "Renewable Diesel"],
+                              included_rows=['CO2'], other_table_refs=[self.select_biodiesel,
+                                                                       self.constants.table_3_fuel_specifications_liquid_fuels,
+                                                                       self.constants.table_4_carbon_and_sulfer_ratios,
+                                                                       self.constants.table_3_fuel_specifications_gaseous_fuels])
+
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_origin_to_destination,
+                              func_to_apply=so2_for_renew_diesel_forward,
+                              included_cols=[
+                                  "Renewable Diesel"],
+                              included_rows=['CO2'], other_table_refs=[self.select_biodiesel,
+                                                                       self.constants.table_3_fuel_specifications_liquid_fuels,
+                                                                       self.constants.table_4_carbon_and_sulfer_ratios,
+                                                                       self.constants.table_3_fuel_specifications_gaseous_fuels])
+
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_destination_to_origin,
+                              func_to_apply=so2_for_renew_diesel_backward,
+                              included_cols=[
+                                  "Renewable Diesel"],
+                              included_rows=['CO2'], other_table_refs=[self.select_biodiesel,
+                                                                       self.constants.table_3_fuel_specifications_liquid_fuels,
+                                                                       self.constants.table_4_carbon_and_sulfer_ratios,
+                                                                       self.constants.table_3_fuel_specifications_gaseous_fuels])
+
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_origin_to_destination,
+                              func_to_apply=co2_emissions_factors_most_fuels,
+                              included_cols=[
+                                  "LNG",	"DME",	"FTD",	"Ethanol",	"Methanol",	"LPG",	"Biodiesel",	"Renewable Gasoline", "Hydrogen"],
+                              included_rows=['CO2'], other_table_refs=[
+                                  self.constants.table_3_fuel_specifications_liquid_fuels,
+                                  self.constants.table_4_carbon_and_sulfer_ratios,
+                              ],
+                              other_tables_keymap={f"{self.constants.table_3_fuel_specifications_liquid_fuels['full_table_name']}": {
+                                  "row_keymap": {"LNG": "Liquefied natural gas (LNG)", "DME": "Dimethyl ether (DME)", "FTD": "Dimethyl ether (DME)", "LPG": "Liquefied petroleum gas (LPG)", "Biodiesel": "Methyl ester (biodiesel, BD)", "Hydrogen": "Liquid hydrogen", "Renewable Gasoline": "Renewable gasoline"}, "col_keymap": {}}},)
+
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_destination_to_origin,
+                              func_to_apply=co2_emissions_factors_most_fuels,
+                              included_cols=[
+                                  "LNG",	"DME",	"FTD",	"Ethanol",	"Methanol",	"LPG",	"Biodiesel",	"Renewable Gasoline", "Hydrogen"],
+                              included_rows=['CO2'], other_table_refs=[
+                                  self.constants.table_3_fuel_specifications_liquid_fuels,
+                                  self.constants.table_4_carbon_and_sulfer_ratios,
+                              ],
+                              other_tables_keymap={f"{self.constants.table_3_fuel_specifications_liquid_fuels['full_table_name']}": {
+                                  "row_keymap": {"LNG": "Liquefied natural gas (LNG)", "DME": "Dimethyl ether (DME)", "FTD": "Dimethyl ether (DME)", "LPG": "Liquefied petroleum gas (LPG)", "Biodiesel": "Methyl ester (biodiesel, BD)", "Hydrogen": "Liquid hydrogen", "Renewable Gasoline": "Renewable gasoline"}, "col_keymap": {}}},)
+
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_origin_to_destination,
+                              func_to_apply=so2_emissions_factors,
+                              included_cols=[
+                                  "LNG",	"DME",	"FTD",	"Ethanol",	"Methanol",	"LPG",	"Biodiesel",	"Renewable Gasoline", "Hydrogen"],
+                              included_rows=['SOx'], other_table_refs=[
+                                  self.constants.table_3_fuel_specifications_liquid_fuels,
+                                  self.constants.table_4_carbon_and_sulfer_ratios,
+                              ],
+                              other_tables_keymap={f"{self.constants.table_3_fuel_specifications_liquid_fuels['full_table_name']}": {
+                                  "row_keymap": {"LNG": "Liquefied natural gas (LNG)", "DME": "Dimethyl ether (DME)", "FTD": "Dimethyl ether (DME)", "LPG": "Liquefied petroleum gas (LPG)", "Biodiesel": "Methyl ester (biodiesel, BD)", "Hydrogen": "Liquid hydrogen", "Renewable Gasoline": "Renewable gasoline"}, "col_keymap": {}}},)
+        fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_destination_to_origin,
+                              func_to_apply=so2_emissions_factors,
+                              included_cols=[
+                                  "LNG",	"DME",	"FTD",	"Ethanol",	"Methanol",	"LPG",	"Biodiesel",	"Renewable Gasoline", "Hydrogen"],
+                              included_rows=['SOx'], other_table_refs=[
+                                  self.constants.table_3_fuel_specifications_liquid_fuels,
+                                  self.constants.table_4_carbon_and_sulfer_ratios,
+                              ],
+                              other_tables_keymap={f"{self.constants.table_3_fuel_specifications_liquid_fuels['full_table_name']}": {
+                                  "row_keymap": {"LNG": "Liquefied natural gas (LNG)", "DME": "Dimethyl ether (DME)", "FTD": "Dimethyl ether (DME)", "LPG": "Liquefied petroleum gas (LPG)", "Biodiesel": "Methyl ester (biodiesel, BD)", "Hydrogen": "Liquid hydrogen", "Renewable Gasoline": "Renewable gasoline"}, "col_keymap": {}}},)
+
+        # fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_origin_to_destination,
+        #                       func_to_apply=emission_factors_calc, excluded_rows=[
+        #                           'SOx', 'CO2'],
+        #                       excluded_cols=[
+        #                           'Class 8B Diesel Truck Emission Factors (g/mi.)', 'Diesel'],
+        #                       other_tables_keymap={f"{self.emission_ratios_by_fuel_type_relative_to_baseline_fuel['full_table_name']}": {
+        #                           "row_keymap": {}, "col_keymap": {'Ethanol': 'E90', 'Methanol': 'M90'}}},
+        #                       other_table_refs=[self.emission_ratios_by_fuel_type_relative_to_baseline_fuel])
+
+        print(
+            self.truck_emission_factors_of_fuel_combustion_origin_to_destination)
+        print(
+            self.truck_emission_factors_of_fuel_combustion_destination_to_origin)
 
     # def calculate_heavy_duty_truck_ef(self
 
@@ -110,38 +387,6 @@ class HeavyDutyTruckEF:
 
     def func_to_apply(row_key, col_key, other_table_refs=None, other_tables_keymap=None):
         pass
-
-    def calculate_emission_factors_of_fuel_combustion_origin_to_destination(self):
-        for row_key, row in self.emission_factors_of_fuel_combustion_origin_to_destination.items():
-
-            if row_key != "row_index_name":
-                # handle column that needs special treatment
-                for col_key in row.keys():
-                    if col_key == 'Diesel':
-                        # get a reference to the Diesel cell in current row
-                        # set value to be product of prev column in same row and a fixed cell of fuel economy table
-                        row[col_key] = row['Class 8B Diesel Truck Emission Factors (g/mi.)'] * self.fuel_economy_and_resultant_energy_consumption[
-                            'Trip From Product Origin to Destination']['Fuel Economy (miles/diesel gallon)']
-                    # handle rest of columns
-                    else:
-                        # skip rows that need special treatment
-                        if not (row_key in ['SOx', 'CO2']) and not (col_key in ['Class 8B Diesel Truck Emission Factors (g/mi.)']):
-
-                            # deal with other table that needs different keys
-                            # always pass in a key map when we reference another table
-                            # pass this as a parameter
-                            col_key_map = {'Ethanol': 'E90', 'Methanol': 'M90'}
-                            # lambda switches table being written col key for table being read col key
-                            other_table_col_key = (lambda col_key: col_key_map[col_key] if col_key in
-                                                   col_key_map.keys() else col_key)(col_key)
-                            print(col_key)
-                            row[col_key] = row['Diesel'] * \
-                                self.emission_ratios_by_fuel_type_relative_to_baseline_fuel[
-                                    row_key][other_table_col_key]
-        print(self.emission_factors_of_fuel_combustion_origin_to_destination)
-        # if col_key != 'Class 8B Diesel Truck Emission Factors (g/mi.)'
-        # print(self.emission_factors_of_fuel_combustion_origin_to_destination)
-        # will this cause problems if I try to pass in a list?
 
     constants: Constants
 

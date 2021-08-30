@@ -31,17 +31,17 @@ class RailEF:
     rail_emission_factors: DefaultDict = field(
         default_factory=lambda: build_dict_from_defaults('Rail Emission Factors'))
 
-    # RailEF sheet, table: Energy Intensity of Rail Transportation (Btu/ton-mile)
+    # RailEF sheet, table: Energy Intensity of Rail Transportation (Btu:ton-mile)
     # USER INPUT
     energy_intensity_of_rail_transportation: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Energy Intensity of Rail Transportation (Btu/ton-mile)'))
+        default_factory=lambda: build_dict_from_defaults('Energy Intensity of Rail Transportation (Btu:ton-mile)'))
 
     # RailEF sheet, table: Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned)
     # STATIC
     rail_emission_factors_combustion_origin_to_destination: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Locomotive'))
+        default_factory=lambda: build_dict_from_defaults("Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation- Trip From Product Origin to Product Destination (grams per mmBtu) -- Locomotive"))
 
 # RailEF sheet, table: EEmission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned)
     # STATIC
     rail_emission_factors_combustion_destination_to_origin: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned) -- Locomotive'))
+        default_factory=lambda: build_dict_from_defaults('Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation- Trip From Product Destination Back to Product Origin (grams per mmBtu) -- Locomotive'))

@@ -7,11 +7,26 @@ from opem.utils import initialize_from_dataclass, initialize_from_list, build_di
 # Define functions for filling calculated cells in the tables here
 
 
+def hv_selection(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+    if other_table_refs[0] == "LHV":
+        return target_table_ref[row_key][other_tables_keymap["LHV"]]
+    elif other_table_refs[0] == "HHV":
+        return target_table_ref[row_key][other_tables_keymap["HHV"]]
+
+
+def hv_ratio(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+
+    return target_table_ref[row_key][other_tables_keymap["LHV"]] / target_table_ref[row_key][other_tables_keymap["HHV"]]
+
+
+def s_ratio(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+    return target_table_ref[row_key]["S ratio, (ppm by wt)"]/1000000
+
+
 @dataclass
 class Constants:
 
     def __post_init__(self, user_input):
-        print(type(user_input))
         if type(user_input) == dict:
             # this allows us to get input from a dict generated from another dataclass
             initialize_from_dataclass(self, user_input)
@@ -20,21 +35,65 @@ class Constants:
         else:
             raise ValueError("Please pass a list or dictionary to initialize")
 
-        # fill_calculated_cells(target_table_ref=self.emission_factors_of_fuel_combustion_origin_to_destination,
-        #                       func_to_apply=emission_factors_calc2, included_cols=[
-        #                           'Diesel'],
-        #                       other_table_refs=[self.fuel_economy_and_resultant_energy_consumption])
+        fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_liquid_fuels,
+                              func_to_apply=hv_selection, included_cols=[
+                                  "User Selection: LHV or HHV, Btu/gal"], other_table_refs=[self.hv],
+                              # hacked the keymap to get around the different units in the HV keys
+                              # so I can reuse the hv_selection function
+                              other_tables_keymap={'LHV': "LHV, Btu/gal", 'HHV': "HHV, Btu/gal"})
 
-        # fill_calculated_cells(target_table_ref=self.emission_factors_of_fuel_combustion_origin_to_destination,
-        #                       func_to_apply=emission_factors_calc, excluded_rows=[
-        #                           'SOx', 'CO2'],
-        #                       excluded_cols=[
-        #                           'Class 8B Diesel Truck Emission Factors (g/mi.)', 'Diesel'],
-        #                       other_tables_keymap={f"{self.emission_ratios_by_fuel_type_relative_to_baseline_fuel['full_table_name']}": {
-        #                           "row_keymap": {}, "col_keymap": {'Ethanol': 'E90', 'Methanol': 'M90'}}},
-        #                       other_table_refs=[self.emission_ratios_by_fuel_type_relative_to_baseline_fuel])
+        fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_gaseous_fuels,
+                              func_to_apply=hv_selection, included_cols=[
+                                  "User Selection: LHV or HHV, Btu/ft3"], other_table_refs=[self.hv],
+                              # hacked the keymap to get around the different units in the HV keys
+                              # so I can reuse the hv_selection function
+                              other_tables_keymap={'LHV': "LHV, Btu/ft3", 'HHV': "HHV, Btu/ft3"})
+
+        fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_solid_fuels,
+                              func_to_apply=hv_selection, included_cols=[
+                                  "User Selection: LHV or HHV, Btu/ton"], other_table_refs=[self.hv],
+                              # hacked the keymap to get around the different units in the HV keys
+                              # so I can reuse the hv_selection function
+                              other_tables_keymap={'LHV': "LHV, Btu/ton", 'HHV': "HHV, Btu/ton"})
+
+        fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_liquid_fuels,
+                              func_to_apply=s_ratio, included_cols=[
+                                  "S ratio, Actual ratio by wt"])
+        fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_solid_fuels,
+                              func_to_apply=s_ratio, included_cols=[
+                                  "S ratio, Actual ratio by wt"])
+        fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_gaseous_fuels,
+                              func_to_apply=s_ratio, included_cols=[
+                                  "S ratio, Actual ratio by wt"])
+
+        fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_liquid_fuels,
+                              func_to_apply=hv_ratio, included_cols=[
+                                  "LHV/HHV"],
+                              # hacked the keymap to get around the different units in the HV keys
+                              # so I can reuse the hv_ratio function
+                              other_tables_keymap={'LHV': "LHV, Btu/gal", 'HHV': "HHV, Btu/gal"})
+
+        fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_gaseous_fuels,
+                              func_to_apply=hv_ratio, included_cols=[
+                                  "LHV/HHV"],
+                              # hacked the keymap to get around the different units in the HV keys
+                              # so I can reuse the hv_ratio function
+                              other_tables_keymap={'LHV': "LHV, Btu/ft3", 'HHV': "HHV, Btu/ft3"})
+
+        fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_solid_fuels,
+                              func_to_apply=hv_ratio, included_cols=[
+                                  "LHV/HHV"],
+                              # hacked the keymap to get around the different units in the HV keys
+                              # so I can reuse the hv_ratio function
+                              other_tables_keymap={'LHV': "LHV, Btu/ton", 'HHV': "HHV, Btu/ton"})
+        # print(
+        #     self.table_3_fuel_specifications_liquid_fuels)
 
     user_input: InitVar[DefaultDict] = {}
+
+    # Constants sheet, table: User Selection, LHV or HHV
+    # USER_INPUT
+    hv: str = "LHV"
 
     # Constants sheet, table: Table 1: Hundred-Year Global Warming Potentials
     # STATIC
@@ -74,7 +133,7 @@ class Constants:
     # Constants sheet, table: Table 5: Solid Fuel Densities
     # STATIC
     table_5_solid_fuel_densities: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Table 5: Solid Fuel Densities'))
+        default_factory=lambda: build_dict_from_defaults('Table 5- Solid Fuel Densities'))
 
     # Constants sheet, table: Table 5: Solid Fuel Densities
     # STATIC

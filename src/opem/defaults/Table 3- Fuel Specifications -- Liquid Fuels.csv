@@ -1,46 +1,46 @@
 ﻿Fuel,"User Selection: LHV or HHV, Btu/gal","LHV, Btu/gal","HHV, Btu/gal","Density, grams/gal","C ratio, (% by wt)","S ratio, (ppm by wt)","S ratio, Actual ratio by wt",LHV/HHV
-Crude oil,None,441617,281876,5329,3.732,34420,None,None
-Synthetic crude oil (SCO),None,377758.5132,428904.4810,4642,9.364820487,4186,None,None
-Bitumen,None,677899.1357,119740.9683,3619.168288,5.98,96930,None,None
-Dilbit,None,335126.331,732763.8432,1738.908971,2.892191436,53866.64448,None,None
-Diluent,None,181820.8310,791572.8944,2176,6.751056840,5938,None,None
-Gasoline blendstock,None,621254,353250,7780,9.882,59.3,None,None
-Gasoline,None,937016.97,642334.42,6576.182,5.23835177,82.97019492,None,None
-CA gasoline,None,460424.34,298952.39,1304.372,9.95436977,14.12579154,None,None
-U.S. conventional diesel,None,584204,193365,8803,9.468,501,None,None
-CA conventional diesel,None,,,,,373,None,None
-Diesel for nonroad engines,None,980313,613548,4405,8.129,446,None,None
-Low-sulfur diesel,None,400249.5133,984959,2076,6.317,96,None,None
-Petroleum naphtha,None,352119,244355,1569,1.38,6,None,None
-Conventional jet fuel,None,990336.6815,632796.3293,6693.577267,5.147,372,None,None
-ULS jet fuel,None,909292.1691,375695.2362,8001.787941,2.61,48,None,None
-NG-based FT naphtha,None,127951,761029,2330,3.668,7,None,None
-Residual oil,None,719437.3037,408489,2227,2.344,5996,None,None
-Bunker fuel for ocean tanker,None,164917.7696,274351,5874,2.715,76180,None,None
-Methanol,None,43707,70062,8206,4.199,6,None,None
-Ethanol,None,54079,77828,1746,9.166,6.349285068,None,None
-Butanol,None,93269,812881,2842,4.5104,3,None,None
-Acetone,None,49119,57291,4046,1.5086,7,None,None
-E-Diesel additives,None,562817,210618,5181,8.147,50.5,None,None
-Liquefied petroleum gas (LPG),None,83918,78686,3481,2.97,9,None,None
-Liquefied natural gas (LNG),None,32263,94746,1313,6.79,8,None,None
-Dimethyl ether (DME),None,82454,42984,4565,6.198,7,None,None
-Dimethoxy methane (DMM),None,69207,45627.3037,6051,3.598,7,None,None
-"Methyl ester (biodiesel, BD)",None,227199,360508,7039,6.474,4,None,None
-Fischer-Tropsch diesel (FTD),None,105731,435397,3932,5.534,1,None,None
-Renewable diesel I (SuperCetane),None,793835,560018.4942,5097,9.214,4,None,None
-Renewable diesel II (UOP-HDO),None,657307,858088,2137,1.993,4,None,None
-Renewable diesel III (PNNL-HTL),None,945954.8820,120244.909,6665.544638,3.341,6,None,None
-Renewable gasoline,None,345020,411307,4766,6.99,7,None,None
-SPK (FT Jet Fuel/HRJ) ,None,798165.6223,455062.7480,2020.633548,3.600,8,None,None
-Liquid hydrogen,None,75925,43958,898,9,2,None,None
-Methyl tertiary butyl ether (MTBE),None,41542,180874,1339,7.474,9,None,None
-Ethyl tertiary butyl ether (ETBE),None,62043,330682,1747,7.599,4,None,None
-Tertiary amyl methyl ether (TAME),None,994861,853050,3580,6.709,3,None,None
-Butane,None,95394,549869,4092,5.674,8,None,None
-Isobutane,None,40871,60443,1892,4.682,9,None,None
-Isobutylene,None,43367,273497,8041,1.124,7,None,None
-Propane,None,29854,37062,2408,6.921,5,None,None
-Natural gas liquids,None,64249.61809,35883,9901,,7,None,None
-n-Hexane,None,841014.7,664337.4,8276.8,4.873460,5,None,None
-Still gas (in refineries),None,214901,902306,,,2,None,None
+Crude oil,NaN,275055,517843,8908,7.678,86720,NaN,NaN
+Synthetic crude oil (SCO),NaN,119364.3206,135924.9370,2312,6.471465279,4049,NaN,NaN
+Bitumen,NaN,508080.3955,381593.4908,8181.186683,9.32,49572,NaN,NaN
+Dilbit,NaN,813578.154,884638.4376,6388.379994,2.330476748,11989.32308,NaN,NaN
+Diluent,NaN,378920.1388,343773.2005,1241,1.390172752,4665,NaN,NaN
+Gasoline blendstock,NaN,167126,168792,8396,3.220,41.1,NaN,NaN
+Gasoline,NaN,808434.36,181857.49,8969.175,5.91293886,21.64082107,NaN,NaN
+CA gasoline,NaN,888169.88,971429.74,7177.766,3.29124010,15.56088547,NaN,NaN
+U.S. conventional diesel,NaN,101314,596581,9006,5.448,969,NaN,NaN
+CA conventional diesel,NaN,NaN,NaN,NaN,NaN,316,NaN,NaN
+Diesel for nonroad engines,NaN,756908,782145,2682,3.249,696,NaN,NaN
+Low-sulfur diesel,NaN,695317.4312,738436,3957,4.611,29,NaN,NaN
+Petroleum naphtha,NaN,994274,472928,1316,6.91,4,NaN,NaN
+Conventional jet fuel,NaN,196979.4409,798948.8282,6410.802956,1.956,305,NaN,NaN
+ULS jet fuel,NaN,349804.6179,184791.1416,4815.247865,9.95,48,NaN,NaN
+NG-based FT naphtha,NaN,761640,135768,9477,5.685,3,NaN,NaN
+Residual oil,NaN,767703.5903,391906,8676,9.477,1783,NaN,NaN
+Bunker fuel for ocean tanker,NaN,987547.6759,398357,4003,4.718,16337,NaN,NaN
+Methanol,NaN,18371,22231,6028,1.265,5,NaN,NaN
+Ethanol,NaN,78358,83151,2753,6.830,9.915692855,NaN,NaN
+Butanol,NaN,30970,221663,9569,1.7366,3,NaN,NaN
+Acetone,NaN,44477,29787,5470,3.8159,9,NaN,NaN
+E-Diesel additives,NaN,639623,967912,3221,8.157,61.7,NaN,NaN
+Liquefied petroleum gas (LPG),NaN,70198,83532,8378,2.15,1,NaN,NaN
+Liquefied natural gas (LNG),NaN,11328,76514,3526,8.69,1,NaN,NaN
+Dimethyl ether (DME),NaN,42390,38317,8755,8.352,7,NaN,NaN
+Dimethoxy methane (DMM),NaN,94955,54500.1371,6858,6.860,1,NaN,NaN
+"Methyl ester (biodiesel, BD)",NaN,606249,629069,6541,8.469,1,NaN,NaN
+Fischer-Tropsch diesel (FTD),NaN,316241,929953,9852,5.145,2,NaN,NaN
+Renewable diesel I (SuperCetane),NaN,760362,241014.9373,1269,1.584,9,NaN,NaN
+Renewable diesel II (UOP-HDO),NaN,270114,764292,2806,1.626,8,NaN,NaN
+Renewable diesel III (PNNL-HTL),NaN,520549.2795,961201.150,7563.492111,4.903,5,NaN,NaN
+Renewable gasoline,NaN,107364,616699,3428,2.82,5,NaN,NaN
+SPK (FT Jet Fuel/HRJ) ,NaN,828904.4140,527195.7198,3046.182083,6.275,3,NaN,NaN
+Liquid hydrogen,NaN,74135,54212,179,1,1,NaN,NaN
+Methyl tertiary butyl ether (MTBE),NaN,87920,349865,6696,7.734,4,NaN,NaN
+Ethyl tertiary butyl ether (ETBE),NaN,86824,303093,3920,7.500,6,NaN,NaN
+Tertiary amyl methyl ether (TAME),NaN,385882,606242,3054,1.738,4,NaN,NaN
+Butane,NaN,11438,485782,6571,5.392,1,NaN,NaN
+Isobutane,NaN,70812,71758,4263,1.797,4,NaN,NaN
+Isobutylene,NaN,74930,311923,3631,9.613,9,NaN,NaN
+Propane,NaN,62673,35147,4484,6.727,3,NaN,NaN
+Natural gas liquids,NaN,32624.64566,16550,8743,NaN,7,NaN,NaN
+n-Hexane,NaN,732944.7,261400.4,8795.1,9.713972,3,NaN,NaN
+Still gas (in refineries),NaN,529631,656625,NaN,NaN,6,NaN,NaN

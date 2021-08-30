@@ -21,17 +21,15 @@ class CombustionEF:
             raise ValueError(
                 "Please pass a list or dictionary to initialize")
 
+    constants: Constants
+    user_input: InitVar[DefaultDict] = {}
 
-constants: Constants
-user_input: InitVar[DefaultDict] = {}
+  # Prod CombustEF sheet, table: Product Combustion Emission Factors -- Petroleum Products
+  # CALCULATED
+    product_combustion_emission_factors_petroleum: DefaultDict = field(
+        default_factory=lambda: build_dict_from_defaults('Product Combustion Emission Factors -- Petroleum Products'))
 
-# Prod CombustEF sheet, table: Product Combustion Emission Factors -- Petroleum Products
-# CALCULATED
-product_combustion_emission_factors_petroleum: DefaultDict = field(
-    default_factory=lambda: build_dict_from_defaults('Product Combustion Emission Factors -- Petroleum Products'))
-
-
-# Prod CombustEF sheet, table: Product Combustion Emission Factors -- Fossil-Fuel-Derived Fuels (Solid)
-# CALCULATED
-product_combustion_emission_factors_derived_solids: DefaultDict = field(
-    default_factory=lambda: build_dict_from_defaults('Product Combustion Emission Factors -- Fossil-Fuel-Derived Fuels (Solid)'))
+   # Prod CombustEF sheet, table: Product Combustion Emission Factors -- Fossil-Fuel-Derived Fuels (Solid)
+   # CALCULATED
+    product_combustion_emission_factors_derived_solids: DefaultDict = field(
+        default_factory=lambda: build_dict_from_defaults('Product Combustion Emission Factors -- Fossil-Fuel-Derived Fuels (Solid)'))
