@@ -1,41 +1,37 @@
 product_name,Field Name A
 upstream_field_selection,Defualt Upstream Field
-ngl_volume_source,8. GD NGL Volume
-percent_ethane_volume_directly_sent_to_cracker_chem_plant_allocated_to_ethylene_conversion,3.2
-
+ngl_volume_source,9. GD NGL Volume
+percent_ethane_volume_directly_sent_to_cracker_chem_plant_allocated_to_ethylene_conversion,4.5
 refinery_product_transport_mode_of_transport,Pipeline Emissions,Transport Fuel,Natural Gas
-refinery_product_transport_mode_of_transport,Pipeline Emissions,Distance Traveled (km),9615
+refinery_product_transport_mode_of_transport,Pipeline Emissions,Distance Traveled (km),3132
 refinery_product_transport_mode_of_transport,Rail Emissions,Transport Fuel,Diesel
-refinery_product_transport_mode_of_transport,Rail Emissions,Distance Traveled (km),1
+refinery_product_transport_mode_of_transport,Rail Emissions,Distance Traveled (km),5
 refinery_product_transport_mode_of_transport,Heavy-Duty Truck Emissions,Transport Fuel,Diesel
-refinery_product_transport_mode_of_transport,Heavy-Duty Truck Emissions,Distance Traveled (km),103
+refinery_product_transport_mode_of_transport,Heavy-Duty Truck Emissions,Distance Traveled (km),279
 refinery_product_transport_mode_of_transport,Ocean Tanker Emissions,Transport Fuel,Bunker Fuel
-refinery_product_transport_mode_of_transport,Ocean Tanker Emissions,Distance Traveled (km),5
+refinery_product_transport_mode_of_transport,Ocean Tanker Emissions,Distance Traveled (km),8
 refinery_product_transport_mode_of_transport,Barge Emissions,Transport Fuel,Residual Oil
-refinery_product_transport_mode_of_transport,Barge Emissions,Distance Traveled (km),5
-
+refinery_product_transport_mode_of_transport,Barge Emissions,Distance Traveled (km),7
 field_ngl_transport_mode_of_transport,Pipeline Emissions,Transport Fuel,Natural Gas
-field_ngl_transport_mode_of_transport,Pipeline Emissions,Distance Traveled (km),31715
+field_ngl_transport_mode_of_transport,Pipeline Emissions,Distance Traveled (km),32689
 field_ngl_transport_mode_of_transport,Rail Emissions,Transport Fuel,Diesel
-field_ngl_transport_mode_of_transport,Rail Emissions,Distance Traveled (km),1
+field_ngl_transport_mode_of_transport,Rail Emissions,Distance Traveled (km),8
 field_ngl_transport_mode_of_transport,Heavy-Duty Truck Emissions,Transport Fuel,Diesel
-field_ngl_transport_mode_of_transport,Heavy-Duty Truck Emissions,Distance Traveled (km),562
+field_ngl_transport_mode_of_transport,Heavy-Duty Truck Emissions,Distance Traveled (km),730
 field_ngl_transport_mode_of_transport,Ocean Tanker Emissions,Transport Fuel,Bunker Fuel
-field_ngl_transport_mode_of_transport,Ocean Tanker Emissions,Distance Traveled (km),8
+field_ngl_transport_mode_of_transport,Ocean Tanker Emissions,Distance Traveled (km),4
 field_ngl_transport_mode_of_transport,Barge Emissions,Transport Fuel,Residual Oil
-field_ngl_transport_mode_of_transport,Barge Emissions,Distance Traveled (km),2
-
-refinery_product_combustion_product_slate,Gasoline,% Combusted,6.7
-refinery_product_combustion_product_slate,Jet Fuel,% Combusted,6.2
-refinery_product_combustion_product_slate,Diesel,% Combusted,3.9
-refinery_product_combustion_product_slate,Fuel Oil,% Combusted,9.4
-refinery_product_combustion_product_slate,Coke,% Combusted,9.9
-refinery_product_combustion_product_slate,Residual Fuels,% Combusted,1.5
-refinery_product_combustion_product_slate,Liquefied Petroleum Gases (LPG),% Combusted,1.3
-
-field_product_combustion_product_slate,Coke,% Combusted,5.1
-field_product_combustion_product_slate,Natural Gas,% Combusted,1.2
-field_product_combustion_product_slate,Ethane,% Combusted,1.2
-field_product_combustion_product_slate,Propane,% Combusted,9.5
-field_product_combustion_product_slate,Butane,% Combusted,7.6
-field_product_combustion_product_slate,Pentanes Plus,% Combusted,6.9
+field_ngl_transport_mode_of_transport,Barge Emissions,Distance Traveled (km),9
+refinery_product_combustion_product_slate,Gasoline,% Combusted,9.3
+refinery_product_combustion_product_slate,Jet Fuel,% Combusted,9.1
+refinery_product_combustion_product_slate,Diesel,% Combusted,3.3
+refinery_product_combustion_product_slate,Fuel Oil,% Combusted,3.6
+refinery_product_combustion_product_slate,Coke,% Combusted,4.4
+refinery_product_combustion_product_slate,Residual Fuels,% Combusted,9.4
+refinery_product_combustion_product_slate,Liquefied Petroleum Gases (LPG),% Combusted,7.6
+field_product_combustion_product_slate,Coke,% Combusted,2.8
+field_product_combustion_product_slate,Natural Gas,% Combusted,5.1
+field_product_combustion_product_slate,Ethane,% Combusted,6.7
+field_product_combustion_product_slate,Propane,% Combusted,1.4
+field_product_combustion_product_slate,Butane,% Combusted,4.4
+field_product_combustion_product_slate,Pentanes Plus,% Combusted,5.4

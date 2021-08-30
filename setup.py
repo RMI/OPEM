@@ -145,6 +145,7 @@ setup(
     # installed, specify them here.
     package_data={  # Optional
         'products': ['products/product_slates/*.json'],
+        'defaults': ['defaults/*.csv']
     },
 
     # Although 'package_data' is the preferred approach, in some case you may

@@ -1,0 +1,46 @@
+﻿Fuel,"User Selection: LHV or HHV, Btu/ton","LHV, Btu/ton","HHV, Btu/ton","Density, grams/ton","C ratio, (% by wt)","S ratio, (ppm by wt)","S ratio, Actual ratio by wt",LHV/HHV
+Coal mix for electricity generation,None,"39,205,870","70,332,860",,70.7%,"47,660",None,None
+Bituminous coal,None,"51,750,568","77,576,796",,97.3%,"79,456",None,None
+Subbituminous coal,None,"93,559,628","55,605,232",,35.9%,"9,945",None,None
+Lignite coal,None,"23,631,677","20,629,203",,77.2%,"2,980",None,None
+Synthetic coal,None,"73,232,465","56,319,558",,28.3%,"82,116",None,None
+Waste coal,None,"2,214,754","89,853,657",,44.7%,"4,807",None,None
+Petcoke,None,"64,958,886","76,863,231",,72.7%,"81,123",None,None
+Tire-derived fuel,None,"34,479,979","28,244,241",,97.6%,"34,539",None,None
+Coking coal,None,"33,272,724","17,482,341",,19.6%,"17,246",None,None
+Willow,None,"80,500,483","66,266,862",,94.2%,357,None,None
+Poplar,None,"84,112,898","69,838,429",,80.5%,584,None,None
+Switchgrass,None,"14,390,214","21,201,197",,63.1%,"7,685",None,None
+Miscanthus,None,"16,810,772","71,100,203",,69.3%,254,None,None
+Corn stover,None,"52,837,899","31,760,313",,71.7%,"7,361",None,None
+Forest residue,None,"61,538,713","18,893,635",,44.6%,771,None,None
+Sugarcane straw,None,"10,490,536","72,280,301",,49.2%,,None,None
+Sugarcane bagasse,None,"98,638,192","76,748,373",,19.3%,,None,None
+Bio-char,None,"24,995,833","64,530,829",,78.6%,7,None,None
+Grain sorghum bagasse,None,"34,768,389","82,675,536",,95.7%,9,None,None
+Sweet sorghum bagasse,None,"70,927,889","98,817,229",,18.9%,7,None,None
+Forage sorghum bagasse,None,"81,212,237","74,994,734",,53.2%,5,None,None
+Municipal solid waste (defined by EISA),None,"15,732,325","51,226,401",,98.6%,"4,535",None,None
+Convertible municipal solid waste,None,"58,628,508","59,426,636",,32.7%,"7,814",None,None
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
