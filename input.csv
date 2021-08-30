@@ -2,7 +2,6 @@ product_name,Algeria Hassi R’Mel
 upstream_field_selection,Defualt Upstream Field
 ngl_volume_source,1. GD NGL Volume
 percent_ethane_volume_directly_sent_to_cracker_chem_plant_allocated_to_ethylene_conversion,1.0
-
 refinery_product_transport_mode_of_transport,Pipeline Emissions,Transport Fuel,Natural Gas
 refinery_product_transport_mode_of_transport,Pipeline Emissions,Distance Traveled (km),2414
 refinery_product_transport_mode_of_transport,Rail Emissions,Transport Fuel,Diesel
@@ -13,7 +12,6 @@ refinery_product_transport_mode_of_transport,Ocean Tanker Emissions,Transport Fu
 refinery_product_transport_mode_of_transport,Ocean Tanker Emissions,Distance Traveled (km),0
 refinery_product_transport_mode_of_transport,Barge Emissions,Transport Fuel,Residual Oil
 refinery_product_transport_mode_of_transport,Barge Emissions,Distance Traveled (km),0
-
 field_ngl_transport_mode_of_transport,Pipeline Emissions,Transport Fuel,Natural Gas
 field_ngl_transport_mode_of_transport,Pipeline Emissions,Distance Traveled (km),24140
 field_ngl_transport_mode_of_transport,Rail Emissions,Transport Fuel,Diesel
@@ -24,7 +22,6 @@ field_ngl_transport_mode_of_transport,Ocean Tanker Emissions,Transport Fuel,Bunk
 field_ngl_transport_mode_of_transport,Ocean Tanker Emissions,Distance Traveled (km),0
 field_ngl_transport_mode_of_transport,Barge Emissions,Transport Fuel,Residual Oil
 field_ngl_transport_mode_of_transport,Barge Emissions,Distance Traveled (km),0
-
 refinery_product_combustion_product_slate,Gasoline,% Combusted,1.0
 refinery_product_combustion_product_slate,Jet Fuel,% Combusted,1.0
 refinery_product_combustion_product_slate,Diesel,% Combusted,1.0
@@ -32,7 +29,6 @@ refinery_product_combustion_product_slate,Fuel Oil,% Combusted,1.0
 refinery_product_combustion_product_slate,Coke,% Combusted,1.0
 refinery_product_combustion_product_slate,Residual Fuels,% Combusted,1.0
 refinery_product_combustion_product_slate,Liquefied Petroleum Gases (LPG),% Combusted,1.0
-
 field_product_combustion_product_slate,Coke,% Combusted,1.0
 field_product_combustion_product_slate,Natural Gas,% Combusted,1.0
 field_product_combustion_product_slate,Ethane,% Combusted,1.0

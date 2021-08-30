@@ -1,0 +1,6 @@
+﻿Mode of Transport,Natural Gas,LNG,Diesel,Bunker Fuel,Residual Oil,LPG,DME,FTD,Biodiesel,Renewable Diesel,Renewable Gasoline,Hydrogen,Ethanol,Methanol
+Pipeline,0.55,,0.45,,,,,,,,,,,
+Rail Emissions,,,1.00,,,,,,,,,,,
+Heavy-Duty Truck Emissions,,,1.00,,,,,,,,,,,
+Ocean Tanker Emissions,,,,1.00,,,,,,,,,,
+Barge Emissions,,,,,1.00,,,,,,,,,
