@@ -1,7 +1,6 @@
-
-
 from dataclasses import InitVar, dataclass, field
 from typing import DefaultDict
+from opem.constants import Constants
 
 from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells
 
@@ -143,6 +142,9 @@ class HeavyDutyTruckEF:
         # if col_key != 'Class 8B Diesel Truck Emission Factors (g/mi.)'
         # print(self.emission_factors_of_fuel_combustion_origin_to_destination)
         # will this cause problems if I try to pass in a list?
+
+    constants: Constants
+
     user_input: InitVar[DefaultDict] = {}
 
     # Heavy-Duty Truck EF sheet, table: Heavy-Duty Truck Emission Factors
@@ -151,59 +153,28 @@ class HeavyDutyTruckEF:
     heavy_duty_truck_emission_factors: DefaultDict = field(
         default_factory=lambda: build_dict_from_defaults('Heavy-Duty Truck Emission Factors'))
 
-    # Heavy-Duty Truck EF sheet, table: Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned)
-    # USER INPUT
-    # CALCULATED
-    emission_factors_of_fuel_combustion_origin_to_destination: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation- Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned)'))
-
-    # {"Transport Emission Factors by Process Fuel(g CO2eq. per kgkm)": {
-    #     "Heavy-Duty	Truck	Forward	Journey	(full	load)":	{"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-    #     "Heavy-Duty	Truck	Backhaul	(full	load)":	{"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-    #     "Heavy-Duty	Truck	Emissions	(full	load)":	{"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	}}})
-
     # Heavy-Duty Truck EF sheet, table: Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks
     # USER INPUT
     # CALCULATED
-    fuel_economy_and_resultant_energy_consumption: DefaultDict = field(
+    truck_fuel_economy_and_resultant_energy_consumption: DefaultDict = field(
         default_factory=lambda: build_dict_from_defaults('Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks'))
 
-    # Heavy-Duty Truck EF sheet, table: Select Biodiesel for Simulating Oil-Based Renewable Diesel
-    # options: 1 --Renewable Diesel I (SuperCetane); 2 --Renewable Diesel II (UOP-HDO); 3 --Renewable Diesel III (PNNL-HTL)
+    # Heavy-Duty Truck EF sheet, cell Select Biodiesel for Simulating Oil-Based Renewable Diesel
     # USER INPUT
-    select_biodiesel_for_simulating_oil_based_renewable_diesel: int = 2
+    # options: 1 --Renewable Diesel I (SuperCetane); 2 --Renewable Diesel II (UOP-HDO); 3 --Renewable Diesel III (PNNL-HTL)
+    select_biodiesel: int = 2
 
     # Heavy-Duty Truck EF sheet, table: Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned)
     # USER INPUT
     # CALCULATED
-    emission_factors_of_fuel_combustion_for_feedstock_and_fuel_transportation_origin_to_destination: DefaultDict = field(default_factory=lambda: {"Heavy-Duty Truck (full load)": {
-        "VOC":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.4068,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "CO":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	1.6812,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "NOx":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	4.7516,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "PM10":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.0378,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "PM2.5":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.0367,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "SOx":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.0163,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "BC":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.005872,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "OC":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.024222,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "CH4":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.4659,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "N2O":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.002,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "CO2":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	1890.02947,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	}}})
+    truck_emission_factors_of_fuel_combustion_origin_to_destination: DefaultDict = field(
+        default_factory=lambda: build_dict_from_defaults('Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation- Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Heavy-Duty Truck (full load)'))
 
     # Heavy-Duty Truck EF sheet, table: Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned)
     # USER INPUT
     # CALCULATED
-    emission_factors_of_fuel_combustion_for_feedstock_and_fuel_transportation_destination_to_origin: DefaultDict = field(default_factory=lambda: {"Heavy-Duty Truck (full load)": {
-        "VOC":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.4068,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "CO":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	1.6812,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "NOx":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	4.7516,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "PM10":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.0378,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "PM2.5":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.0367,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "SOx":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.239018868,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "BC":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.005872,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "OC":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.024222,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "CH4":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.0199332,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "N2O":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	0.0514,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	},
-        "CO2":	{"Class	8B	Diesel	Truck	Emission	Factors	(g/mi.)":	1891.255878,	"Diesel":	None,	"LNG":	None,	"DME":	None,	"FTD":	None,	"Ethanol":	None,	"Methanol":	None,	"LPG":	None,	"Biodiesel":	None,	"Renewable	Diesel":	None,	"Renewable	Gasoline":	None,	"Hydrogen":	None,	}}})
+    truck_emission_factors_of_fuel_combustion_destination_to_origin: DefaultDict = field(
+        default_factory=lambda: build_dict_from_defaults('Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation- Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned) -- Heavy-Duty Truck (full load)'))
 
     # Heavy-Duty Truck EF sheet, table: Emission Ratios by Fuel Type Relative to Baseline Fuel
     # USER INPUT
