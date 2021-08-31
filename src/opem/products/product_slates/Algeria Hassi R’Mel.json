@@ -1,6 +1,8 @@
 {
  "product_name": "Algeria Hassi R’Mel",
 
+ "volume_flow": {
+
 "Crude_bbl":101100,
 "Gasoline_bbl":84802,
 "Jet_Fuel_bbl":7470,
@@ -11,11 +13,11 @@
 "Surplus_Refinery_Fuel_Gas_RFG_bbl":0,
 "Liquefied_Petroleum_Gases_LPG_bbl":4079,
 "Petrochemical_Feedstocks_bbl":0,
-"Asphalt_bbl":0,
+"Asphalt_bbl":0
+ },
 
 
-
-
+"energy_flow": {
 "Gasoline_MJ":402661595,
 "Jet_Fuel_MJ":39837610,
 "Diesel_MJ":2317217,
@@ -28,8 +30,10 @@
 "Petrochemical_Feedstocks_MJ":10884196,
 "Asphalt_MJ":"null",
 "Gasoline_S_wt_MJ":"null",
-"Gasoline_H2_wt_MJ":14,
+"Gasoline_H2_wt_MJ":14
+},
 
+"mass_flow": {
 
 "Gasoline_kg":9400187,
 "Jet_Fuel_kg":959662,
@@ -44,7 +48,7 @@
 "Petrochemical_Feedstocks_kg":"null",
 "Asphalt_kg":"null",
 "Net_Upstream_Petcoke_kg":"null"
-
+}
 }
 
 

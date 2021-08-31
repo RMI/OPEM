@@ -19,10 +19,10 @@ def initialize_model_inputs(get_input_func, validate_input_func):
 
     all_input = get_input_func(validate_input)
 
-    # SHORTCUT--bypass user_input_dto and go straight to the 
+    # SHORTCUT--bypass user_input_dto and go straight to the
     # model objects. That means this returns the list
     # of lists we read from the csv
-    
+
     # try:
     #     all_input_dto = UserInputDto(input_list=all_input)
     # except ValueError:
@@ -53,20 +53,17 @@ def get_csv_input(validate_input_func):
             # lambda: for each item in row if index(row[item]) exists
             # then all_user_input[row] = {}
             all_user_input.append(row)
-        print(all_user_input)
     return all_user_input
 
 
 def validate_input(row):
     # check if input params are valid
-    print('validating row')
-    print(row)
+    pass
 
 
 def initialize_params(all_input):
     # fill in parameter object with user defined or default params
     print("input dict")
-    print(all_input)
 
     # = initialize_combustion_dto(all_input)
     # transportation input =
@@ -87,9 +84,11 @@ def get_product_slate(product_name: str):
     with pkg_resources.resource_stream(
             "opem.products.product_slates", f"{product_name}.json") as json_file:
         product_slate_json = json.load(json_file)
-    print(product_slate_json)
     try:
-        return ProductSlate(**product_slate_json)
+        # product slate has default vals in its dictionaries
+        # so we don't unpack the json. Send it as an object
+        # to be processed by __post__init function
+        return ProductSlate(user_input=product_slate_json, product_name=product_slate_json["product_name"])
     except TypeError:
         print(
             'Problem initializing product slate. Please check your input parameters')
