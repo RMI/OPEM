@@ -8,8 +8,7 @@ import pkg_resources
 
 
 def fill_calculated_cells(target_table_ref, func_to_apply, included_rows=[], included_cols=[], excluded_rows=[], excluded_cols=[], other_tables_keymap={}, other_table_refs=None):
-    print("in calc function")
-    print(included_cols)
+
     if (included_rows and excluded_rows):
         raise ValueError(
             "Please only pass arguments for one of excluded_rows/included_rows, not both")
@@ -24,15 +23,12 @@ def fill_calculated_cells(target_table_ref, func_to_apply, included_rows=[], inc
                 and (not excluded_rows or (row_key not in excluded_rows)) and (not included_rows or (row_key in included_rows)):
             # handle column that needs special treatment
             for col_key in row.keys():
-                print(col_key)
-                print(included_cols)
-                print(col_key in included_cols)
+
                 if (not excluded_cols or (col_key not in excluded_cols)) and (not included_cols or (col_key in included_cols)):
                     # get a reference to current cell and write calculated value
-                    print(row[col_key])
+
                     row[col_key] = func_to_apply(
                         row_key, col_key, target_table_ref, other_table_refs, other_tables_keymap)
-                    print(row[col_key])
 
 
 def build_dict_from_defaults(table_name):
@@ -43,8 +39,6 @@ def build_dict_from_defaults(table_name):
     dict['row_index_name'] = headers[0]
     for row in table_array[1:]:
         if row[0] != '':
-            print(table_name)
-            print(row)
             dict[row[0]] = {k: float(v)
                             for (k, v) in filter(lambda x: True if (x[0] != '' and x[1] != '') else False, zip(headers[1:], row[1:]))}
     return dict
@@ -56,17 +50,14 @@ def read_model_table_defaults(table_name):
         "opem.defaults", f"{table_name}.csv")
     # if only 'utf-8' is specified then BOM character '\ufeff' is included in output
     utf8_reader = codecs.getreader("utf-8-sig")
-
-    print("no error in with")
-    print(type(csvfile))
     reader = csv.reader(utf8_reader(csvfile))
-    print("no error after reader")
     for row in reader:
         rows_and_header.append(row)
     return rows_and_header
 
 
 def visit_dict(d, path=[]):
+
     for k, v in d.items():
         if not isinstance(v, dict):
             yield path + [k], v
@@ -76,20 +67,24 @@ def visit_dict(d, path=[]):
 
 def initialize_from_dataclass(target, source: DefaultDict):
     # this allows us to get input from a dict generated from another dataclass
+    print("initialize from dataclass")
     for key in source.keys():
         if key in asdict(target).keys():
+            if type(source[key]) != dict:
 
-            for path in visit_dict(source[key]):
-                # print(user_input[key])
+                setattr(target, key, source[key])
+            else:
+                for path in visit_dict(source[key]):
 
-                if len(path[0]) == 1:
-                    print('path length = 1')
-                    print(source[key])
-                    setattr(target, key, source[key][path[0]])
-                else:
+                    # if len(path[0]) == 1:
+                    #     print("lenth of path is 1")
+                    #     setattr(target.key, [path[0][0]],
+                    #             [path[0][1]])
+                    #     # setattr(target, key, source[key][path[0][0]])
+                    # else:
 
                     keys_length = len(path[0]) - 1
-                # get a reference to the object the holds the key/value pair we want to mutate
+                    # get a reference to the object the holds the key/value pair we want to mutate
                     ref = nested_access(
                         dict=getattr(target, key), keys=path[0][0:keys_length])
 
@@ -110,8 +105,6 @@ def initialize_from_list(target, source: List):
             if len(row) == 2:
                 setattr(target, row[0], row[1])
             else:
-                print('keys from input row')
-                print(row[1:-2])
                 # get a reference to the object the holds the key/value pair we want to mutate
                 ref = nested_access(
                     dict=getattr(target, row[0]), keys=row[1:-2])

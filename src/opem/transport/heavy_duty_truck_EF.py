@@ -74,41 +74,33 @@ def co2_for_renew_diesel_backward(row_key, col_key, target_table_ref=None, other
 def so2_for_renew_diesel_forward(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
     hv = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["User Selection: LHV or HHV, Btu/gal"]
     density = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["Density, grams/gal"]
-    c_ratio = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["C ratio, (% by wt)"]
+    s_ratio = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["S ratio, Actual ratio by wt"]
     if other_table_refs[0] == 1:
         hv = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["User Selection: LHV or HHV, Btu/gal"]
         density = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["Density, grams/gal"]
-        c_ratio = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["C ratio, (% by wt)"]
+        s_ratio = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["S ratio, Actual ratio by wt"]
     elif other_table_refs[0] == 3:
         hv = other_table_refs[1]["Renewable diesel III (PNNL-HTL)"]["User Selection: LHV or HHV, Btu/gal"]
         density = other_table_refs[1]["Renewable diesel III (PNNL-HTL)"]["Density, grams/gal"]
 
-    # There might be a problem with this formula, originating from the workbook
-    return (1000000/hv*density*c_ratio - (target_table_ref["VOC"]["Renewable Diesel"] *
-                                          other_table_refs[2]["Carbon ratio of VOC"]["ratio"]+target_table_ref["CO"]["Renewable Diesel"] *
-                                          other_table_refs[2]["Carbon ratio of CO"]["ratio"] +
-                                          target_table_ref["N2O"]["Renewable Diesel"] *
-                                          other_table_refs[2]["Carbon ratio of CH4"]["ratio"])) / other_table_refs[2]["Carbon ratio of CO2"]["ratio"]
+    return (1000000/hv*density*s_ratio / other_table_refs[2]["Sulfur ratio of SO2"]["ratio"])
 
 
 def so2_for_renew_diesel_backward(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
     hv = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["User Selection: LHV or HHV, Btu/gal"]
     density = other_table_refs[1]["Renewable diesel II (UOP-HDO)"]["Density, grams/gal"]
-    c_ratio = other_table_refs[3]["Natural gas"]["C ratio, (% by wt)"]
+    s_ratio = other_table_refs[3]["Natural gas"]["S ratio, Actual ratio by wt"]
     if other_table_refs[0] == 1:
         hv = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["User Selection: LHV or HHV, Btu/gal"]
         density = other_table_refs[1]["Renewable diesel I (SuperCetane)"]["Density, grams/gal"]
+        # problem with cell reference H77 - it is in a table header
+        s_ratio = other_table_refs[3]["Natural gas"]["S ratio, Actual ratio by wt"]
 
     elif other_table_refs[0] == 3:
         hv = other_table_refs[1]["Renewable diesel III (PNNL-HTL)"]["User Selection: LHV or HHV, Btu/gal"]
         density = other_table_refs[1]["Renewable diesel III (PNNL-HTL)"]["Density, grams/gal"]
 
-    # There might be a problem with this formula, originating from the workbook
-    return (1000000/hv*density*c_ratio - (target_table_ref["VOC"]["Renewable Diesel"] *
-                                          other_table_refs[2]["Carbon ratio of VOC"]["ratio"]+target_table_ref["CO"]["Renewable Diesel"] *
-                                          other_table_refs[2]["Carbon ratio of CO"]["ratio"] +
-                                          target_table_ref["N2O"]["Renewable Diesel"] *
-                                          other_table_refs[2]["Carbon ratio of CH4"]["ratio"])) / other_table_refs[2]["Carbon ratio of CO2"]["ratio"]
+    return (1000000/hv*density*s_ratio / other_table_refs[2]["Sulfur ratio of SO2"]["ratio"])
 
 
 def co2_emissions_factors_most_fuels(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
@@ -206,6 +198,7 @@ class HeavyDutyTruckEF:
     def __post_init__(self, user_input):
         print(type(user_input))
         if type(user_input) == dict:
+            print("heavy duty truck")
             # this allows us to get input from a dict generated from another dataclass
             initialize_from_dataclass(self, user_input)
         elif type(user_input) == list:
@@ -290,7 +283,7 @@ class HeavyDutyTruckEF:
                               func_to_apply=so2_for_renew_diesel_forward,
                               included_cols=[
                                   "Renewable Diesel"],
-                              included_rows=['CO2'], other_table_refs=[self.select_biodiesel,
+                              included_rows=['SOx'], other_table_refs=[self.select_biodiesel,
                                                                        self.constants.table_3_fuel_specifications_liquid_fuels,
                                                                        self.constants.table_4_carbon_and_sulfer_ratios,
                                                                        self.constants.table_3_fuel_specifications_gaseous_fuels])
@@ -299,7 +292,7 @@ class HeavyDutyTruckEF:
                               func_to_apply=so2_for_renew_diesel_backward,
                               included_cols=[
                                   "Renewable Diesel"],
-                              included_rows=['CO2'], other_table_refs=[self.select_biodiesel,
+                              included_rows=['SOx'], other_table_refs=[self.select_biodiesel,
                                                                        self.constants.table_3_fuel_specifications_liquid_fuels,
                                                                        self.constants.table_4_carbon_and_sulfer_ratios,
                                                                        self.constants.table_3_fuel_specifications_gaseous_fuels])
@@ -355,11 +348,6 @@ class HeavyDutyTruckEF:
         #                       other_tables_keymap={f"{self.emission_ratios_by_fuel_type_relative_to_baseline_fuel['full_table_name']}": {
         #                           "row_keymap": {}, "col_keymap": {'Ethanol': 'E90', 'Methanol': 'M90'}}},
         #                       other_table_refs=[self.emission_ratios_by_fuel_type_relative_to_baseline_fuel])
-
-        print(
-            self.truck_emission_factors_of_fuel_combustion_origin_to_destination)
-        print(
-            self.truck_emission_factors_of_fuel_combustion_destination_to_origin)
 
     # def calculate_heavy_duty_truck_ef(self
 

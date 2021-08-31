@@ -4,6 +4,7 @@ from opem.combustion.combustion_model import CombustionModel
 from opem.constants import Constants
 from opem.core import calculate_opem_transport
 from opem import input
+from opem.input.user_input_dto import UserInputDto
 from opem.transport.pipeline_EF import PipelineEF
 from opem.transport.rail_EF import RailEF
 from opem.transport.tanker_barge_EF import TankerBargeEF
@@ -20,12 +21,16 @@ def main():
     # run_model()
     user_input = input.initialize_model_inputs(
         input.get_csv_input, input.validate_input)
+    user_input_dto = UserInputDto(user_input)
+    product_slate = input.get_product_slate(user_input_dto.product_name)
     # make a constants object and pass a ref to heavy_duty truck
     constants = Constants()
-    # tanker_barge_ef = TankerBargeEF(user_input=user_input, constants=constants)
-    heavy_duty_truck_ef = HeavyDutyTruckEF(
-        user_input=user_input, constants=constants)
-    # rail_ef = RailEF(user_input=user_input, constants=constants)
+    tanker_barge_ef = TankerBargeEF(
+        user_input=user_input, constants=constants, product_slate=product_slate)
+    # heavy_duty_truck_ef = HeavyDutyTruckEF(
+    #     user_input=user_input, constants=constants)
+
+    #rail_ef = RailEF(user_input=user_input, constants=constants)
     # pipeline_ef = PipelineEF(user_input=user_input, constants=constants)
     # transport_ef = TransportEF(user_input=user_input, pipeline_ef=pipeline_ef,
     #                            rail_ef=rail_ef,
@@ -41,4 +46,3 @@ def main():
 
     # don't need asdict, since user_params comes straight from csv now (list of lists)
     #transport_results = calculate_opem_transport(asdict(user_params))
-    #product_slate = input.get_product_slate(user_params.product_name)
