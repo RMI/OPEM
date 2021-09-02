@@ -1,0 +1,6 @@
+﻿Mode of Transport (for the aggregate product slate),Choose Transport Fuel (from drop-down),Emission Factor (g CO2eq. / kgkm),Select Distance Traveled (km),Transport Emissions (kg CO2eq. / bbl of crude)
+Sum,Natural Gas,NaN,1119,NaN
+Rail Emissions,Diesel,NaN,5,NaN
+Heavy-Duty Truck Emissions,Diesel,NaN,310,NaN
+Ocean Tanker Emissions,Bunker Fuel,NaN,3,NaN
+Barge Emissions,Residual Oil,NaN,1,NaN

@@ -6,8 +6,34 @@ import codecs
 
 import pkg_resources
 
+"""
+@param func_to_apply: function
+     this is a user defined function that will return a value to be 
+     written to the table cell that this function navigates to.
+     it takes row_key and col_key as arguments 
 
-def fill_calculated_cells(target_table_ref, func_to_apply, included_rows=[], included_cols=[], excluded_rows=[], excluded_cols=[], other_tables_keymap={}, other_table_refs=None):
+@param other_tables_keymap: dict
+     should be of the form 
+     {
+         other_table_1: {
+             row_keymap: {"[target_table_key]": "[other_table_key]"}, 
+             col_keymap: {"[target_table_key]": "[other_table_key]"}},
+
+        other_table_1: {
+             row_keymap: {"[target_table_key]": "[other_table_key]"}, 
+             col_keymap: {"[target_table_key]": "[other_table_key]"}},
+            
+     }
+     for other_table name use the "full_table_name" table attribute. 
+      example: f"{self.product_slate.mass_flow['full_table_name']}"
+
+@param extra: dict
+      used to pass extra config into function
+
+"""
+
+
+def fill_calculated_cells(target_table_ref, func_to_apply, other_table_refs=None,  included_rows=[], included_cols=[], excluded_rows=[], excluded_cols=[], other_tables_keymap={}, extra={}):
 
     if (included_rows and excluded_rows):
         raise ValueError(
@@ -28,10 +54,13 @@ def fill_calculated_cells(target_table_ref, func_to_apply, included_rows=[], inc
                     # get a reference to current cell and write calculated value
 
                     row[col_key] = func_to_apply(
-                        row_key, col_key, target_table_ref, other_table_refs, other_tables_keymap)
+                        row_key, col_key, target_table_ref, other_table_refs, other_tables_keymap, extra)
 
 
 def build_dict_from_defaults(table_name):
+    # we should be able to pass in a different read_model_table_defaults
+    # function here. should implement a version that reads from memory instead
+    # of disk for more speed.
     table_array = read_model_table_defaults(table_name)
     dict = {}
     headers = table_array[0]

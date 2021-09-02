@@ -1,0 +1,24 @@
+Metadata-Version: 2.1
+Name: opem
+Version: 0.1.0
+Summary: UNKNOWN
+Home-page: UNKNOWN
+Author: RMI
+Author-email: zacharym.schmidt@gmail.com
+License: UNKNOWN
+Keywords: OPEM,RMI,GHG,OCI+
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: GHG Emissions
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Requires-Python: >=3.6, <4
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
+TODO
+
