@@ -5,7 +5,13 @@ from opem.constants import Constants
 from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells
 
 # Define functions for filling calculated cells in the tables here
-
+def calc_total_ghg_per_gal(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+   return target_table_ref["Product Combustion Emission Factors"][row_key]["kg CO2 per gallon"] * \
+        other_table_refs["Table 1: Hundred-Year Global Warming Potentials"]["CO2"]["GWP"] + \
+            target_table_ref["Product Combustion Emission Factors"][row_key]["kg CH4 per gallon"] * \
+        other_table_refs["Table 1: Hundred-Year Global Warming Potentials"]["CH4"]["GWP"] / 1000 + \
+    target_table_ref["Product Combustion Emission Factors"][row_key]["g N2O per gallon"] * \
+        other_table_refs["Table 1: Hundred-Year Global Warming Potentials"]["N2O"]["GWP"] / 1000
 
 @dataclass
 class CombustionEF:
@@ -21,6 +27,12 @@ class CombustionEF:
             raise ValueError(
                 "Please pass a list or dictionary to initialize")
 
+        fill_calculated_cells(target_table_ref={"Product Combustion Emission Factors": self.product_combustion_emission_factors_petroleum},
+                              func_to_apply=calc_total_ghg_per_gal,
+                              included_cols=["Total GHGs (kg CO2eq. per gallon)"],
+                              other_table_refs={"Table 1: Hundred-Year Global Warming Potentials": self.constants.table_1_100year_gwp})
+
+        print(self.product_combustion_emission_factors_petroleum)
     constants: Constants
     user_input: InitVar[DefaultDict] = {}
 

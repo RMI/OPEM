@@ -5,9 +5,10 @@
 
 
 from dataclasses import InitVar, dataclass, field
-from typing import DefaultDict
+from typing import DefaultDict, Type
 from math import isnan
 from opem.combustion.combustion_EF import CombustionEF
+from opem.products.product_slate import ProductSlate
 
 from opem.transport.heavy_duty_truck_EF import HeavyDutyTruckEF
 from opem.transport.pipeline_EF import PipelineEF
@@ -31,20 +32,18 @@ def verify_user_fuel_shares(user_shares):
 # Define functions for filling calculated cells in the tables here
 
 
-def calc_emission_factors(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    print(row_key)
-    # print(other_table_refs[extra[row_key][0]][extra[row_key][1]].items())
-    fuel_sum = 0
-    for col, val in other_table_refs[extra["keymap"][row_key][0]][extra["keymap"][row_key][1]].items():
-        fuel_fraction = other_table_refs[0][row_key].get((lambda col:
-                                                extra["fuel_lookup"][col] if col in extra["fuel_lookup"].keys() else col)(col)) 
-        print(fuel_fraction)
-        print(val)
-        if fuel_fraction is not None and not isnan(fuel_fraction):
-            fuel_sum += val * fuel_fraction                                        
-    return fuel_sum
-   
+def lookup_emission_factors(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
 
+    return other_table_refs[0][row_key][target_table_ref[row_key]["Choose Transport Fuel (from drop-down)"]]
+
+def calc_emissions(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    try:
+       return target_table_ref[row_key]["Emission Factor (g CO2eq. / kgkm)"] * \
+        target_table_ref[row_key]["Select Distance Traveled (km)"] * \
+            other_table_refs[0]["mass_flow_sum"]["total"] / 100000000
+    except TypeError:
+        pass
+    
 
 @dataclass
 class OPEM:
@@ -59,12 +58,16 @@ class OPEM:
         else:
             raise ValueError("Please pass a list or dictionary to initialize")
         
-      
-        fill_calculated_cells(target_table_ref=self.transport_emission_factors_weighted_average,
-                              func_to_apply=calc_emission_factors,
-                              # extra holds two dicts, map from target to other table
-                              # and a lookup table to standardize fuel names
-                              # maps row in target table to a tuple (index_into_other_table_ref_array, row_in_other_table)
+
+        # fill_calculated_cells(target_table_ref=self.transport_results,
+        #                       func_to_apply=calc_product_slate_combustion_sum,
+        #                       included_cols=["Transport Emissions (kg CO2eq. / bbl of crude)"],
+        #                       other_table_refs=[self.transport_ef.tanker_barge_ef.share_of_petroleum_products])
+
+
+        fill_calculated_cells(target_table_ref=self.transport_results,
+                              func_to_apply=lookup_emission_factors,
+                              included_cols=["Emission Factor (g CO2eq. / kgkm)"],
                               extra={"fuel_lookup": {"NG": "Natural Gas"
 
                                                      },
@@ -73,19 +76,20 @@ class OPEM:
                                                 "Heavy-Duty Truck Emissions": (3, "Heavy-Duty Truck Emissions (full load)"),
                                                 "Ocean Tanker Emissions": (4, "Ocean Tanker Emissions"),
                                                 "Barge Emissions": (4, "Barge Emissions")}},
-                              other_table_refs=[self.fraction_of_fuel_type_for_transport_mode,
-                                                self.pipeline_ef.pipeline_emission_factors,
-                                                self.rail_ef.rail_emission_factors,
-                                                self.heavy_duty_truck_ef.heavy_duty_truck_emission_factors,
-                                                self.tanker_barge_ef.tanker_barge_emission_factors])
+                              other_table_refs=[self.transport_ef.transport_emission_factors_weighted_average])
+        
+        fill_calculated_cells(target_table_ref=self.transport_results,
+                              func_to_apply=calc_emissions,
+                              included_cols=["Transport Emissions (kg CO2eq. / bbl of crude)"],
+                              other_table_refs=[self.transport_ef.tanker_barge_ef.share_of_petroleum_products])
 
         
-
-    def calculate_transport_ef(self):
-        pass
+        print(self.transport_results)
+        
 
     transport_ef: TransportEF
-    combustion_ef: CombustionEF
+    #combustion_ef: CombustionEF
+    #product_slate: ProductSlate
 
     # will this cause problems if I try to pass in a list?
     user_input: InitVar[DefaultDict] = {}
@@ -111,6 +115,9 @@ class OPEM:
     # CALCULATED
     combustion_sum: DefaultDict = field(
         default_factory=lambda: build_dict_from_defaults('Combustion Sum'))
+    
+    # hold sum of product volume from product slate here
+    # product_volume_sum: int = None
 
 
 

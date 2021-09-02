@@ -34,14 +34,17 @@ import pkg_resources
 
 
 def fill_calculated_cells(target_table_ref, func_to_apply, other_table_refs=None,  included_rows=[], included_cols=[], excluded_rows=[], excluded_cols=[], other_tables_keymap={}, extra={}):
-
+    print(type(target_table_ref))
     if (included_rows and excluded_rows):
         raise ValueError(
             "Please only pass arguments for one of excluded_rows/included_rows, not both")
     if (included_cols and excluded_cols):
         raise ValueError(
             "Please only pass arguments for one of excluded_cols/included_cols, not both")
-
+    if type(target_table_ref == dict):
+        target_table_ref = dict(list(target_table_ref.values())[1])
+        print(target_table_ref)
+    print(type(target_table_ref))
     # handle included rows/ cols as well
     for row_key, row in target_table_ref.items():
         # skip label for the row index and full table name and
@@ -56,6 +59,12 @@ def fill_calculated_cells(target_table_ref, func_to_apply, other_table_refs=None
                     row[col_key] = func_to_apply(
                         row_key, col_key, target_table_ref, other_table_refs, other_tables_keymap, extra)
 
+def isfloat(value):
+  try:
+    float(value)
+    return True
+  except ValueError:
+    return False
 
 def build_dict_from_defaults(table_name):
     # we should be able to pass in a different read_model_table_defaults
@@ -68,8 +77,7 @@ def build_dict_from_defaults(table_name):
     dict['row_index_name'] = headers[0]
     for row in table_array[1:]:
         if row[0] != '':
-            dict[row[0]] = {k: float(v)
-                            for (k, v) in filter(lambda x: True if (x[0] != '' and x[1] != '') else False, zip(headers[1:], row[1:]))}
+            dict[row[0]] = {k: float(v) if isfloat(v) else v for (k, v) in filter(lambda x: True if (x[0] != '' and x[1] != '') else False, zip(headers[1:], row[1:])) }
     return dict
 
 

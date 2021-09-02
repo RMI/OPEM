@@ -35,7 +35,9 @@ def calc_emission_factors(row_key, col_key, target_table_ref=None, other_table_r
         if fuel_fraction is not None and not isnan(fuel_fraction):
             fuel_sum += val * fuel_fraction                                        
     return fuel_sum
-   
+
+def lookup_emission_factors(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    return other_table_refs[extra["keymap"][row_key][0]][extra["keymap"][row_key][1]].get(col_key)
 
 
 @dataclass
@@ -57,6 +59,27 @@ class TransportEF:
         print(self.heavy_duty_truck_ef.truck_emission_factors_of_fuel_combustion_origin_to_destination)
         fill_calculated_cells(target_table_ref=self.transport_emission_factors_weighted_average,
                               func_to_apply=calc_emission_factors,
+                              included_cols=["Manual Input"],
+                              # extra holds two dicts, map from target to other table
+                              # and a lookup table to standardize fuel names
+                              # maps row in target table to a tuple (index_into_other_table_ref_array, row_in_other_table)
+                              extra={"fuel_lookup": {"NG": "Natural Gas"
+
+                                                     },
+                                     "keymap": {"Pipeline Emissions": (1, "Pipeline"),
+                                                "Rail Emissions": (2, "Rail Emissions"),
+                                                "Heavy-Duty Truck Emissions": (3, "Heavy-Duty Truck Emissions (full load)"),
+                                                "Ocean Tanker Emissions": (4, "Ocean Tanker Emissions"),
+                                                "Barge Emissions": (4, "Barge Emissions")}},
+                              other_table_refs=[self.fraction_of_fuel_type_for_transport_mode,
+                                                self.pipeline_ef.pipeline_emission_factors,
+                                                self.rail_ef.rail_emission_factors,
+                                                self.heavy_duty_truck_ef.heavy_duty_truck_emission_factors,
+                                                self.tanker_barge_ef.tanker_barge_emission_factors])
+        
+        fill_calculated_cells(target_table_ref=self.transport_emission_factors_weighted_average,
+                              func_to_apply=lookup_emission_factors,
+                              excluded_cols=["Manual Input"],
                               # extra holds two dicts, map from target to other table
                               # and a lookup table to standardize fuel names
                               # maps row in target table to a tuple (index_into_other_table_ref_array, row_in_other_table)
@@ -87,7 +110,7 @@ class TransportEF:
     user_input: InitVar[DefaultDict] = {}
 
     # TransportEF sheet, table: Transport Emission Factors
-    # only manual input
+    # collect references to nested objects for ease
     # CALCULATED
     transport_emission_factors_weighted_average: DefaultDict = field(
         default_factory=lambda: build_dict_from_defaults('Transport Emission Factors'))
