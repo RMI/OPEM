@@ -2,7 +2,7 @@ from dataclasses import asdict
 from opem.combustion.combustion_EF import CombustionEF
 from opem.combustion.combustion_model import CombustionModel
 from opem.constants import Constants
-from opem.core import calculate_opem_transport
+from opem.core import OPEM
 from opem import input
 from opem.input.user_input_dto import UserInputDto
 from opem.transport.pipeline_EF import PipelineEF
@@ -36,6 +36,8 @@ def main():
                                 rail_ef=rail_ef,
                                 heavy_duty_truck_ef=heavy_duty_truck_ef,
                                 tanker_barge_ef=tanker_barge_ef)
+    combustion_ef = CombustionEF(user_input=user_input, constants=constants)
+    opem = OPEM(user_input=user_input, transport_ef=transport_ef)
    
 
     # transport_model = TransportModel(

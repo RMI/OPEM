@@ -34,14 +34,15 @@ class Constants:
             initialize_from_list(self, user_input)
         else:
             raise ValueError("Please pass a list or dictionary to initialize")
-
+        print('from constants')
+        print(type(self.table_3_fuel_specifications_liquid_fuels))
         fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_liquid_fuels,
                               func_to_apply=hv_selection, included_cols=[
                                   "User Selection: LHV or HHV, Btu/gal"], other_table_refs=[self.hv],
                               # hacked the keymap to get around the different units in the HV keys
                               # so I can reuse the hv_selection function
                               extra={'LHV': "LHV, Btu/gal", 'HHV': "HHV, Btu/gal"})
-
+        print("second call")
         fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_gaseous_fuels,
                               func_to_apply=hv_selection, included_cols=[
                                   "User Selection: LHV or HHV, Btu/ft3"], other_table_refs=[self.hv],
