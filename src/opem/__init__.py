@@ -27,15 +27,16 @@ def main():
     constants = Constants()
     tanker_barge_ef = TankerBargeEF(
         user_input=user_input, constants=constants, product_slate=product_slate)
-    # heavy_duty_truck_ef = HeavyDutyTruckEF(
-    #     user_input=user_input, constants=constants)
+    heavy_duty_truck_ef = HeavyDutyTruckEF(
+         user_input=user_input, constants=constants)
 
-    #rail_ef = RailEF(user_input=user_input, constants=constants)
-    # pipeline_ef = PipelineEF(user_input=user_input, constants=constants)
-    # transport_ef = TransportEF(user_input=user_input, pipeline_ef=pipeline_ef,
-    #                            rail_ef=rail_ef,
-    #                            heavy_duty_truck_ef=heavy_duty_truck_ef,
-    #                            tanker_barge_ef=tanker_barge_ef)
+    rail_ef = RailEF(user_input=user_input, constants=constants)
+    pipeline_ef = PipelineEF(user_input=user_input, constants=constants)
+    transport_ef = TransportEF(user_input=user_input, pipeline_ef=pipeline_ef,
+                                rail_ef=rail_ef,
+                                heavy_duty_truck_ef=heavy_duty_truck_ef,
+                                tanker_barge_ef=tanker_barge_ef)
+   
 
     # transport_model = TransportModel(
     #     user_input=user_input, transport_ef=transport_ef)

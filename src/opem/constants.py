@@ -7,19 +7,19 @@ from opem.utils import initialize_from_dataclass, initialize_from_list, build_di
 # Define functions for filling calculated cells in the tables here
 
 
-def hv_selection(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+def hv_selection(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     if other_table_refs[0] == "LHV":
-        return target_table_ref[row_key][other_tables_keymap["LHV"]]
+        return target_table_ref[row_key][extra["LHV"]]
     elif other_table_refs[0] == "HHV":
-        return target_table_ref[row_key][other_tables_keymap["HHV"]]
+        return target_table_ref[row_key][extra["HHV"]]
 
 
-def hv_ratio(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+def hv_ratio(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
 
-    return target_table_ref[row_key][other_tables_keymap["LHV"]] / target_table_ref[row_key][other_tables_keymap["HHV"]]
+    return target_table_ref[row_key][extra["LHV"]] / target_table_ref[row_key][extra["HHV"]]
 
 
-def s_ratio(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None):
+def s_ratio(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     return target_table_ref[row_key]["S ratio, (ppm by wt)"]/1000000
 
 
@@ -40,21 +40,21 @@ class Constants:
                                   "User Selection: LHV or HHV, Btu/gal"], other_table_refs=[self.hv],
                               # hacked the keymap to get around the different units in the HV keys
                               # so I can reuse the hv_selection function
-                              other_tables_keymap={'LHV': "LHV, Btu/gal", 'HHV': "HHV, Btu/gal"})
+                              extra={'LHV': "LHV, Btu/gal", 'HHV': "HHV, Btu/gal"})
 
         fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_gaseous_fuels,
                               func_to_apply=hv_selection, included_cols=[
                                   "User Selection: LHV or HHV, Btu/ft3"], other_table_refs=[self.hv],
                               # hacked the keymap to get around the different units in the HV keys
                               # so I can reuse the hv_selection function
-                              other_tables_keymap={'LHV': "LHV, Btu/ft3", 'HHV': "HHV, Btu/ft3"})
+                              extra={'LHV': "LHV, Btu/ft3", 'HHV': "HHV, Btu/ft3"})
 
         fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_solid_fuels,
                               func_to_apply=hv_selection, included_cols=[
                                   "User Selection: LHV or HHV, Btu/ton"], other_table_refs=[self.hv],
                               # hacked the keymap to get around the different units in the HV keys
                               # so I can reuse the hv_selection function
-                              other_tables_keymap={'LHV': "LHV, Btu/ton", 'HHV': "HHV, Btu/ton"})
+                              extra={'LHV': "LHV, Btu/ton", 'HHV': "HHV, Btu/ton"})
 
         fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_liquid_fuels,
                               func_to_apply=s_ratio, included_cols=[
@@ -71,21 +71,21 @@ class Constants:
                                   "LHV/HHV"],
                               # hacked the keymap to get around the different units in the HV keys
                               # so I can reuse the hv_ratio function
-                              other_tables_keymap={'LHV': "LHV, Btu/gal", 'HHV': "HHV, Btu/gal"})
+                              extra={'LHV': "LHV, Btu/gal", 'HHV': "HHV, Btu/gal"})
 
         fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_gaseous_fuels,
                               func_to_apply=hv_ratio, included_cols=[
                                   "LHV/HHV"],
                               # hacked the keymap to get around the different units in the HV keys
                               # so I can reuse the hv_ratio function
-                              other_tables_keymap={'LHV': "LHV, Btu/ft3", 'HHV': "HHV, Btu/ft3"})
+                              extra={'LHV': "LHV, Btu/ft3", 'HHV': "HHV, Btu/ft3"})
 
         fill_calculated_cells(target_table_ref=self.table_3_fuel_specifications_solid_fuels,
                               func_to_apply=hv_ratio, included_cols=[
                                   "LHV/HHV"],
                               # hacked the keymap to get around the different units in the HV keys
                               # so I can reuse the hv_ratio function
-                              other_tables_keymap={'LHV': "LHV, Btu/ton", 'HHV': "HHV, Btu/ton"})
+                              extra={'LHV': "LHV, Btu/ton", 'HHV': "HHV, Btu/ton"})
         # print(
         #     self.table_3_fuel_specifications_liquid_fuels)
 
