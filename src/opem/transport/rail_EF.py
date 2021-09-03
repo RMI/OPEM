@@ -25,7 +25,6 @@ def calc_emission_factors_rail_total(row_key, col_key, target_table_ref=None, ot
 @dataclass
 class RailEF:
     def __post_init__(self, user_input):
-        print(type(user_input))
         if type(user_input) == dict:
             # this allows us to get input from a dict generated from another dataclass
             initialize_from_dataclass(self, user_input)
@@ -56,8 +55,7 @@ class RailEF:
         fill_calculated_cells(target_table_ref=self.rail_emission_factors,
                               func_to_apply=calc_emission_factors_rail_total,
                               included_rows=["Rail Emissions"])
-                              
-        print(self.rail_emission_factors)
+
 
     constants: Constants
     # will this cause problems if I try to pass in a list?

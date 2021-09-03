@@ -22,22 +22,40 @@ def main():
     user_input = input.initialize_model_inputs(
         input.get_csv_input, input.validate_input)
     user_input_dto = UserInputDto(user_input)
+    print("finished user input")
     product_slate = input.get_product_slate(user_input_dto.product_name)
+    print("finished product slate")
     # make a constants object and pass a ref to heavy_duty truck
     constants = Constants()
+    print("finished constants")
     tanker_barge_ef = TankerBargeEF(
         user_input=user_input, constants=constants, product_slate=product_slate)
+    print("finished tanker barge")
     heavy_duty_truck_ef = HeavyDutyTruckEF(
          user_input=user_input, constants=constants)
-
+    print("heavy duty truck")
     rail_ef = RailEF(user_input=user_input, constants=constants)
+    print("rail")
     pipeline_ef = PipelineEF(user_input=user_input, constants=constants)
+    print("pipeline")
+    print(pipeline_ef.pipeline_emission_factors )
+    print("before transport ef")
     transport_ef = TransportEF(user_input=user_input, pipeline_ef=pipeline_ef,
-                                rail_ef=rail_ef,
-                                heavy_duty_truck_ef=heavy_duty_truck_ef,
-                                tanker_barge_ef=tanker_barge_ef)
+                                 rail_ef=rail_ef,
+                                 heavy_duty_truck_ef=heavy_duty_truck_ef,
+                                 tanker_barge_ef=tanker_barge_ef)
+    
+    
+    print("after transport ef")
     combustion_ef = CombustionEF(user_input=user_input, constants=constants)
-    opem = OPEM(user_input=user_input, transport_ef=transport_ef)
+   
+    opem = OPEM(user_input=user_input, transport_ef=transport_ef, combustion_ef=combustion_ef, product_slate=product_slate)
+    print("opem")
+    print(opem.transport_results)
+    print(opem.transport_sum)
+    print(heavy_duty_truck_ef.heavy_duty_truck_emission_factors)
+    print(opem.combustion_results)
+    print(opem.combustion_sum)
    
 
     # transport_model = TransportModel(

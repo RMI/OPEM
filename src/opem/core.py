@@ -32,24 +32,57 @@ def verify_user_fuel_shares(user_shares):
 # Define functions for filling calculated cells in the tables here
 
 
-def lookup_emission_factors(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+def lookup_emission_factors_transport(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+ 
+    return other_table_refs["TransportEF::TransportEmFactors"][row_key][target_table_ref["Transport Results"][row_key]["Choose Transport Fuel (from drop-down)"]]
 
-    return other_table_refs[0][row_key][target_table_ref[row_key]["Choose Transport Fuel (from drop-down)"]]
+def lookup_emission_factors_combustion(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+  
+    if row_key == "Coke":
+        return other_table_refs["CombustionEF::ProductEmFactorsSolid"][extra["fuel_lookup"][row_key]]["Total GHGs (kg CO2eq. per kg petcoke)"]
+    else:
+        return other_table_refs["CombustionEF::ProductEmFactorsPet"][extra["fuel_lookup"][row_key]]["Total GHGs (kg CO2eq. per bbl)"]
 
-def calc_emissions(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+def calc_emissions_transport(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     try:
-       return target_table_ref[row_key]["Emission Factor (g CO2eq. / kgkm)"] * \
-        target_table_ref[row_key]["Select Distance Traveled (km)"] * \
-            other_table_refs[0]["mass_flow_sum"]["total"] / 100000000
+       return target_table_ref["Transport Results"][row_key]["Emission Factor (g CO2eq. / kgkm)"] * \
+        target_table_ref["Transport Results"][row_key]["Select Distance Traveled (km)"] * \
+            other_table_refs["TankerBargeEF::ShareOfPetProducts"]["mass_flow_sum"]["total"] / 100000000
     except TypeError:
         pass
-    
+
+def calc_emissions_combustion(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    if row_key == "Coke":
+        return (target_table_ref["Combustion Results"][row_key]["Combustion Emission Factors"] *
+        target_table_ref["Combustion Results"][row_key]["% Combusted"] *
+        (other_table_refs["ProductSlate::mass_flow"]["Coke"] +
+        other_table_refs["ProductSlate::mass_flow"]["Net Upstream Petcoke"]) /
+        other_table_refs["ProductSlate::volume_flow"]["Barrels of Crude per Day"])
+    else:
+       print(target_table_ref["Combustion Results"][row_key]["Combustion Emission Factors"]) 
+       print(target_table_ref["Combustion Results"][row_key]["% Combusted"])
+       print(other_table_refs["ProductSlate::volume_flow"][row_key])
+       print( other_table_refs["ProductSlate::volume_flow"]["Barrels of Crude per Day"])
+       return (target_table_ref["Combustion Results"][row_key]["Combustion Emission Factors"] *
+        target_table_ref["Combustion Results"][row_key]["% Combusted"] *
+        other_table_refs["ProductSlate::volume_flow"][row_key] /
+        other_table_refs["ProductSlate::volume_flow"]["Barrels of Crude per Day"])
+
+
+
+def calc_transport_sum(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+   
+    return sum(other_table_refs["Transport Results"][key][col_key] 
+                for key, row in other_table_refs["Transport Results"].items() if key not in ["full_table_name", "row_index_name"])
+   
+def calc_combustion_sum(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None): 
+   return sum(other_table_refs["Combustion Results"][key][col_key] 
+                for key, row in other_table_refs["Combustion Results"].items() if key not in ["full_table_name", "row_index_name"])
 
 @dataclass
 class OPEM:
 
     def __post_init__(self, user_input):
-        print(type(user_input))
         if type(user_input) == dict:
             # this allows us to get input from a dict generated from another dataclass
             initialize_from_dataclass(self, user_input)
@@ -64,9 +97,9 @@ class OPEM:
         #                       included_cols=["Transport Emissions (kg CO2eq. / bbl of crude)"],
         #                       other_table_refs=[self.transport_ef.tanker_barge_ef.share_of_petroleum_products])
 
-
-        fill_calculated_cells(target_table_ref=self.transport_results,
-                              func_to_apply=lookup_emission_factors,
+        print("before lookup transport")
+        fill_calculated_cells(target_table_ref={"Transport Results": self.transport_results, "has_wrapper": True},
+                              func_to_apply=lookup_emission_factors_transport,
                               included_cols=["Emission Factor (g CO2eq. / kgkm)"],
                               extra={"fuel_lookup": {"NG": "Natural Gas"
 
@@ -76,20 +109,44 @@ class OPEM:
                                                 "Heavy-Duty Truck Emissions": (3, "Heavy-Duty Truck Emissions (full load)"),
                                                 "Ocean Tanker Emissions": (4, "Ocean Tanker Emissions"),
                                                 "Barge Emissions": (4, "Barge Emissions")}},
-                              other_table_refs=[self.transport_ef.transport_emission_factors_weighted_average])
-        
-        fill_calculated_cells(target_table_ref=self.transport_results,
-                              func_to_apply=calc_emissions,
+                              other_table_refs={"TransportEF::TransportEmFactors": self.transport_ef.transport_emission_factors_weighted_average})
+      
+        fill_calculated_cells(target_table_ref={"Combustion Results": self.combustion_results, "has_wrapper": True},
+                              func_to_apply=lookup_emission_factors_combustion,
+                              included_cols=["Combustion Emission Factors"],
+                              excluded_rows=["Fuel Oil", "Residual fuels", "Liquefied Petroleum Gases (LPG)"],
+                              other_table_refs={"CombustionEF::ProductEmFactorsPet": self.combustion_ef.product_combustion_emission_factors_petroleum,
+                                                         "CombustionEF::ProductEmFactorsSolid": self.combustion_ef.product_combustion_emission_factors_derived_solids},
+                              extra={"fuel_lookup": {"Gasoline": "Motor Gasoline",
+                                                     "Jet Fuel": "Kerosene-Type Jet Fuel",
+                                                     "Diesel": "Distillate Fuel Oil No. 2",
+                                                     "Coke": "Petroleum Coke "
+                                                     }})
+
+        fill_calculated_cells(target_table_ref={"Transport Results": self.transport_results, "has_wrapper": True},
+                              func_to_apply=calc_emissions_transport,
                               included_cols=["Transport Emissions (kg CO2eq. / bbl of crude)"],
-                              other_table_refs=[self.transport_ef.tanker_barge_ef.share_of_petroleum_products])
+                              other_table_refs={"TankerBargeEF::ShareOfPetProducts": self.transport_ef.tanker_barge_ef.share_of_petroleum_products})
+        
+        fill_calculated_cells(target_table_ref={"Combustion Results": self.combustion_results, "has_wrapper": True},
+                              func_to_apply=calc_emissions_combustion,
+                              other_table_refs={"ProductSlate::mass_flow": self.product_slate.mass_flow_kg, "ProductSlate::volume_flow": self.product_slate.volume_flow_bbl},
+                              included_cols=["Total Combustion Emissions (kg CO2eq. / bbl of crude)"])
+
+        fill_calculated_cells(target_table_ref={"Transport Sum": self.transport_sum, "has_wrapper": True},
+                              func_to_apply=calc_transport_sum,
+                              other_table_refs={"Transport Results": self.transport_results})
 
         
-        print(self.transport_results)
+        fill_calculated_cells(target_table_ref={"Combustion Sum": self.combustion_sum, "has_wrapper": True},
+                              func_to_apply=calc_combustion_sum,
+                              other_table_refs={"Combustion Results": self.combustion_results})
+
         
 
     transport_ef: TransportEF
-    #combustion_ef: CombustionEF
-    #product_slate: ProductSlate
+    combustion_ef: CombustionEF
+    product_slate: ProductSlate
 
     # will this cause problems if I try to pass in a list?
     user_input: InitVar[DefaultDict] = {}

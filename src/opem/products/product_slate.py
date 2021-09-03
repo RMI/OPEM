@@ -23,54 +23,54 @@ class ProductSlate:
     # the fields from json so that we don't overwrite
     # any default values in the dictionary fields
     user_input: InitVar[DefaultDict] = {}
-    volume_flow: DefaultDict = field(default_factory=lambda:
+    volume_flow_bbl: DefaultDict = field(default_factory=lambda:
                                      {
                                          "full_table_name": 'Volume Flow',
-                                         "Crude_bbl": Any,
-                                         "Gasoline_bbl": Any,
-                                         "Jet_Fuel_bbl": Any,
-                                         "Diesel_bbl": Any,
-                                         "Fuel_Oil_bbl": Any,
-                                         "Coke_bbl": Any,
-                                         "Residual_fuels_bbl": Any,
-                                         "Surplus_Refinery_Fuel_Gas_RFG_bbl": Any,
-                                         "Liquefied_Petroleum_Gases_LPG_bbl": Any,
-                                         "Petrochemical_Feedstocks_bbl": Any,
-                                         "Asphalt_bbl": Any})
+                                         "Barrels of Crude per Day": Any,
+                                         "Gasoline": Any,
+                                         "Jet Fuel": Any,
+                                         "Diesel": Any,
+                                         "Fuel Oil": Any,
+                                         "Coke": Any,
+                                         "Residual fuels": Any,
+                                         "Surplus_Refinery Fuel_Gas (RFG)": Any,
+                                         "Liquefied_Petroleum Gases (LPG)": Any,
+                                         "Petrochemical Feedstocks": Any,
+                                         "Asphalt": Any})
 
-    energy_flow: DefaultDict = field(default_factory=lambda:
+    energy_flow_MJ: DefaultDict = field(default_factory=lambda:
                                      {"full_table_name": 'Energy Flow',
-                                         "Gasoline_MJ": Any,
-                                         "Jet_Fuel_MJ": Any,
-                                         "Diesel_MJ": Any,
-                                         "Fuel_Oil_MJ": Any,
-                                         "Coke_MJ": Any,
-                                         "Residual_fuels_MJ": Any,
-                                         "Surplus_RFG_MJ": Any,
-                                         "Surplus_NCR_H2_MJ": Any,
-                                         "Liquefied_Petroleum_Gases_LPG_MJ": Any,
-                                         "Petrochemical_Feedstocks_MJ": Any,
-                                         "Asphalt_MJ": Any,
-                                         "Gasoline_S_wt_MJ": Any,
-                                         "Gasoline_H2_wt_MJ": Any
+                                         "Gasoline": Any,
+                                         "Jet Fuel": Any,
+                                         "Diesel": Any,
+                                         "Fuel Oil": Any,
+                                         "Coke": Any,
+                                         "Residual fuels": Any,
+                                         "Surplus RFG": Any,
+                                         "Surplus NCR H2": Any,
+                                         "Liquefied Petroleum Gases (LPG)": Any,
+                                         "Petrochemical Feedstocks": Any,
+                                         "Asphalt": Any,
+                                         "Gasoline S wt": Any,
+                                         "Gasoline H2 wt": Any
                                       })
 
-    mass_flow: DefaultDict = field(default_factory=lambda:
+    mass_flow_kg: DefaultDict = field(default_factory=lambda:
                                    {   # keys "full_table_name" and "row_index_name" will be ignored during iteration
                                        "full_table_name": "Mass Flow",
-                                       "Gasoline_kg": Any,
-                                       "Jet_Fuel_kg": Any,
-                                       "Diesel_kg": Any,
-                                       "Fuel_Oil_kg": Any,
-                                       "Coke_kg": Any,
-                                       "Residual_fuels_kg": Any,
-                                       "Sulphur_kg": Any,
-                                       "Surplus_RFG_kg": Any,
-                                       "Surplus_NCR_H2_kg": Any,
-                                       "Liquefied_Petroleum_Gases_LPG_kg": Any,
-                                       "Petrochemical_Feedstocks_kg": Any,
-                                       "Asphalt_kg": Any,
-                                       "Net_Upstream_Petcoke_kg": Any,
+                                       "Gasoline": Any,
+                                       "Jet Fuel": Any,
+                                       "Diesel": Any,
+                                       "Fuel Oil": Any,
+                                       "Coke": Any,
+                                       "Residual fuels": Any,
+                                       "Sulphur": Any,
+                                       "Surplus RFG": Any,
+                                       "Surplus NCR H2": Any,
+                                       "Liquefied Petroleum Gases (LPG)": Any,
+                                       "Petrochemical Feedstocks": Any,
+                                       "Asphalt": Any,
+                                       "Net Upstream Petcoke": Any,
 
                                    }
                                    )

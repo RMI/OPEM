@@ -25,7 +25,7 @@ import pkg_resources
             
      }
      for other_table name use the "full_table_name" table attribute. 
-      example: f"{self.product_slate.mass_flow['full_table_name']}"
+      example: f"{self.product_slate.mass_flow_kg['full_table_name']}"
 
 @param extra: dict
       used to pass extra config into function
@@ -34,19 +34,27 @@ import pkg_resources
 
 
 def fill_calculated_cells(target_table_ref, func_to_apply, other_table_refs=None,  included_rows=[], included_cols=[], excluded_rows=[], excluded_cols=[], other_tables_keymap={}, extra={}):
-    print(type(target_table_ref))
     if (included_rows and excluded_rows):
         raise ValueError(
             "Please only pass arguments for one of excluded_rows/included_rows, not both")
     if (included_cols and excluded_cols):
         raise ValueError(
             "Please only pass arguments for one of excluded_cols/included_cols, not both")
-    if type(target_table_ref == dict):
-        target_table_ref = dict(list(target_table_ref.values())[1])
-        print(target_table_ref)
-    print(type(target_table_ref))
+   
+    temp_target_table_ref = target_table_ref
+    # sometimes the target_table_ref is a ref to the table (in form of dict),
+    # sometimes it is in the form of {"[table name]" : target_table_ref} --
+    # the second form lets us access the table by its tablename in func_to_apply
+    # so that it is easier to read. When we use the second form we also include
+    # {"[table name]" : target_table_ref, "has_wrapper": True }
+    # this lets us perform the check below to handle both forms in this function
+    if target_table_ref.get("has_wrapper"):
+        for key in target_table_ref:
+            if key != "has_wrapper":
+                temp_target_table_ref = target_table_ref[key]
+            
     # handle included rows/ cols as well
-    for row_key, row in target_table_ref.items():
+    for row_key, row in temp_target_table_ref.items():
         # skip label for the row index and full table name and
         if row_key not in ["row_index_name", "full_table_name"] \
                 and (not excluded_rows or (row_key not in excluded_rows)) and (not included_rows or (row_key in included_rows)):
@@ -55,16 +63,17 @@ def fill_calculated_cells(target_table_ref, func_to_apply, other_table_refs=None
 
                 if (not excluded_cols or (col_key not in excluded_cols)) and (not included_cols or (col_key in included_cols)):
                     # get a reference to current cell and write calculated value
-
                     row[col_key] = func_to_apply(
                         row_key, col_key, target_table_ref, other_table_refs, other_tables_keymap, extra)
 
+
 def isfloat(value):
-  try:
-    float(value)
-    return True
-  except ValueError:
-    return False
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
+
 
 def build_dict_from_defaults(table_name):
     # we should be able to pass in a different read_model_table_defaults
@@ -77,7 +86,8 @@ def build_dict_from_defaults(table_name):
     dict['row_index_name'] = headers[0]
     for row in table_array[1:]:
         if row[0] != '':
-            dict[row[0]] = {k: float(v) if isfloat(v) else v for (k, v) in filter(lambda x: True if (x[0] != '' and x[1] != '') else False, zip(headers[1:], row[1:])) }
+            dict[row[0]] = {k: float(v) if isfloat(v) else v for (k, v) in filter(
+                lambda x: True if (x[0] != '' and x[1] != '') else False, zip(headers[1:], row[1:]))}
     return dict
 
 
@@ -104,7 +114,6 @@ def visit_dict(d, path=[]):
 
 def initialize_from_dataclass(target, source: DefaultDict):
     # this allows us to get input from a dict generated from another dataclass
-    print("initialize from dataclass")
     for key in source.keys():
         if key in asdict(target).keys():
             if type(source[key]) != dict:

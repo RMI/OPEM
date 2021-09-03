@@ -19,24 +19,33 @@ def verify_user_fuel_shares(user_shares):
             if share_sum != 1:
                 raise(ValueError(
                     f'Shares of fuel types for {key} do not add to 1. Sum is {share_sum}'))
-    print("fuel shares valid")
+
 # Define functions for filling calculated cells in the tables here
 
 
 def calc_emission_factors(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    print(row_key)
+
     # print(other_table_refs[extra[row_key][0]][extra[row_key][1]].items())
     fuel_sum = 0
     for col, val in other_table_refs[extra["keymap"][row_key][0]][extra["keymap"][row_key][1]].items():
         fuel_fraction = other_table_refs[0][row_key].get((lambda col:
                                                 extra["fuel_lookup"][col] if col in extra["fuel_lookup"].keys() else col)(col)) 
-        print(fuel_fraction)
-        print(val)
+
         if fuel_fraction is not None and not isnan(fuel_fraction):
             fuel_sum += val * fuel_fraction                                        
     return fuel_sum
 
 def lookup_emission_factors(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    print("INSIDE TRANSPORT EF")
+    print(row_key)
+   
+
+    
+    for fuel_name in other_table_refs[extra["keymap"][row_key][0]][extra["keymap"][row_key][1]].keys():
+
+        if extra["fuel_lookup"].get(fuel_name):
+            if col_key == extra["fuel_lookup"].get(fuel_name):
+              col_key = fuel_name
     return other_table_refs[extra["keymap"][row_key][0]][extra["keymap"][row_key][1]].get(col_key)
 
 
@@ -45,8 +54,7 @@ class TransportEF:
 
     def __post_init__(self, user_input):
         # calculate_transport_ef()
-        print("from transport ef")
-        print(type(user_input))
+
         if type(user_input) == dict:
             # this allows us to get input from a dict generated from another dataclass
             initialize_from_dataclass(self, user_input)
@@ -55,8 +63,7 @@ class TransportEF:
         else:
             raise ValueError("Please pass a list or dictionary to initialize")
         verify_user_fuel_shares(self.fraction_of_fuel_type_for_transport_mode)
-        print(self.heavy_duty_truck_ef.heavy_duty_truck_emission_factors)
-        print(self.heavy_duty_truck_ef.truck_emission_factors_of_fuel_combustion_origin_to_destination)
+        print("before calcs")
         fill_calculated_cells(target_table_ref=self.transport_emission_factors_weighted_average,
                               func_to_apply=calc_emission_factors,
                               included_cols=["Manual Input"],
@@ -64,7 +71,6 @@ class TransportEF:
                               # and a lookup table to standardize fuel names
                               # maps row in target table to a tuple (index_into_other_table_ref_array, row_in_other_table)
                               extra={"fuel_lookup": {"NG": "Natural Gas"
-
                                                      },
                                      "keymap": {"Pipeline Emissions": (1, "Pipeline"),
                                                 "Rail Emissions": (2, "Rail Emissions"),
@@ -96,7 +102,7 @@ class TransportEF:
                                                 self.rail_ef.rail_emission_factors,
                                                 self.heavy_duty_truck_ef.heavy_duty_truck_emission_factors,
                                                 self.tanker_barge_ef.tanker_barge_emission_factors])
-        print(self.transport_emission_factors_weighted_average)
+
         
 
     def calculate_transport_ef(self):
