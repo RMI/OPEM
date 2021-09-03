@@ -1,53 +1,53 @@
 {
  "product_name": "Algeria Hassi R’Mel",
 
- "volume_flow": {
+ "volume_flow_bbl": {
 
-"Crude_bbl":101100,
-"Gasoline_bbl":84802,
-"Jet_Fuel_bbl":7470,
-"Diesel_bbl":428,
-"Fuel_Oil_bbl":166,
-"Coke_bbl":0,
-"Residual_fuels_bbl":80,
-"Surplus_Refinery_Fuel_Gas_RFG_bbl":0,
-"Liquefied_Petroleum_Gases_LPG_bbl":4079,
-"Petrochemical_Feedstocks_bbl":0,
-"Asphalt_bbl":0
+"Barrels of Crude per Day":101100,
+"Gasoline":84802,
+"Jet Fuel":7470,
+"Diesel":428,
+"Fuel Oil":166,
+"Coke":0,
+"Residual fuels":80,
+"Surplus Refinery Fuel Gas (RFG)":0,
+"Liquefied Petroleum Gases (LPG)":4079,
+"Petrochemical Feedstocks":0,
+"Asphalt":0
  },
 
 
-"energy_flow": {
-"Gasoline_MJ":402661595,
-"Jet_Fuel_MJ":39837610,
-"Diesel_MJ":2317217,
-"Fuel_Oil_MJ":920856,
-"Coke_MJ":0,
-"Residual_fuels_MJ":454410,
-"Surplus_RFG_MJ":"null",
-"Surplus_NCR_H2_MJ":14891763,
-"Liquefied_Petroleum_Gases_LPG_MJ":15223629.2098456,
-"Petrochemical_Feedstocks_MJ":10884196,
-"Asphalt_MJ":"null",
-"Gasoline_S_wt_MJ":"null",
-"Gasoline_H2_wt_MJ":14
+"energy_flow_MJ": {
+"Gasoline":402661595,
+"Jet Fuel":39837610,
+"Diesel":2317217,
+"Fuel Oil":920856,
+"Coke":0,
+"Residual fuels":454410,
+"Surplus RFG":0,
+"Surplus NCR H2":14891763,
+"Liquefied Petroleum Gases (LPG)":15223629.2098456,
+"Petrochemical Feedstocks":10884196,
+"Asphalt":0,
+"Gasoline S wt":0,
+"Gasoline H2 wt":14
 },
 
-"mass_flow": {
+"mass_flow_kg": {
 
-"Gasoline_kg":9400187,
-"Jet_Fuel_kg":959662,
-"Diesel_kg":56118,
-"Fuel_Oil_kg":22486,
-"Coke_kg":0,
-"Residual_fuels_kg":11243,
-"Sulphur_kg":52,
-"Surplus_RFG_kg":"null",
-"Surplus_NCR_H2_kg":117205,
-"Liquefied_Petroleum_Gases_LPG_kg":329410,
-"Petrochemical_Feedstocks_kg":"null",
-"Asphalt_kg":"null",
-"Net_Upstream_Petcoke_kg":"null"
+"Gasoline":9400187,
+"Jet Fuel":959662,
+"Diesel":56118,
+"Fuel Oil":22486,
+"Coke":0,
+"Residual fuels":11243,
+"Sulphur":52,
+"Surplus RFG":0,
+"Surplus NCR H2":117205,
+"Liquefied Petroleum Gases (LPG)":329410,
+"Petrochemical Feedstocks":0,
+"Asphalt":0,
+"Net Upstream Petcoke":0
 }
 }
 

@@ -211,9 +211,7 @@ def calc_truck_emission_factors_total(row_key, col_key, target_table_ref=None, o
 class HeavyDutyTruckEF:
 
     def __post_init__(self, user_input):
-        print(type(user_input))
         if type(user_input) == dict:
-            print("heavy duty truck")
             # this allows us to get input from a dict generated from another dataclass
             initialize_from_dataclass(self, user_input)
         elif type(user_input) == list:

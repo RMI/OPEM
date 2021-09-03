@@ -1,8 +1,8 @@
-﻿Product Slate Components,Combustion Emission Factors ,Emission Factor Units,% Combusted,Total Combustion Emissions (kg CO2eq. / bbl of crude) 
+﻿Product Slate Components,Combustion Emission Factors,Emission Factor Units,% Combusted,Total Combustion Emissions (kg CO2eq. / bbl of crude)
 Gasoline,NaN,kg CO2eq. / bbl,1,NaN
 Jet Fuel,NaN,kg CO2eq. / bbl,1,NaN
 Diesel,NaN,kg CO2eq. / bbl,1,NaN
-Fuel Oil,NaN,kg CO2eq. / bbl,1,NaN
+Fuel Oil,462,kg CO2eq. / bbl,1,NaN
 Coke,NaN,kg CO2eq. / kg,1,NaN
-Residual fuels,NaN,kg CO2eq. / bbl,1,NaN
-Liquefied Petroleum Gases (LPG),NaN,kg CO2eq. / bbl,1,NaN
+Residual fuels,453,kg CO2eq. / bbl,1,NaN
+Liquefied Petroleum Gases (LPG),240,kg CO2eq. / bbl,1,NaN

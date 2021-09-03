@@ -16,6 +16,9 @@ def calc_pipeline_emissions_factors(row_key, col_key, target_table_ref=None, oth
     result = (result * other_table_refs[2]["Oil Product Pipeline"][extra["trip_details"]]) / \
         1000000/other_table_refs[3]["kg per short ton"]["Conversion Factor"] / \
         other_table_refs[3]["km per mile"]["Conversion Factor"]
+    if target_table_ref["full_table_name"] == "Pipeline Emission Factors":
+        print("PIPELINE") 
+        print(result)
     return result
 
 
@@ -31,7 +34,6 @@ def calc_pipeline_emissions_factors_total(row_key, col_key, target_table_ref=Non
 @dataclass
 class PipelineEF:
     def __post_init__(self, user_input):
-        print(type(user_input))
         if type(user_input) == dict:
             # this allows us to get input from a dict generated from another dataclass
             initialize_from_dataclass(self, user_input)
