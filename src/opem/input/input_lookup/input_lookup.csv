@@ -1,0 +1,254 @@
+﻿User Inputs & Results,Global:,Assay (Select Oil),-,`,product_name,,
+User Inputs & Results,Global:,Upstream Field Selection,-,`,,,
+User Inputs & Results,Global:,NGL Volume Source,-,`,,,
+User Inputs & Results,Global:,% Ethane Volume directly sent to cracker/chem plant allocated to Ethylene Conversion,-,`,,,
+,,,,,,,
+User Inputs & Results,Transport:,Fuel,Pipeline,`,transport_results,Pipeline Emissions,Choose Transport Fuel (from drop-down)
+User Inputs & Results,Transport:,Fuel,Rail,`,transport_results,Rail Emissions,Choose Transport Fuel (from drop-down)
+User Inputs & Results,Transport:,Fuel,Truck,`,transport_results,Heavy-Duty Truck Emissions,Choose Transport Fuel (from drop-down)
+User Inputs & Results,Transport:,Fuel,Ocean Tanker,`,transport_results,Ocean Tanker Emissions,Choose Transport Fuel (from drop-down)
+User Inputs & Results,Transport:,Fuel,Barge,`,transport_results,Barge Emissions,Choose Transport Fuel (from drop-down)
+User Inputs & Results,Transport:,Distance,Pipeline,`,transport_results,Pipeline Emissions,Select Distance Traveled (km)
+User Inputs & Results,Transport:,Distance,Rail,`,transport_results,Rail Emissions,Select Distance Traveled (km)
+User Inputs & Results,Transport:,Distance,Truck,`,transport_results,Heavy-Duty Truck Emissions,Select Distance Traveled (km)
+User Inputs & Results,Transport:,Distance,Ocean Tanker,`,transport_results,Ocean Tanker Emissions,Select Distance Traveled (km)
+User Inputs & Results,Transport:,Distance,Barge,`,transport_results,Barge Emissions,Select Distance Traveled (km)
+,,,,,,,
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Gasoline,`,combustion_results,Gasoline,% Combusted
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Jet Fuel,`,combustion_results,Jet Fuel,% Combusted
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Diesel,`,combustion_results,Diesel,% Combusted
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Fuel Oil,`,combustion_results,Fuel Oil,% Combusted
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Coke,`,combustion_results,Coke,% Combusted
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Residual fuels,`,combustion_results,Residual fuels,% Combusted
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Liquefied Petroleum Gases (LPG),`,combustion_results,Liquefied Petroleum Gases (LPG),% Combusted
+,,,,,,,
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 2,kg CO2 per gallon
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 2,g CH4 per gallon
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 2,g N2O per gallon
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 4,kg CO2 per gallon
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 4,g CH4 per gallon
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 4,g N2O per gallon
+Prod Combustion EF,Combustion EF,Kerosene type jet fuel,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Kerosene-Type Jet Fuel,kg CO2 per gallon
+Prod Combustion EF,Combustion EF,Kerosene type jet fuel,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Kerosene-Type Jet Fuel,g CH4 per gallon
+Prod Combustion EF,Combustion EF,Kerosene type jet fuel,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Kerosene-Type Jet Fuel,g N2O per gallon
+Prod Combustion EF,Combustion EF,Motor Gasoline,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Motor Gasoline,kg CO2 per gallon
+Prod Combustion EF,Combustion EF,Motor Gasoline,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Motor Gasoline,g CH4 per gallon
+Prod Combustion EF,Combustion EF,Motor Gasoline,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Motor Gasoline,g N2O per gallon
+Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Residual Fuel Oil No. 6,kg CO2 per gallon
+Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Residual Fuel Oil No. 6,g CH4 per gallon
+Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Residual Fuel Oil No. 6,g N2O per gallon
+Prod Combustion EF,Combustion EF,Petroleum Coke,kg CO2 per ton,`,product_combustion_emission_factors_derived_solids,Petroleum Coke,kg CO2 per ton
+Prod Combustion EF,Combustion EF,Petroleum Coke,g CH4 per ton,`,product_combustion_emission_factors_derived_solids,Petroleum Coke,g CH4 per ton
+Prod Combustion EF,Combustion EF,Petroleum Coke,g N2O per ton,`,product_combustion_emission_factors_derived_solids,Petroleum Coke,g N2O per ton
+,,,,,,,
+Pipeline EF,Energy Intensity of Pipeline Transport (btu/ton-mile),Reciprocating Engine,-,`,energy_intensity_of_pipeline_transportation,Oil Product Pipeline,Reciprocating Engine
+Pipeline EF,Energy Intensity of Pipeline Transport (btu/ton-mile),Turbine ,-,`,energy_intensity_of_pipeline_transportation,Oil Product Pipeline,Turbine 
+Pipeline EF,Energy Intensity of Pipeline Transport (btu/ton-mile),NG Engine: Future,-,`,energy_intensity_of_pipeline_transportation,Oil Product Pipeline,NG Engine: Future
+Pipeline EF,Share of Pipeline Tech Used,Reciprocating Engine,-,`,share_of_pipeline_technologies_used,Oil Product Pipeline,Reciprocating Engine
+Pipeline EF,Share of Pipeline Tech Used,Turbine ,-,`,share_of_pipeline_technologies_used,Oil Product Pipeline,Turbine
+Pipeline EF,Share of Pipeline Tech Used,NG Engine: Future,-,`,share_of_pipeline_technologies_used,Oil Product Pipeline,NG Engine: Future
+Rail EF,Energy Intensity of Rail Transportation (Btu/ton-mile),Trip From Product Origin to Destination,-,`,energy_intensity_of_rail_transportation,Trip From Product Origin to Destination,Energy Intensity
+Rail EF,Energy Intensity of Rail Transportation (Btu/ton-mile),Trip From Product Destination Back to Origin,-,`,energy_intensity_of_rail_transportation,Trip From Product Destination Back to Origin,Energy Intensity
+Heavy-Duty Truck EF,Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks,Trip From Product Origin to Destination,Fuel Economy (miles/diesel gallon),`,truck_fuel_economy_and_resultant_energy_consumption,Trip From Product Origin to Destination,Fuel Economy (miles/diesel gallon)
+Heavy-Duty Truck EF,Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks,Trip From Product Origin to Destination,Cargo Payload (kg),`,truck_fuel_economy_and_resultant_energy_consumption,Trip From Product Origin to Destination,Cargo Payload (kg)
+Heavy-Duty Truck EF,Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks,Trip From Product Destination Back to Origin,Fuel Economy (miles/diesel gallon),`,truck_fuel_economy_and_resultant_energy_consumption,Trip From Product Destination Back to Origin,Fuel Economy (miles/diesel gallon)
+Heavy-Duty Truck EF,Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks,Trip From Product Destination Back to Origin,Cargo Payload (kg),`,truck_fuel_economy_and_resultant_energy_consumption,Trip From Product Destination Back to Origin,Cargo Payload (kg)
+Heavy-Duty Truck EF,Select Biodiesel for Simulating Oil-Based Renewable Diesel,,,`,select_biodiesel,,
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),VOC,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,VOC,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CO,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,CO,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),NOx,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,NOx,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM10,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,PM10,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM2.5,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,PM2.5,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),SOx,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,SOx,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),BC,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,BC,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),OC,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,OC,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CH4,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,CH4,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),N2O,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,N2O,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),VOC,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,VOC,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CO,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,CO,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),NOx,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,NOx,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM10,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,PM10,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM2.5,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,PM2.5,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),SOx,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,SOx,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),BC,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,BC,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),OC,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,OC,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CH4,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,CH4,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),N2O,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,N2O,Class 8B Diesel Truck Emission Factors (g/mi.)
+,,,,,,,
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Gasoline,`,cargo_payload,Ocean Tanker,Gasoline
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Diesel,`,cargo_payload,Ocean Tanker,Diesel
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Jet Fuel,`,cargo_payload,Ocean Tanker,Jet Fuel
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Residual Oil,`,cargo_payload,Ocean Tanker,Residual Oil
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Petcoke,`,cargo_payload,Ocean Tanker,Petcoke
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Gasoline,`,cargo_payload,Barge,Gasoline
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Diesel,`,cargo_payload,Barge,Diesel
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Jet Fuel,`,cargo_payload,Barge,Jet Fuel
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Residual Oil,`,cargo_payload,Barge,Residual Oil
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Petcoke,`,cargo_payload,Barge,Petcoke
+Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Ocean Tanker,Average Speed,`,tanker_barge_average_speed,Average Speed (miles/hour),Ocean Tanker
+Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Ocean Tanker,Origin to Destination Load Factor,`,tanker_barge_energy_consumption_origin_to_destination,Load Factor,Ocean Tanker
+Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Ocean Tanker,Destination to Origin Load Factor,`,tanker_barge_energy_consumption_destination_to_origin,Load Factor,Ocean Tanker
+Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Barge,Average Speed,`,tanker_barge_average_speed,Average Speed (miles/hour),Barge
+Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Barge,Origin to Destination Load Factor,`,tanker_barge_energy_consumption_origin_to_destination,Load Factor,Barge
+Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Barge,Destination to Origin Load Factor,`,tanker_barge_energy_consumption_destination_to_origin,Load Factor,Barge
+Tanker & Barge EF,Marine Fuel Properties and Consumption (Residual Oil),"Brake Specific Fuel Consumption (BSFC, g/kWh operation)",,`,marine_fuel_properties_consumption,"Brake Specific Fuel Consumption (BSFC, g/kWh operation)",properties
+Transport EF,Transport Fuel Shares,Pipeline Emissions,Natural Gas,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,Natural Gas
+Transport EF,Transport Fuel Shares,Pipeline Emissions,LNG,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,LNG
+Transport EF,Transport Fuel Shares,Pipeline Emissions,Diesel,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,Diesel
+Transport EF,Transport Fuel Shares,Pipeline Emissions,Bunker Fuel,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,Bunker Fuel
+Transport EF,Transport Fuel Shares,Pipeline Emissions,Residual Oil,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,Residual Oil
+Transport EF,Transport Fuel Shares,Pipeline Emissions,LPG,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,LPG
+Transport EF,Transport Fuel Shares,Pipeline Emissions,DME,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,DME
+Transport EF,Transport Fuel Shares,Pipeline Emissions,FTD,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,FTD
+Transport EF,Transport Fuel Shares,Pipeline Emissions,Biodiesel,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,Biodiesel
+Transport EF,Transport Fuel Shares,Pipeline Emissions,Renewable Diesel,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,Renewable Diesel
+Transport EF,Transport Fuel Shares,Pipeline Emissions,Renewable Gasoline,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,Renewable Gasoline
+Transport EF,Transport Fuel Shares,Pipeline Emissions,Hydrogen,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,Hydrogen
+Transport EF,Transport Fuel Shares,Pipeline Emissions,Ethanol,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,Ethanol
+Transport EF,Transport Fuel Shares,Pipeline Emissions,Methanol,`,fraction_of_fuel_type_for_transport_mode,Pipeline Emissions,Methanol
+Transport EF,Transport Fuel Shares,Rail Emissions,Natural Gas,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,Natural Gas
+Transport EF,Transport Fuel Shares,Rail Emissions,LNG,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,LNG
+Transport EF,Transport Fuel Shares,Rail Emissions,Diesel,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,Diesel
+Transport EF,Transport Fuel Shares,Rail Emissions,Bunker Fuel,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,Bunker Fuel
+Transport EF,Transport Fuel Shares,Rail Emissions,Residual Oil,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,Residual Oil
+Transport EF,Transport Fuel Shares,Rail Emissions,LPG,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,LPG
+Transport EF,Transport Fuel Shares,Rail Emissions,DME,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,DME
+Transport EF,Transport Fuel Shares,Rail Emissions,FTD,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,FTD
+Transport EF,Transport Fuel Shares,Rail Emissions,Biodiesel,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,Biodiesel
+Transport EF,Transport Fuel Shares,Rail Emissions,Renewable Diesel,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,Renewable Diesel
+Transport EF,Transport Fuel Shares,Rail Emissions,Renewable Gasoline,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,Renewable Gasoline
+Transport EF,Transport Fuel Shares,Rail Emissions,Hydrogen,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,Hydrogen
+Transport EF,Transport Fuel Shares,Rail Emissions,Ethanol,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,Ethanol
+Transport EF,Transport Fuel Shares,Rail Emissions,Methanol,`,fraction_of_fuel_type_for_transport_mode,Rail Emissions,Methanol
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,Natural Gas,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,Natural Gas
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,LNG,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,LNG
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,Diesel,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,Diesel
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,Bunker Fuel,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,Bunker Fuel
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,Residual Oil,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,Residual Oil
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,LPG,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,LPG
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,DME,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,DME
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,FTD,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,FTD
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,Biodiesel,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,Biodiesel
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,Renewable Diesel,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,Renewable Diesel
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,Renewable Gasoline,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,Renewable Gasoline
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,Hydrogen,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,Hydrogen
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,Ethanol,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,Ethanol
+Transport EF,Transport Fuel Shares,Heavy-Duty Truck Emissions,Methanol,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck Emissions,Methanol
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,Natural Gas,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,Natural Gas
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,LNG,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,LNG
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,Diesel,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,Diesel
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,Bunker Fuel,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,Bunker Fuel
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,Residual Oil,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,Residual Oil
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,LPG,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,LPG
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,DME,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,DME
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,FTD,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,FTD
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,Biodiesel,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,Biodiesel
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,Renewable Diesel,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,Renewable Diesel
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,Renewable Gasoline,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,Renewable Gasoline
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,Hydrogen,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,Hydrogen
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,Ethanol,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,Ethanol
+Transport EF,Transport Fuel Shares,Ocean Tanker Emissions,Methanol,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker Emissions,Methanol
+Transport EF,Transport Fuel Shares,Barge Emissions,Natural Gas,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,Natural Gas
+Transport EF,Transport Fuel Shares,Barge Emissions,LNG,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,LNG
+Transport EF,Transport Fuel Shares,Barge Emissions,Diesel,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,Diesel
+Transport EF,Transport Fuel Shares,Barge Emissions,Bunker Fuel,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,Bunker Fuel
+Transport EF,Transport Fuel Shares,Barge Emissions,Residual Oil,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,Residual Oil
+Transport EF,Transport Fuel Shares,Barge Emissions,LPG,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,LPG
+Transport EF,Transport Fuel Shares,Barge Emissions,DME,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,DME
+Transport EF,Transport Fuel Shares,Barge Emissions,FTD,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,FTD
+Transport EF,Transport Fuel Shares,Barge Emissions,Biodiesel,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,Biodiesel
+Transport EF,Transport Fuel Shares,Barge Emissions,Renewable Diesel,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,Renewable Diesel
+Transport EF,Transport Fuel Shares,Barge Emissions,Renewable Gasoline,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,Renewable Gasoline
+Transport EF,Transport Fuel Shares,Barge Emissions,Hydrogen,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,Hydrogen
+Transport EF,Transport Fuel Shares,Barge Emissions,Ethanol,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,Ethanol
+Transport EF,Transport Fuel Shares,Barge Emissions,Methanol,`,fraction_of_fuel_type_for_transport_mode,Barge Emissions,Methanol
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,VOC,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,VOC,LNG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,VOC,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,VOC,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,VOC,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,VOC,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,VOC,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,VOC,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,VOC,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,VOC,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,VOC,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,VOC,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,VOC,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,VOC,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,VOC,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,VOC,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,VOC,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,VOC,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,VOC,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,VOC,Hydrogen
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CO,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CO,LNG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CO,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CO,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CO,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CO,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CO,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CO,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CO,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CO,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CO,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CO,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CO,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CO,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CO,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CO,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CO,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CO,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CO,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CO,Hydrogen
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,NOx,LNG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,NOx,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,NOx,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,NOx,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,NOx,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,NOx,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,NOx,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,NOx,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,NOx,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,NOx,Hydrogen
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,LNG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM11,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM11,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM12,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM12,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM13,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM13,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM14,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM14,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM15,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM15,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM16,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM16,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM17,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM17,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM18,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM18,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM19,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM19,Hydrogen
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.5,LNG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.6,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.6,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.7,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.7,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.8,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.8,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.9,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.9,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.10,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.10,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.11,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.11,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.12,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.12,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.13,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.13,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.14,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.14,Hydrogen
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,LNG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,Hydrogen
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,OC,LNG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,OC,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,OC,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,OC,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,OC,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,OC,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,OC,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,OC,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,OC,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,OC,Hydrogen
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH4,LNG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH5,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH5,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH6,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH6,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH7,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH7,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH8,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH8,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH9,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH9,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH10,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH10,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH11,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH11,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH12,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH12,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH13,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH13,Hydrogen
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,LNG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,Hydrogen

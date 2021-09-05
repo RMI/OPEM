@@ -187,9 +187,11 @@ def emission_factors_calc_diesel(row_key, col_key, target_table_ref=None, other_
         if "row_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
             other_table_row_key = (lambda row_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"][row_key] if row_key in
                                    other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"].keys() else other_table_row_key)(row_key)
-    return target_table_ref[row_key]['Class 8B Diesel Truck Emission Factors (g/mi.)'] * \
-        other_table_refs[0][
-        extra['trip_econ']]['Fuel Economy (miles/diesel gallon)']
+
+    return (target_table_ref[row_key]['Class 8B Diesel Truck Emission Factors (g/mi.)'] *
+            other_table_refs[0][
+        extra['trip_econ']]['Fuel Economy (miles/diesel gallon)'] /
+        other_table_refs[1]["U.S. conventional diesel"]["User Selection: LHV or HHV, Btu/gal"]*1000000)
 
 
 def calc_truck_emission_factors_forward_backward(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -200,11 +202,20 @@ def calc_truck_emission_factors_forward_backward(row_key, col_key, target_table_
         if key not in ["full_table_name", "row_index_name"]:
             fuel_sum += row["GWP"] * \
                 other_table_refs[2][key][col_key]
+            # if col_key == "Diesel":
+            # print("from heavy duty Truck")
+            # print("key", key)
+            # print("row", row)
+            # print("col_key", col_key)
+            # print(row["GWP"])
+            # print(other_table_refs[2][key][col_key])
+            # print(row["GWP"]*other_table_refs[2][key][col_key])
     return consump_per_payload * fuel_sum
+
 
 def calc_truck_emission_factors_total(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     return target_table_ref["Heavy-Duty Truck Forward Journey (full load)"][col_key] + \
-       target_table_ref["Heavy-Duty Truck Backhaul (full load)"][col_key] 
+        target_table_ref["Heavy-Duty Truck Backhaul (full load)"][col_key]
 
 
 @ dataclass
@@ -242,7 +253,8 @@ class HeavyDutyTruckEF:
                               func_to_apply=emission_factors_calc_diesel, included_cols=[
                                   "Diesel"],
                               other_table_refs=[
-                                  self.truck_fuel_economy_and_resultant_energy_consumption, ],
+                                  self.truck_fuel_economy_and_resultant_energy_consumption,
+                                  self.constants.table_3_fuel_specifications_liquid_fuels],
                               # hack the keymap to use same function for forward and backward trip
                               extra={"trip_econ": "Trip From Product Origin to Destination"})
 
@@ -250,7 +262,8 @@ class HeavyDutyTruckEF:
                               func_to_apply=emission_factors_calc_diesel, included_cols=[
                                   'Diesel'],
                               other_table_refs=[
-                                  self.truck_fuel_economy_and_resultant_energy_consumption, ],
+                                  self.truck_fuel_economy_and_resultant_energy_consumption,
+                                  self.constants.table_3_fuel_specifications_liquid_fuels],
                               # hack the keymap to use same function for forward and backward trip
                               extra={"trip_econ": "Trip From Product Destination Back to Origin"})
 
@@ -362,7 +375,7 @@ class HeavyDutyTruckEF:
                                   self.constants.table_1_100year_gwp,
                                   self.truck_emission_factors_of_fuel_combustion_origin_to_destination
                               ], extra={"trip_details": "Trip From Product Origin to Destination"})
-       
+
         fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors,
                               func_to_apply=calc_truck_emission_factors_forward_backward,
 

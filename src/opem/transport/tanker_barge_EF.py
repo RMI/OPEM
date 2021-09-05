@@ -11,7 +11,7 @@ from statistics import mean
 
 def calc_product_total_mass_flow(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     return sum(
-        (float(value) for key, value in other_table_refs[0].mass_flow_kg.items() if key != "full_table_name" and key not in extra["excluded_keys"] and value != "null"))
+        (float(value["Flow"]) for key, value in other_table_refs[0].items() if key not in ["full_table_name", "row_index_name"] and key not in extra["excluded_keys"] and value != None))
 
 
 def calc_marine_heating_val(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -38,7 +38,9 @@ def calc_tanker_barge_energy_consumption(row_key, col_key, target_table_ref=None
 def calc_marine_energy_consumption(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     MJ_to_BTU = 947.817
 
-    return target_table_ref["Heating Value"]["properties"] * target_table_ref["Brake Specific Fuel Consumption (BSFC, g/kWh operation)"]["properties"] * MJ_to_BTU / 1000
+    return (target_table_ref["Heating Value"]["properties"] *
+            float(target_table_ref["Brake Specific Fuel Consumption (BSFC, g/kWh operation)"]["properties"]) *
+            MJ_to_BTU / 1000)
 
 
 def calc_product_share(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -55,9 +57,10 @@ def calc_product_share(row_key, col_key, target_table_ref=None, other_table_refs
                                    other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"].keys() else other_table_row_key)(row_key)
 
     if row_key == "Residual Oil":
-        return (other_table_refs[0]["Fuel Oil"] + other_table_refs[0]["Residual fuels"]/target_table_ref["mass_flow_sum"]["total"])
+        return (other_table_refs[0]["Fuel Oil"]["Flow"] + other_table_refs[0]["Residual fuels"]["Flow"]/target_table_ref["mass_flow_sum"]["total"])
     else:
-        return other_table_refs[0][other_table_row_key]/target_table_ref["mass_flow_sum"]["total"]
+
+        return other_table_refs[0][other_table_row_key]["Flow"]/target_table_ref["mass_flow_sum"]["total"]
 
 
 def calc_barge_tanker_emissions(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -101,13 +104,15 @@ def calc_emission_factors_barge_forward_backward(row_key, col_key, target_table_
     elif row_key == "Barge Backhaul":
         return mean(other_table_refs[1][row][col_key] for row in other_table_refs[0].keys() if row != "full_table_name" and row != "row_index_name")
 
+
 def calc_emission_factors_barge_total(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    return target_table_ref["Barge Forward Journey"][col_key] + target_table_ref["Barge Backhaul"][col_key] 
+    return target_table_ref["Barge Forward Journey"][col_key] + target_table_ref["Barge Backhaul"][col_key]
+
 
 @dataclass
 class TankerBargeEF:
     def __post_init__(self, user_input):
-   
+
         if type(user_input) == dict:
             # this allows us to get input from a dict generated from another dataclass
             initialize_from_dataclass(self, user_input)
@@ -121,9 +126,9 @@ class TankerBargeEF:
                                   "mass_flow_sum"],
                               included_cols=["total"],
                               other_table_refs=[
-                                  self.product_slate, ],
+                                  self.product_slate.mass_flow_kg, ],
                               # hack the keymap to pass excluded column when we iterate over other_table keys
-                              extra={"excluded_keys": ["Net_Upstream_Petcoke"]})
+                              extra={"excluded_keys": ["Net_Upstream_Petcoke", ]})
 
         fill_calculated_cells(target_table_ref=self.share_of_petroleum_products, other_table_refs=[
             self.product_slate.mass_flow_kg, ],
@@ -200,7 +205,6 @@ class TankerBargeEF:
                                                 self.cargo_payload,
                                                 self.constants.table_2_conversion_factors])
 
-
         # calculate emissions factors from transport
         fill_calculated_cells(target_table_ref=self.tanker_barge_emissions_factors_transport_forward_journey_barge,
                               func_to_apply=calc_barge_tanker_emissions,
@@ -254,7 +258,7 @@ class TankerBargeEF:
                               func_to_apply=calc_emission_factors_barge_forward_backward,
                               included_rows=[
                                   "Barge Forward Journey", "Barge Backhaul"],
-                              excluded_cols=["Bunker Fuel",],
+                              excluded_cols=["Bunker Fuel", ],
                               other_table_refs=[self.tanker_barge_emissions_factors_transport_forward_journey_barge,
                                                 self.tanker_barge_emissions_factors_transport_backhaul_barge])
 
@@ -263,7 +267,6 @@ class TankerBargeEF:
                               included_rows=[
                                   "Barge Emissions"],
                               excluded_cols=["Bunker Fuel"])
-
 
     constants: Constants
 

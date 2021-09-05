@@ -16,9 +16,6 @@ def calc_pipeline_emissions_factors(row_key, col_key, target_table_ref=None, oth
     result = (result * other_table_refs[2]["Oil Product Pipeline"][extra["trip_details"]]) / \
         1000000/other_table_refs[3]["kg per short ton"]["Conversion Factor"] / \
         other_table_refs[3]["km per mile"]["Conversion Factor"]
-    if target_table_ref["full_table_name"] == "Pipeline Emission Factors":
-        print("PIPELINE") 
-        print(result)
     return result
 
 

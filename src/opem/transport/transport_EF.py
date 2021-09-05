@@ -29,23 +29,20 @@ def calc_emission_factors(row_key, col_key, target_table_ref=None, other_table_r
     fuel_sum = 0
     for col, val in other_table_refs[extra["keymap"][row_key][0]][extra["keymap"][row_key][1]].items():
         fuel_fraction = other_table_refs[0][row_key].get((lambda col:
-                                                extra["fuel_lookup"][col] if col in extra["fuel_lookup"].keys() else col)(col)) 
+                                                          extra["fuel_lookup"][col] if col in extra["fuel_lookup"].keys() else col)(col))
 
         if fuel_fraction is not None and not isnan(fuel_fraction):
-            fuel_sum += val * fuel_fraction                                        
+            fuel_sum += val * fuel_fraction
     return fuel_sum
 
-def lookup_emission_factors(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    print("INSIDE TRANSPORT EF")
-    print(row_key)
-   
 
-    
+def lookup_emission_factors(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+
     for fuel_name in other_table_refs[extra["keymap"][row_key][0]][extra["keymap"][row_key][1]].keys():
 
         if extra["fuel_lookup"].get(fuel_name):
             if col_key == extra["fuel_lookup"].get(fuel_name):
-              col_key = fuel_name
+                col_key = fuel_name
     return other_table_refs[extra["keymap"][row_key][0]][extra["keymap"][row_key][1]].get(col_key)
 
 
@@ -63,7 +60,7 @@ class TransportEF:
         else:
             raise ValueError("Please pass a list or dictionary to initialize")
         verify_user_fuel_shares(self.fraction_of_fuel_type_for_transport_mode)
-        print("before calcs")
+
         fill_calculated_cells(target_table_ref=self.transport_emission_factors_weighted_average,
                               func_to_apply=calc_emission_factors,
                               included_cols=["Manual Input"],
@@ -82,7 +79,7 @@ class TransportEF:
                                                 self.rail_ef.rail_emission_factors,
                                                 self.heavy_duty_truck_ef.heavy_duty_truck_emission_factors,
                                                 self.tanker_barge_ef.tanker_barge_emission_factors])
-        
+
         fill_calculated_cells(target_table_ref=self.transport_emission_factors_weighted_average,
                               func_to_apply=lookup_emission_factors,
                               excluded_cols=["Manual Input"],
@@ -102,8 +99,6 @@ class TransportEF:
                                                 self.rail_ef.rail_emission_factors,
                                                 self.heavy_duty_truck_ef.heavy_duty_truck_emission_factors,
                                                 self.tanker_barge_ef.tanker_barge_emission_factors])
-
-        
 
     def calculate_transport_ef(self):
         pass

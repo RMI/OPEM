@@ -10,7 +10,7 @@ from opem.transport.rail_EF import RailEF
 from opem.transport.tanker_barge_EF import TankerBargeEF
 from opem.transport.transport_EF import TransportEF
 from opem.transport.transport_model import TransportModel
-from opem.utils import initialize_from_list, nested_access, visit_dict, initialize_from_dataclass
+from opem.utils import initialize_from_list, nested_access, visit_dict, initialize_from_dataclass, write_csv_output
 import os
 from opem.transport import HeavyDutyTruckEF
 
@@ -21,9 +21,10 @@ def main():
     # run_model()
     user_input = input.initialize_model_inputs(
         input.get_csv_input, input.validate_input)
+    #print(user_input)
     user_input_dto = UserInputDto(user_input)
     print("finished user input")
-    product_slate = input.get_product_slate(user_input_dto.product_name)
+    product_slate = input.get_product_slate_csv(user_input_dto.product_name)
     print("finished product slate")
     # make a constants object and pass a ref to heavy_duty truck
     constants = Constants()
@@ -34,6 +35,7 @@ def main():
     heavy_duty_truck_ef = HeavyDutyTruckEF(
          user_input=user_input, constants=constants)
     print("heavy duty truck")
+    print(heavy_duty_truck_ef.heavy_duty_truck_emission_factors)
     rail_ef = RailEF(user_input=user_input, constants=constants)
     print("rail")
     pipeline_ef = PipelineEF(user_input=user_input, constants=constants)
@@ -50,12 +52,8 @@ def main():
     combustion_ef = CombustionEF(user_input=user_input, constants=constants)
    
     opem = OPEM(user_input=user_input, transport_ef=transport_ef, combustion_ef=combustion_ef, product_slate=product_slate)
-    print("opem")
-    print(opem.transport_results)
-    print(opem.transport_sum)
-    print(heavy_duty_truck_ef.heavy_duty_truck_emission_factors)
-    print(opem.combustion_results)
-    print(opem.combustion_sum)
+    print(heavy_duty_truck_ef.truck_emission_factors_of_fuel_combustion_destination_to_origin)
+    write_csv_output(opem.results())
    
 
     # transport_model = TransportModel(

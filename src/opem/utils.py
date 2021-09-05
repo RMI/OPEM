@@ -40,7 +40,7 @@ def fill_calculated_cells(target_table_ref, func_to_apply, other_table_refs=None
     if (included_cols and excluded_cols):
         raise ValueError(
             "Please only pass arguments for one of excluded_cols/included_cols, not both")
-   
+
     temp_target_table_ref = target_table_ref
     # sometimes the target_table_ref is a ref to the table (in form of dict),
     # sometimes it is in the form of {"[table name]" : target_table_ref} --
@@ -52,7 +52,7 @@ def fill_calculated_cells(target_table_ref, func_to_apply, other_table_refs=None
         for key in target_table_ref:
             if key != "has_wrapper":
                 temp_target_table_ref = target_table_ref[key]
-            
+
     # handle included rows/ cols as well
     for row_key, row in temp_target_table_ref.items():
         # skip label for the row index and full table name and
@@ -80,15 +80,15 @@ def build_dict_from_defaults(table_name):
     # function here. should implement a version that reads from memory instead
     # of disk for more speed.
     table_array = read_model_table_defaults(table_name)
-    dict = {}
+    defaults = {}
     headers = table_array[0]
-    dict["full_table_name"] = table_name
-    dict['row_index_name'] = headers[0]
+    defaults["full_table_name"] = table_name
+    defaults['row_index_name'] = headers[0]
     for row in table_array[1:]:
         if row[0] != '':
-            dict[row[0]] = {k: float(v) if isfloat(v) else v for (k, v) in filter(
+            defaults[row[0]] = {k: float(v) if isfloat(v) else v for (k, v) in filter(
                 lambda x: True if (x[0] != '' and x[1] != '') else False, zip(headers[1:], row[1:]))}
-    return dict
+    return defaults
 
 
 def read_model_table_defaults(table_name):
@@ -132,15 +132,18 @@ def initialize_from_dataclass(target, source: DefaultDict):
                     keys_length = len(path[0]) - 1
                     # get a reference to the object the holds the key/value pair we want to mutate
                     ref = nested_access(
-                        dict=getattr(target, key), keys=path[0][0:keys_length])
+                        dictionary=getattr(target, key), keys=path[0][0:keys_length])
 
                     ref[path[0][-1]] = path[-1]
 
 
-def nested_access(dict, keys):
+def nested_access(dictionary, keys):
+
     for key in keys:
-        dict = dict[key]
-    return dict
+        # print(dictionary)
+
+        dictionary = dictionary[key]
+    return dictionary
 
 
 def initialize_from_list(target, source: List):
@@ -148,13 +151,26 @@ def initialize_from_list(target, source: List):
 
     for row in source:
         if row[0] in asdict(target).keys():
-            if len(row) == 2:
-                setattr(target, row[0], row[1])
-            else:
+            # test if this is a path to a primitive datatype (as opposed to nested
+            # dictionary)
+            if row[1] == "" and row[-1] != "":
+                setattr(target, row[0], row[-1])
+            elif row[1] != "" and row[-1] != "":
                 # get a reference to the object the holds the key/value pair we want to mutate
+
                 ref = nested_access(
-                    dict=getattr(target, row[0]), keys=row[1:-2])
+                    dictionary=getattr(target, row[0]), keys=row[1:-2])
                 ref[row[-2]] = row[-1]
+
+
+def write_csv_output(output, path="opem_output.csv"):
+
+    with open(path, "w", newline='', encoding="utf-8-sig") as csvfile:
+
+        writer = csv.writer(csvfile)
+
+        for row in output:
+            writer.writerow(row)
 
 
 ######################### NOT USED #######################
