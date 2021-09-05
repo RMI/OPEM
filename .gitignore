@@ -1,7 +1,7 @@
 venv
 
 build/
-dist/
+
 *.egg-info/
 *.egg
 *.py[cod]
