@@ -4,7 +4,9 @@ For now, I recommend this procedure to install and run the package:
 
 Clone this repo to your local machine:
 
+```
 git clone https://github.com/zacharyschmidt/opem.git
+```
 
 --Once you have a local copy of the repo, navigate to the same directory as the setup.py file and create a virtual environment:
 
