@@ -144,8 +144,10 @@ setup(
     # If there are data files included in your packages that need to be
     # installed, specify them here.
     package_data={  # Optional
-        'products': ['products/product_slates/*.json'],
-        'defaults': ['defaults/*.csv']
+        'products': ['products/product_slates/*.json',
+                     'products/product_slates/*.csv'],
+        'defaults': ['defaults/*.csv'],
+        'input': ['input_lookup/*.csv']
     },
 
     # Although 'package_data' is the preferred approach, in some case you may

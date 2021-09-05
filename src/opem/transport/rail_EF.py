@@ -18,8 +18,9 @@ def calc_rail_emissions_factors(row_key, col_key, target_table_ref=None, other_t
         other_table_refs[3]["km per mile"]["Conversion Factor"]
     return result
 
+
 def calc_emission_factors_rail_total(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    return target_table_ref["Rail - Forward Trip"][col_key] + target_table_ref["Rail - Backhaul"][col_key] 
+    return target_table_ref["Rail - Forward Trip"][col_key] + target_table_ref["Rail - Backhaul"][col_key]
 
 
 @dataclass
@@ -51,11 +52,10 @@ class RailEF:
                                                 self.constants.table_1_100year_gwp,
                                                 self.energy_intensity_of_rail_transportation,
                                                 self.constants.table_2_conversion_factors])
-        
+
         fill_calculated_cells(target_table_ref=self.rail_emission_factors,
                               func_to_apply=calc_emission_factors_rail_total,
                               included_rows=["Rail Emissions"])
-
 
     constants: Constants
     # will this cause problems if I try to pass in a list?
