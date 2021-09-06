@@ -4,19 +4,27 @@ For now, I recommend this procedure to install and run the package:
 
 Clone this repo to your local machine:
 
+```
 git clone https://github.com/zacharyschmidt/opem.git
+```
 
 --Once you have a local copy of the repo, navigate to the same directory as the setup.py file and create a virtual environment:
 
+```
 python -m venv venv
+```
 
 Activate the virtual environment:
 
+```
 source venv/bin/activate
+```
 
 Then run the command below to install the package in 'editable' mode (make sure you are in the same directory as the setup.py file). Any changes you make to the source code will automatically update the locally installed package.
 
+```
 pip install -e .
+```
 
 Once the installation is complete you can run opem from anywhere on your local machine with the terminal command 'opem' (make sure the virtual environment is activated).
 
