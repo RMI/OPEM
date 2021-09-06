@@ -149,8 +149,9 @@ def nested_access(dictionary, keys):
 def initialize_from_list(target, source: List):
     # this allows us to get input from csv
 
+    target_keys = asdict(target).keys() 
     for row in source:
-        if row[0] in asdict(target).keys():
+        if row[0] in target_keys:
             # test if this is a path to a primitive datatype (as opposed to nested
             # dictionary)
             if row[1] == "" and row[-1] != "":
