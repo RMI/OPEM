@@ -41,16 +41,16 @@ def main():
     pipeline_ef = PipelineEF(user_input=user_input, constants=constants)
 
 
-    print("Calculating results . . .")
+    
     transport_ef = TransportEF(user_input=user_input, pipeline_ef=pipeline_ef,
                                  rail_ef=rail_ef,
                                  heavy_duty_truck_ef=heavy_duty_truck_ef,
                                  tanker_barge_ef=tanker_barge_ef)
     
     
-
+    print("Processing Combustion Emission Factors . . .") 
     combustion_ef = CombustionEF(user_input=user_input, constants=constants)
-   
+    print("Calculating results . . .")
     opem = OPEM(user_input=user_input, transport_ef=transport_ef, combustion_ef=combustion_ef, product_slate=product_slate)
     print("Model run completed.")
     print("Writing results . . .")
