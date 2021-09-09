@@ -193,25 +193,25 @@ Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,R
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,NOx,Renewable Gasoline
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,NOx,Hydrogen
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,LNG
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM11,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM11,DME
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM12,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM12,FTD
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM13,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM13,E90
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM14,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM14,M90
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM15,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM15,LPG
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM16,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM16,Biodiesel
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM17,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM17,Renewable Diesel
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM18,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM18,Renewable Gasoline
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM19,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM19,Hydrogen
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,Hydrogen
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.5,LNG
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.6,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.6,DME
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.7,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.7,FTD
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.8,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.8,E90
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.9,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.9,M90
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.10,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.10,LPG
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.11,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.11,Biodiesel
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.12,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.12,Renewable Diesel
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.13,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.13,Renewable Gasoline
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.14,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.14,Hydrogen
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.5,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.5,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.5,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.5,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.5,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.5,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.5,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.5,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.5,Hydrogen
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,LNG
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,DME
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,FTD
@@ -233,15 +233,15 @@ Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,Re
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,OC,Renewable Gasoline
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,OC,Hydrogen
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH4,LNG
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH5,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH5,DME
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH6,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH6,FTD
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH7,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH7,E90
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH8,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH8,M90
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH9,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH9,LPG
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH10,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH10,Biodiesel
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH11,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH11,Renewable Diesel
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH12,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH12,Renewable Gasoline
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH13,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH13,Hydrogen
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH4,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH4,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH4,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH4,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH4,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH4,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH4,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH4,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,CH4,Hydrogen
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,LNG
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,DME
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,N2O,FTD
