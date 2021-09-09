@@ -8,38 +8,38 @@ User Inputs & Results,Transport:,Fuel,Rail,Diesel
 User Inputs & Results,Transport:,Fuel,Truck,Diesel
 User Inputs & Results,Transport:,Fuel,Ocean Tanker,Bunker Fuel
 User Inputs & Results,Transport:,Fuel,Barge,Residual Oil
-User Inputs & Results,Transport:,Distance,Pipeline,7213
+User Inputs & Results,Transport:,Distance,Pipeline,6839
 User Inputs & Results,Transport:,Distance,Rail,4
-User Inputs & Results,Transport:,Distance,Truck,586
-User Inputs & Results,Transport:,Distance,Ocean Tanker,8
-User Inputs & Results,Transport:,Distance,Barge,8
+User Inputs & Results,Transport:,Distance,Truck,942
+User Inputs & Results,Transport:,Distance,Ocean Tanker,2
+User Inputs & Results,Transport:,Distance,Barge,2
 ,,,,
-User Inputs & Results,Combustion,Oil product Combustion efficiencies,Gasoline,5
-User Inputs & Results,Combustion,Oil product Combustion efficiencies,Jet Fuel,9
-User Inputs & Results,Combustion,Oil product Combustion efficiencies,Diesel,5
-User Inputs & Results,Combustion,Oil product Combustion efficiencies,Fuel Oil,4
-User Inputs & Results,Combustion,Oil product Combustion efficiencies,Coke,8
-User Inputs & Results,Combustion,Oil product Combustion efficiencies,Residual fuels,1
-User Inputs & Results,Combustion,Oil product Combustion efficiencies,Liquefied Petroleum Gases (LPG),1
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Gasoline,1
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Jet Fuel,1
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Diesel,4
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Fuel Oil,8
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Coke,3
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Residual fuels,6
+User Inputs & Results,Combustion,Oil product Combustion efficiencies,Liquefied Petroleum Gases (LPG),2
 ,,,,
-Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,kg CO2 per gallon,27.18
-Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,g CH4 per gallon,1.10
-Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,g N2O per gallon,8.22
-Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,kg CO2 per gallon,16.62
-Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,g CH4 per gallon,1.31
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,kg CO2 per gallon,57.38
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,g CH4 per gallon,4.88
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,g N2O per gallon,1.71
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,kg CO2 per gallon,27.62
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,g CH4 per gallon,6.47
 Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,g N2O per gallon,3.28
-Prod Combustion EF,Combustion EF,Kerosene type jet fuel,kg CO2 per gallon,8.31
-Prod Combustion EF,Combustion EF,Kerosene type jet fuel,g CH4 per gallon,5.86
-Prod Combustion EF,Combustion EF,Kerosene type jet fuel,g N2O per gallon,4.73
-Prod Combustion EF,Combustion EF,Motor Gasoline,kg CO2 per gallon,5.48
-Prod Combustion EF,Combustion EF,Motor Gasoline,g CH4 per gallon,1.55
-Prod Combustion EF,Combustion EF,Motor Gasoline,g N2O per gallon,9.76
-Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,kg CO2 per gallon,98.63
-Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,g CH4 per gallon,3.50
-Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,g N2O per gallon,4.14
-Prod Combustion EF,Combustion EF,Petroleum Coke,kg CO2 per ton,4656
-Prod Combustion EF,Combustion EF,Petroleum Coke,g CH4 per ton,489
-Prod Combustion EF,Combustion EF,Petroleum Coke,g N2O per ton,336
+Prod Combustion EF,Combustion EF,Kerosene type jet fuel,kg CO2 per gallon,1.94
+Prod Combustion EF,Combustion EF,Kerosene type jet fuel,g CH4 per gallon,7.57
+Prod Combustion EF,Combustion EF,Kerosene type jet fuel,g N2O per gallon,7.29
+Prod Combustion EF,Combustion EF,Motor Gasoline,kg CO2 per gallon,6.78
+Prod Combustion EF,Combustion EF,Motor Gasoline,g CH4 per gallon,5.10
+Prod Combustion EF,Combustion EF,Motor Gasoline,g N2O per gallon,2.32
+Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,kg CO2 per gallon,79.87
+Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,g CH4 per gallon,5.20
+Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,g N2O per gallon,4.78
+Prod Combustion EF,Combustion EF,Petroleum Coke,kg CO2 per ton,3647
+Prod Combustion EF,Combustion EF,Petroleum Coke,g CH4 per ton,909
+Prod Combustion EF,Combustion EF,Petroleum Coke,g N2O per ton,296
 ,,,,
 Pipeline EF,Energy Intensity of Pipeline Transport (btu/ton-mile),Reciprocating Engine,-,
 Pipeline EF,Energy Intensity of Pipeline Transport (btu/ton-mile),Turbine ,-,
@@ -49,49 +49,49 @@ Pipeline EF,Share of Pipeline Tech Used,Turbine ,-,
 Pipeline EF,Share of Pipeline Tech Used,NG Engine: Future,-,
 Rail EF,Energy Intensity of Rail Transportation (Btu/ton-mile),Trip From Product Origin to Destination,-,
 Rail EF,Energy Intensity of Rail Transportation (Btu/ton-mile),Trip From Product Destination Back to Origin,-,
-Heavy-Duty Truck EF,Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks,Trip From Product Origin to Destination,Fuel Economy (miles/diesel gallon),8.5
-Heavy-Duty Truck EF,Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks,Trip From Product Origin to Destination,Cargo Payload (kg),82908.445
-Heavy-Duty Truck EF,Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks,Trip From Product Destination Back to Origin,Fuel Economy (miles/diesel gallon),3.4
-Heavy-Duty Truck EF,Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks,Trip From Product Destination Back to Origin,Cargo Payload (kg),88272.886
+Heavy-Duty Truck EF,Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks,Trip From Product Origin to Destination,Fuel Economy (miles/diesel gallon),4.2
+Heavy-Duty Truck EF,Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks,Trip From Product Origin to Destination,Cargo Payload (kg),86289.835
+Heavy-Duty Truck EF,Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks,Trip From Product Destination Back to Origin,Fuel Economy (miles/diesel gallon),2.8
+Heavy-Duty Truck EF,Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks,Trip From Product Destination Back to Origin,Cargo Payload (kg),92029.119
 Heavy-Duty Truck EF,Select Biodiesel for Simulating Oil-Based Renewable Diesel,,,
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),VOC,1.5133
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CO,5.2492
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),NOx,7.4729
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM10,5.2144
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM2.3,7.4117
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),SOx,5.8417
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),BC,5.464652
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),OC,3.643980
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CH4,3.5884
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),N2O,7.301
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),VOC,9.1324
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CO,5.6446
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),NOx,6.3498
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM10,5.4476
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM2.7,4.8002
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),SOx,5.8012
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),BC,3.397288
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),OC,7.615259
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CH4,2.4265
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),N2O,1.449
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),VOC,4.5238
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CO,2.3272
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),NOx,3.8022
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM10,8.4084
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM2.4,7.6884
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),SOx,9.6839
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),BC,5.956859
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),OC,8.876601
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CH4,8.7666
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),N2O,9.404
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),VOC,7.3146
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CO,1.8650
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),NOx,3.2458
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM10,4.9739
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM2.4,4.4299
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),SOx,9.2561
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),BC,8.624548
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),OC,9.583865
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CH4,1.3980
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),N2O,2.844
 ,,,,
-Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Gasoline,54491
-Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Diesel,410368
-Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Jet Fuel,266984
-Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Residual Oil,975567
-Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Petcoke,343112
-Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Gasoline,34242
-Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Diesel,67266
-Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Jet Fuel,94077
-Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Residual Oil,51336
-Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Petcoke,26558
-Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Ocean Tanker,Average Speed,66
-Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Ocean Tanker,Origin to Destination Load Factor,9.42
-Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Ocean Tanker,Destination to Origin Load Factor,9.3
-Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Barge,Average Speed,8
-Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Barge,Origin to Destination Load Factor,9.2
-Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Barge,Destination to Origin Load Factor,7.7
-Tanker & Barge EF,Marine Fuel Properties and Consumption (Residual Oil),"Brake Specific Fuel Consumption (BSFC, g/kWh operation)",,369
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Gasoline,50254
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Diesel,161414
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Jet Fuel,901267
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Residual Oil,367427
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Petcoke,177065
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Gasoline,84501
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Diesel,27431
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Jet Fuel,46468
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Residual Oil,60842
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Petcoke,78287
+Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Ocean Tanker,Average Speed,11
+Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Ocean Tanker,Origin to Destination Load Factor,6.38
+Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Ocean Tanker,Destination to Origin Load Factor,7.4
+Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Barge,Average Speed,4
+Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Barge,Origin to Destination Load Factor,3.3
+Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Barge,Destination to Origin Load Factor,6.4
+Tanker & Barge EF,Marine Fuel Properties and Consumption (Residual Oil),"Brake Specific Fuel Consumption (BSFC, g/kWh operation)",,287
 Transport EF,Transport Fuel Shares,Pipeline Emissions,Natural Gas,
 Transport EF,Transport Fuel Shares,Pipeline Emissions,LNG,
 Transport EF,Transport Fuel Shares,Pipeline Emissions,Diesel,
@@ -193,25 +193,25 @@ Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,R
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,Renewable Gasoline,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,NOx,Hydrogen,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,LNG,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM11,DME,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM12,FTD,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM13,E90,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM14,M90,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM15,LPG,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM16,Biodiesel,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM17,Renewable Diesel,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM18,Renewable Gasoline,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM19,Hydrogen,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.6,LNG,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,DME,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,FTD,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,E90,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,M90,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,LPG,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,Biodiesel,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,Renewable Diesel,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,Renewable Gasoline,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,Hydrogen,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.8,LNG,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.9,DME,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.3,FTD,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,E90,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.4,M90,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.49,LPG,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.51,Biodiesel,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.98,Renewable Diesel,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.64,Renewable Gasoline,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.48,Hydrogen,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.8,E90,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.7,M90,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.2,LPG,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.1,Biodiesel,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.4,Renewable Diesel,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.7,Renewable Gasoline,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.2,Hydrogen,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,LNG,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,DME,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,FTD,
@@ -233,15 +233,15 @@ Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,Re
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,Renewable Gasoline,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,OC,Hydrogen,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,LNG,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH5,DME,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH6,FTD,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH7,E90,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH8,M90,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH9,LPG,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH10,Biodiesel,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH11,Renewable Diesel,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH12,Renewable Gasoline,
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH13,Hydrogen,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,DME,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,FTD,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,E90,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,M90,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,LPG,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,Biodiesel,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,Renewable Diesel,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,Renewable Gasoline,
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,CH4,Hydrogen,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,LNG,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,DME,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,N2O,FTD,
