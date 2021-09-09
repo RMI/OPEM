@@ -140,9 +140,10 @@ def initialize_from_dataclass(target, source: DefaultDict):
 def nested_access(dictionary, keys):
 
     for key in keys:
-        # print(dictionary)
-
-        dictionary = dictionary[key]
+        try:
+          dictionary = dictionary[key]
+        except KeyError: 
+          print(f"Key {key} not recognized. There is probably an error in input_lookup.csv")
     return dictionary
 
 

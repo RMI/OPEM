@@ -54,13 +54,17 @@ def get_csv_input(validate_input_func):
             try:
                 validate_input_func(row)
             except ValueError:
-                ValueError("input is invalid!")
+                raise ValueError("input is invalid!")
             # lambda function here to get nesting of arbitrary depth
             # lambda: for each item in row if index(row[item]) exists
             # then all_user_input[row] = {}
             if row[0] != "":
-                all_user_input.append(
+                try:
+                 all_user_input.append(
                     input_lookup[create_key_from_csv(row[:4])] + [float(row[4]) if isfloat(row[4]) else row[4]])
+                except KeyError:
+                   print(f"Name {row[:4]} does not match expected user input.")
+                   print("Ignoring this input and using defaults.")
 
     return all_user_input
 
