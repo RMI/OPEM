@@ -1,20 +1,10 @@
 import codecs
 import csv
 import json
-from opem.input.user_input_dto import UserInputDto
-from opem.products.product_slate import ProductSlate
 import pkg_resources
 
-
-from opem import input
+from opem.products.product_slate import ProductSlate
 from opem.utils import isfloat
-# opem.input.user_input_dto
-# we will have a script to prompt user and take input
-# don't worry about that here. What functions will that script call?
-
-# what is hardcoded now but will change in the future?
-# --product slates
-# --transportation
 
 
 def initialize_model_inputs(get_input_func, validate_input_func):
@@ -100,21 +90,6 @@ def create_lookup_table():
     return lookup_table
 
 
-def initialize_params(all_input):
-    pass
-    # fill in parameter object with user defined or default param
-
-    # = initialize_combustion_dto(all_input)
-    # transportation input =
-    # return {comb: combustion_input, trans: transportation_input}
-
-    # def initialize_combustion_dto(all_input):
-    #     combustion_input = input.user_input_dto.CombustionInputDto(**all_input)
-    #     print('COMBUSTION INPUT')
-    #     print(combustion_input)
-    #     return combustion_input
-
-
 def get_product_slate_json(product_name: str):
     # read user selection from csv input and fetch respective slate
     # slate objects stored as dataclass with default values
@@ -157,13 +132,3 @@ def get_product_slate_csv(product_name: str):
             input_paths.append([table_names[name_index], row[0],
                                 "Flow", float(row[selected_index])])
     return ProductSlate(user_input=input_paths, product_name=product_name)
-
-    # try:
-    #     # read the big csc, pull out specifics related to selected slate,
-    #     # format them as user input list of lists[[table, row, column, value]]
-    #     # and pass in below
-    #     return ProductSlate(user_input=product_slate_json, product_name=product_slate_json["product_name"])
-    # except TypeError:
-    #     print(
-    #         'Problem initializing product slate. Please check your input parameters')
-    #     raise

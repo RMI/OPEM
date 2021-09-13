@@ -6,10 +6,6 @@ from math import isnan
 from opem.combustion.combustion_EF import CombustionEF
 from opem.products.product_slate import ProductSlate
 
-from opem.transport.heavy_duty_truck_EF import HeavyDutyTruckEF
-from opem.transport.pipeline_EF import PipelineEF
-from opem.transport.rail_EF import RailEF
-from opem.transport.tanker_barge_EF import TankerBargeEF
 from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells
 from opem.transport.transport_EF import TransportEF
 
