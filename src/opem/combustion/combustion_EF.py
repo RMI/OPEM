@@ -78,9 +78,9 @@ class CombustionEF:
   # Prod CombustEF sheet, table: Product Combustion Emission Factors -- Petroleum Products
   # CALCULATED
     product_combustion_emission_factors_petroleum: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Product Combustion Emission Factors -- Petroleum Products'))
+        default_factory=lambda: build_dict_from_defaults('Product_Combustion_Emission_Factors_Petroleum_Products'))
 
     # Prod CombustEF sheet, table: Product Combustion Emission Factors -- Fossil-Fuel-Derived Fuels (Solid)
     # CALCULATED
     product_combustion_emission_factors_derived_solids: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Product Combustion Emission Factors -- Fossil-Fuel-Derived Fuels (Solid)'))
+        default_factory=lambda: build_dict_from_defaults('Product_Combustion_Emission_Factors_Fossil_Fuel_Derived_Fuels_Solid'))

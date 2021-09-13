@@ -64,19 +64,21 @@ class RailEF:
     # RailEF sheet, table: Rail Emission Factors
     # CALCULATED
     rail_emission_factors: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Rail Emission Factors'))
+        default_factory=lambda: build_dict_from_defaults('Rail_Emission_Factors'))
 
     # RailEF sheet, table: Energy Intensity of Rail Transportation (Btu:ton-mile)
     # USER INPUT
     energy_intensity_of_rail_transportation: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Energy Intensity of Rail Transportation (Btu:ton-mile)'))
+        default_factory=lambda: build_dict_from_defaults('Energy_Intensity_of_Rail_Transportation'))
 
     # RailEF sheet, table: Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned)
     # STATIC
     rail_emission_factors_combustion_origin_to_destination: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults("Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation- Trip From Product Origin to Product Destination (grams per mmBtu) -- Locomotive"))
+        default_factory=lambda: build_dict_from_defaults(
+    "Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Origin_to_Product_Destination_Locomotive"))
 
 # RailEF sheet, table: EEmission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned)
     # STATIC
     rail_emission_factors_combustion_destination_to_origin: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation- Trip From Product Destination Back to Product Origin (grams per mmBtu) -- Locomotive'))
+        default_factory=lambda: build_dict_from_defaults(
+      'Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Destination_Back_to_Product_Origin_Locomotive'))

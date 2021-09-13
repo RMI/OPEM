@@ -189,7 +189,7 @@ class OPEM:
     # User Inputs & Results sheet, table: OPEM Transport
     # CALCULATED
     transport_sum: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Transport Sum'))
+        default_factory=lambda: build_dict_from_defaults('Transport_Sum'))
 
     # User Inputs & Results sheet, table: OPEM Combustion
     # USER INPUT
@@ -200,7 +200,7 @@ class OPEM:
     # User Inputs & Results sheet, table: OPEM Combustion
     # CALCULATED
     combustion_sum: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Combustion Sum'))
+        default_factory=lambda: build_dict_from_defaults('Combustion_Sum'))
 
     # hold sum of product volume from product slate here
     # product_volume_sum: int = None
