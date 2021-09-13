@@ -188,7 +188,7 @@ def emission_factors_calc_diesel(row_key, col_key, target_table_ref=None, other_
             other_table_row_key = (lambda row_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"][row_key] if row_key in
                                    other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"].keys() else other_table_row_key)(row_key)
 
-    return (target_table_ref[row_key]['Class 8B Diesel Truck Emission Factors (g/mi.)'] *
+    return (target_table_ref[row_key]["Class 8B Diesel Truck Emission Factors (g/mi.)"] *
             other_table_refs[0][
         extra['trip_econ']]['Fuel Economy (miles/diesel gallon)'] /
         other_table_refs[1]["U.S. conventional diesel"]["User Selection: LHV or HHV, Btu/gal"]*1000000)
@@ -436,13 +436,15 @@ class HeavyDutyTruckEF:
     # all fuels for pipeline transport modes
     # CALCULATED
     heavy_duty_truck_emission_factors: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Heavy-Duty Truck Emission Factors'))
+        default_factory=lambda: build_dict_from_defaults('Heavy_Duty_Truck_Emission_Factors'))
+            #'Heavy-Duty Truck Emission Factors'))
 
     # Heavy-Duty Truck EF sheet, table: Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks
     # USER INPUT
     # CALCULATED
     truck_fuel_economy_and_resultant_energy_consumption: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks'))
+        default_factory=lambda: build_dict_from_defaults('Fuel_Economy_and_Resultant_Energy_Consumption_of_Heavy_Duty_Trucks'))
+        #'Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks'
 
     # Heavy-Duty Truck EF sheet, cell Select Biodiesel for Simulating Oil-Based Renewable Diesel
     # USER INPUT
@@ -453,16 +455,20 @@ class HeavyDutyTruckEF:
     # USER INPUT
     # CALCULATED
     truck_emission_factors_of_fuel_combustion_origin_to_destination: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation- Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Heavy-Duty Truck (full load)'))
+        default_factory=lambda: build_dict_from_defaults(
+            'Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Origin_to_Product_Destination_Heavy_Duty_Truck'))
+            #'Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation- Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Heavy-Duty Truck (full load)'))
 
     # Heavy-Duty Truck EF sheet, table: Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned)
     # USER INPUT
     # CALCULATED
     truck_emission_factors_of_fuel_combustion_destination_to_origin: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation- Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned) -- Heavy-Duty Truck (full load)'))
+        default_factory=lambda: build_dict_from_defaults(
+        'Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Destination_Back_to_Product_Origin_Heavy_Duty_Truck'))
 
     # Heavy-Duty Truck EF sheet, table: Emission Ratios by Fuel Type Relative to Baseline Fuel
     # USER INPUT
     # STATIC
     emission_ratios_by_fuel_type_relative_to_baseline_fuel: DefaultDict = field(
-        default_factory=lambda: build_dict_from_defaults('Emission Ratios by Fuel Type Relative to Baseline Fuel'))
+        default_factory=lambda: build_dict_from_defaults(
+         'Emission_Ratios_by_Fuel_Type_Relative_to_Baseline_Fuel'))
