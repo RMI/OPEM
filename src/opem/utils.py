@@ -4,7 +4,13 @@ from dataclasses import asdict, dataclass
 from typing import DefaultDict, List
 import codecs
 
-import pkg_resources
+try:
+    import importlib.resources as pkg_resources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    import importlib_resources as pkg_resources
+
+from opem import defaults
 
 """
 @param func_to_apply: function
@@ -93,14 +99,15 @@ def build_dict_from_defaults(table_name):
 
 def read_model_table_defaults(table_name):
     rows_and_header = []
-    csvfile = pkg_resources.resource_stream(
-        "opem.defaults", f"{table_name}.csv")
+    ref = pkg_resources.files(
+        defaults).joinpath(f"{table_name}.csv")
     # if only 'utf-8' is specified then BOM character '\ufeff' is included in output
     utf8_reader = codecs.getreader("utf-8-sig")
-    reader = csv.reader(utf8_reader(csvfile))
-    for row in reader:
-        rows_and_header.append(row)
-    return rows_and_header
+    with ref.open('rb') as csvfile:
+        reader = csv.reader(utf8_reader(csvfile))
+        for row in reader:
+            rows_and_header.append(row)
+        return rows_and_header
 
 
 def visit_dict(d, path=[]):
@@ -114,8 +121,9 @@ def visit_dict(d, path=[]):
 
 def initialize_from_dataclass(target, source: DefaultDict):
     # this allows us to get input from a dict generated from another dataclass
+    target_keys = asdict(target).keys()
     for key in source.keys():
-        if key in asdict(target).keys():
+        if key in target_keys:
             if type(source[key]) != dict:
 
                 setattr(target, key, source[key])
@@ -141,16 +149,17 @@ def nested_access(dictionary, keys):
 
     for key in keys:
         try:
-          dictionary = dictionary[key]
-        except KeyError: 
-          print(f"Key {key} not recognized. There is probably an error in input_lookup.csv")
+            dictionary = dictionary[key]
+        except KeyError:
+            print(
+                f"Key {key} not recognized. There is probably an error in input_lookup.csv")
     return dictionary
 
 
 def initialize_from_list(target, source: List):
     # this allows us to get input from csv
 
-    target_keys = asdict(target).keys() 
+    target_keys = asdict(target).keys()
     for row in source:
         if row[0] in target_keys:
             # test if this is a path to a primitive datatype (as opposed to nested

@@ -1,7 +1,15 @@
 import codecs
 import csv
 import json
-import pkg_resources
+
+try:
+    import importlib.resources as pkg_resources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    import importlib_resources as pkg_resources
+
+from opem.input import input_lookup
+from opem.products import product_slates
 
 from opem.products.product_slate import ProductSlate
 from opem.utils import isfloat
@@ -76,16 +84,17 @@ def create_key_from_csv(row):
 def create_lookup_table():
     input_keys = []
     indexing_paths = []
-    csvfile = pkg_resources.resource_stream(
-        "opem.input.input_lookup", "input_lookup.csv")
+    ref = pkg_resources.files(
+        input_lookup).joinpath("input_lookup.csv")
     # if only 'utf-8' is specified then BOM character '\ufeff' is included in output
     utf8_reader = codecs.getreader("utf-8-sig")
-    reader = csv.reader(utf8_reader(csvfile))
-    for row in reader:
-        if row[0] != '':
-            split_array_index = row.index("`")
-            input_keys.append(create_key_from_csv(row[:split_array_index]))
-            indexing_paths.append(row[split_array_index+1:])
+    with ref.open('rb') as csvfile:
+        reader = csv.reader(utf8_reader(csvfile))
+        for row in reader:
+            if row[0] != '':
+                split_array_index = row.index("`")
+                input_keys.append(create_key_from_csv(row[:split_array_index]))
+                indexing_paths.append(row[split_array_index+1:])
     lookup_table = dict(zip(input_keys, indexing_paths))
     return lookup_table
 
@@ -94,8 +103,8 @@ def get_product_slate_json(product_name: str):
     # read user selection from csv input and fetch respective slate
     # slate objects stored as dataclass with default values
 
-    with pkg_resources.resource_stream(
-            "opem.products.product_slates", f"{product_name}.json") as json_file:
+    with pkg_resources.read_text(
+            product_slates, f"{product_name}.json") as json_file:
         product_slate_json = json.load(json_file)
     try:
         # product slate has default vals in its dictionaries
@@ -112,10 +121,11 @@ def get_product_slate_csv(product_name: str):
     # read user selection from csv input and fetch respective slate
     # slate objects stored as dataclass with default values
 
-    with pkg_resources.resource_stream(
-            "opem.products.product_slates", "all_product_slates.csv") as csvfile:
-        # if only 'utf-8' is specified then BOM character '\ufeff' is included in output
-        utf8_reader = codecs.getreader("utf-8-sig")
+    ref = pkg_resources.files(
+        product_slates).joinpath("all_product_slates.csv")
+    # if only 'utf-8' is specified then BOM character '\ufeff' is included in output
+    utf8_reader = codecs.getreader("utf-8-sig")
+    with ref.open('rb') as csvfile:
         reader = csv.reader(utf8_reader(csvfile))
         all_product_slates = []
         for row in reader:
