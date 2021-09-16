@@ -128,7 +128,7 @@ class TankerBargeEF:
                               other_table_refs=[
                                   self.product_slate.mass_flow_kg, ],
                               # hack the keymap to pass excluded column when we iterate over other_table keys
-                              extra={"excluded_keys": ["Net_Upstream_Petcoke", ]})
+                              extra={"excluded_keys": ["Net Upstream Petcoke", ]})
 
         fill_calculated_cells(target_table_ref=self.share_of_petroleum_products, other_table_refs=[
             self.product_slate.mass_flow_kg, ],
