@@ -1,21 +1,21 @@
 ﻿Output Name,Value
 --OPEM Transport--,
-Sum: Kilograms of Product per Day,96360492.744080179
+Sum: Kilograms of Product per Day,22670357.880603046
 Transport Emissions (kg CO2eq. / bbl of crude),
-Pipeline Emissions,7.302973132803037
-Rail Emissions,4.2
-Heavy-Duty Truck Emissions,1.611177581757863
-Ocean Tanker Emissions,5.4
-Barge Emissions,9.1
-Sum,70.285134798716003
-Sum Distance Travelled,1423.7
+Pipeline Emissions,3.406307112055157
+Rail Emissions,2.7
+Heavy-Duty Truck Emissions,4.646731871469392
+Ocean Tanker Emissions,9.3
+Barge Emissions,1.2
+Sum,49.631468406024248
+Sum Distance Travelled,1645.5
 --OPEM Combustion--,
 Total Combustion Emissions (kg CO2eq. / bbl of crude),
-Gasoline,93.10181519308118
-Jet Fuel,41.71688944462736
-Diesel,66.31598054630271
-Fuel Oil,96.35582323149906
-Coke,1.293733216314912e-12
-Residual fuels,773.57805303772980
-Liquefied Petroleum Gases (LPG),8.296483120887697
-Sum,815.14001916532803
+Gasoline,85.72699648868381
+Jet Fuel,478.81412615390982
+Diesel,54.4175378532370
+Fuel Oil,63.90524433072978
+Coke,155.29368150963960
+Residual fuels,26.7313109485933
+Liquefied Petroleum Gases (LPG),5.5307377738367594
+Sum,480.7325165672875
