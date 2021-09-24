@@ -5,7 +5,13 @@ from typing import Dict, List
 import codecs
 import math
 
-import pkg_resources
+try:
+    import importlib.resources as pkg_resources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    import importlib_resources as pkg_resources
+
+from opem import defaults
 
 
 
@@ -99,16 +105,16 @@ def read_input_structure(table_name):
 
 
 def read_model_table_defaults(table_name):
-     rows_and_header = []
-     csvfile = pkg_resources.resource_stream(
-        "opem.defaults", f"{table_name}.csv")
+    rows_and_header = []
+    ref = pkg_resources.files(
+        defaults).joinpath(f"{table_name}.csv")
     # if only 'utf-8' is specified then BOM character '\ufeff' is included in output
-     utf8_reader = codecs.getreader("utf-8-sig")
-     reader = csv.reader(utf8_reader(csvfile))
-     for row in reader:
-         rows_and_header.append(row)
-     return rows_and_header
-
+    utf8_reader = codecs.getreader("utf-8-sig")
+    with ref.open('rb') as csvfile:
+        reader = csv.reader(utf8_reader(csvfile))
+        for row in reader:
+            rows_and_header.append(row)
+        return rows_and_header
 
 def build_dict_from_defaults(table_name, read_defaults=read_model_table_defaults):
     # we should be able to pass in a different read_model_table_defaults
@@ -127,7 +133,7 @@ def build_dict_from_defaults(table_name, read_defaults=read_model_table_defaults
       return defaults
 
 
-    
+
 
 
 def visit_dict(d, path=[]):
@@ -170,18 +176,17 @@ def nested_access(dictionary, keys):
 
     for key in keys:
         try:
-          dictionary = dictionary[key]
+            dictionary = dictionary[key]
         except KeyError:
-          print(dictionary) 
-          print(f"Key {key} not recognized. There is probably an error in input_lookup.csv")
+            print(
+                f"Key {key} not recognized. There is probably an error in input_lookup.csv")
     return dictionary
 
 
 def initialize_from_list(target, source: List):
     # this allows us to get input from csv
 
-    target_keys = asdict(target).keys() 
-    
+    target_keys = asdict(target).keys()
     for row in source:
         if row[0] in target_keys:
             if row[0] == "product_name":
