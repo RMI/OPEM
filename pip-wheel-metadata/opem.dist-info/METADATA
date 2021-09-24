@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: opem
-Version: 1.0.2a0
+Version: 1.0.3a0
 Summary: UNKNOWN
 Home-page: UNKNOWN
 Author: RMI
@@ -15,7 +15,7 @@ Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.7
 Classifier: Programming Language :: Python :: 3.8
 Classifier: Programming Language :: Python :: 3.9
-Requires-Python: >=3.7, <4
+Requires-Python: >=3.9, <4
 Description-Content-Type: text/markdown
 License-File: LICENSE.txt
 
