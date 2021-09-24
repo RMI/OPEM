@@ -1,5 +1,5 @@
 from dataclasses import InitVar, dataclass, field
-from typing import Any, DefaultDict
+from typing import Any, Dict
 
 from opem.utils import build_dict_from_defaults, initialize_from_dataclass, initialize_from_list
 
@@ -24,10 +24,10 @@ class ProductSlate:
     # We will us an initvar and custom function to fill
     # the fields from json so that we don't overwrite
     # any default values in the dictionary fields
-    user_input: InitVar[DefaultDict] = {}
+    user_input: InitVar[Dict] = {}
 
-    volume_flow_bbl: DefaultDict = field(default_factory=lambda: build_dict_from_defaults("volume_flow_bbl"))
+    volume_flow_bbl: Dict = field(default_factory=lambda: build_dict_from_defaults("volume_flow_bbl"))
 
-    energy_flow_MJ: DefaultDict = field(default_factory=lambda: build_dict_from_defaults("energy_flow_MJ"))
+    energy_flow_MJ: Dict = field(default_factory=lambda: build_dict_from_defaults("energy_flow_MJ"))
 
-    mass_flow_kg: DefaultDict = field(default_factory=lambda: build_dict_from_defaults("mass_flow_kg"))
+    mass_flow_kg: Dict = field(default_factory=lambda: build_dict_from_defaults("mass_flow_kg"))

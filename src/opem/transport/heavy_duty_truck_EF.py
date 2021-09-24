@@ -1,5 +1,5 @@
 from dataclasses import InitVar, dataclass, field
-from typing import DefaultDict
+from typing import Dict
 from opem.constants import Constants
 
 from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells
@@ -430,19 +430,19 @@ class HeavyDutyTruckEF:
 
     constants: Constants
 
-    user_input: InitVar[DefaultDict] = {}
+    user_input: InitVar[Dict] = {}
 
     # Heavy-Duty Truck EF sheet, table: Heavy-Duty Truck Emission Factors
     # all fuels for pipeline transport modes
     # CALCULATED
-    heavy_duty_truck_emission_factors: DefaultDict = field(
+    heavy_duty_truck_emission_factors: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Heavy_Duty_Truck_Emission_Factors'))
             #'Heavy-Duty Truck Emission Factors'))
 
     # Heavy-Duty Truck EF sheet, table: Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks
     # USER INPUT
     # CALCULATED
-    truck_fuel_economy_and_resultant_energy_consumption: DefaultDict = field(
+    truck_fuel_economy_and_resultant_energy_consumption: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Fuel_Economy_and_Resultant_Energy_Consumption_of_Heavy_Duty_Trucks'))
         #'Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks'
 
@@ -454,7 +454,7 @@ class HeavyDutyTruckEF:
     # Heavy-Duty Truck EF sheet, table: Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned)
     # USER INPUT
     # CALCULATED
-    truck_emission_factors_of_fuel_combustion_origin_to_destination: DefaultDict = field(
+    truck_emission_factors_of_fuel_combustion_origin_to_destination: Dict = field(
         default_factory=lambda: build_dict_from_defaults(
             'Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Origin_to_Product_Destination_Heavy_Duty_Truck'))
             #'Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation- Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Heavy-Duty Truck (full load)'))
@@ -462,13 +462,13 @@ class HeavyDutyTruckEF:
     # Heavy-Duty Truck EF sheet, table: Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned)
     # USER INPUT
     # CALCULATED
-    truck_emission_factors_of_fuel_combustion_destination_to_origin: DefaultDict = field(
+    truck_emission_factors_of_fuel_combustion_destination_to_origin: Dict = field(
         default_factory=lambda: build_dict_from_defaults(
         'Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Destination_Back_to_Product_Origin_Heavy_Duty_Truck'))
 
     # Heavy-Duty Truck EF sheet, table: Emission Ratios by Fuel Type Relative to Baseline Fuel
     # USER INPUT
     # STATIC
-    emission_ratios_by_fuel_type_relative_to_baseline_fuel: DefaultDict = field(
+    emission_ratios_by_fuel_type_relative_to_baseline_fuel: Dict = field(
         default_factory=lambda: build_dict_from_defaults(
          'Emission_Ratios_by_Fuel_Type_Relative_to_Baseline_Fuel'))

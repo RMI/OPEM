@@ -1,7 +1,15 @@
 ﻿User Inputs & Results,Global:,Assay (Select Oil),-,Canada Athabasca DC SCO
 User Inputs & Results,Global:,Upstream Field Selection,-,
-User Inputs & Results,Global:,NGL Volume Source,-,
-User Inputs & Results,Global:,% Ethane Volume directly sent to cracker/chem plant allocated to Ethylene Conversion,-,
+User Inputs & Results,Global:,Gas Production Volume (MCFD),-,600000
+User Inputs & Results,Global:,Oil Production Volume (BOED),-,100000
+User Inputs & Results,Global:,NGL Volume source,-,
+User Inputs & Results,Global:,NGL C2 Volume (BOED),-,
+User Inputs & Results,Global:,NGL C3 Volume (BOED),-,
+User Inputs & Results,Global:,NGL C4 Volume (BOED),-,
+User Inputs & Results,Global:,NGL C5+ Volume (BOED),-,
+User Inputs & Results,Global:,Total field NGL volume (BOED),-,
+User Inputs & Results,Global:,OPGEE Coke mass (kg/d),-,
+User Inputs & Results,Global:,% Field NGL C2 Volume allocated to Ethylene converstion,-,
 ,,,,
 User Inputs & Results,Transport:,Fuel,Pipeline,Natural Gas
 User Inputs & Results,Transport:,Fuel,Rail,Diesel

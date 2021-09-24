@@ -1,7 +1,7 @@
 
 
 from dataclasses import InitVar, dataclass, field
-from typing import DefaultDict, Type
+from typing import Dict, Dict
 from math import isnan
 from opem.combustion.combustion_EF import CombustionEF
 from opem.products.product_slate import ProductSlate
@@ -178,28 +178,28 @@ class OPEM:
     product_slate: ProductSlate
 
     # will this cause problems if I try to pass in a list?
-    user_input: InitVar[DefaultDict] = {}
+    user_input: InitVar[Dict] = {}
 
     # User Inputs & Results sheet, table: OPEM Transport
     # USER INPUT
     # CALCULATED
-    transport_results: DefaultDict = field(
+    transport_results: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Transport'))
 
     # User Inputs & Results sheet, table: OPEM Transport
     # CALCULATED
-    transport_sum: DefaultDict = field(
+    transport_sum: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Transport_Sum'))
 
     # User Inputs & Results sheet, table: OPEM Combustion
     # USER INPUT
     # CALCULATED
-    combustion_results: DefaultDict = field(
+    combustion_results: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Combustion'))
 
     # User Inputs & Results sheet, table: OPEM Combustion
     # CALCULATED
-    combustion_sum: DefaultDict = field(
+    combustion_sum: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Combustion_Sum'))
 
     # hold sum of product volume from product slate here
