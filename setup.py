@@ -83,7 +83,6 @@ setup(
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate you support Python 3. These classifiers are *not*
         # checked by 'pip install'. See instead 'python_requires' below.
-        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
@@ -126,9 +125,10 @@ setup(
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
 
-    # I could include this: install_requires=[" importlib_resources ; python_version<'3.7'"],
-    # but I've already specified python >= 3.7, so it is not necessary
-    # install_requires=[],  TODO
+    
+    # we need backport "importlib_resorces for any python version < 3.9"
+    
+    install_requires=[" importlib_resources ; python_version<'3.9'"],
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
