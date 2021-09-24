@@ -1,5 +1,5 @@
 from dataclasses import InitVar, dataclass, field
-from typing import DefaultDict
+from typing import Dict
 from opem.combustion.combustion_EF import CombustionEF
 from opem.transport.transport_EF import TransportEF
 
@@ -24,9 +24,9 @@ class CombustionModel:
                 "Please pass a list or dictionary to initialize")
 
     combustion_ef: CombustionEF
-    user_input: InitVar[DefaultDict] = {}
+    user_input: InitVar[Dict] = {}
 
-    combustion_results: DefaultDict = field(
+    combustion_results: Dict = field(
         default_factory=lambda: {})
 
     def calculate_opem_combustion(combustion_ef: CombustionEF):

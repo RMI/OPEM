@@ -1,5 +1,5 @@
 from dataclasses import InitVar, dataclass, field
-from typing import DefaultDict
+from typing import Dict
 from opem.transport.heavy_duty_truck_EF import HeavyDutyTruckEF
 from opem.transport.pipeline_EF import PipelineEF
 from opem.transport.rail_EF import RailEF
@@ -108,15 +108,15 @@ class TransportEF:
     heavy_duty_truck_ef: HeavyDutyTruckEF
     tanker_barge_ef: TankerBargeEF
     # will this cause problems if I try to pass in a list?
-    user_input: InitVar[DefaultDict] = {}
+    user_input: InitVar[Dict] = {}
 
     # TransportEF sheet, table: Transport Emission Factors
     # collect references to nested objects for ease
     # CALCULATED
-    transport_emission_factors_weighted_average: DefaultDict = field(
+    transport_emission_factors_weighted_average: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors'))
 
     # TransportEF sheet, subtable: Manual Input
     # fraction of fuel type for each transport mode
-    fraction_of_fuel_type_for_transport_mode: DefaultDict = field(
+    fraction_of_fuel_type_for_transport_mode: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Transport_Process_Fuel_Share'))

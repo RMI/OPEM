@@ -1,6 +1,6 @@
 
 from dataclasses import InitVar, dataclass, field
-from typing import DefaultDict
+from typing import Dict
 
 from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells
 
@@ -88,7 +88,7 @@ class Constants:
         # print(
         #     self.table_3_fuel_specifications_liquid_fuels)
 
-    user_input: InitVar[DefaultDict] = {}
+    user_input: InitVar[Dict] = {}
 
     # Constants sheet, table: User Selection, LHV or HHV
     # USER_INPUT
@@ -96,45 +96,45 @@ class Constants:
 
     # Constants sheet, table: Table 1: Hundred-Year Global Warming Potentials
     # STATIC
-    table_1_100year_gwp: DefaultDict = field(
+    table_1_100year_gwp: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Table_1_Hundred-Year_Global_Warming_Potentials'))
 
     # Constants sheet, table: Table 2: Conversion Factors
     # NOTE: I CHANGED THE ORDER OF COLUMNS from the Excel workbook (unit, factor)
     # STATIC
-    table_2_conversion_factors: DefaultDict = field(
+    table_2_conversion_factors: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Table_2_Conversion_Factors'))
 
     # Constants sheet, table: Table 3: Table 3- Fuel Specifications -- Liquid Fuels
     # STATIC
     # CALCULATED
     # USER INPUT
-    table_3_fuel_specifications_liquid_fuels: DefaultDict = field(
+    table_3_fuel_specifications_liquid_fuels: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Table_3_Fuel_Specifications_Liquid_Fuels'))
 
     # Constants sheet, table: Table 3: Table 3- Fuel Specifications -- Gaseous Fuels (at 32F and 1atm)
     # STATIC
     # CALCULATED
-    table_3_fuel_specifications_gaseous_fuels: DefaultDict = field(
+    table_3_fuel_specifications_gaseous_fuels: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Table_3_Fuel_Specifications_Gaseous_Fuels'))
 
     # Constants sheet, table: Table 3: Table 3- Fuel Specifications -- Solid Fuels
     # STATIC
     # CALCULATED
-    table_3_fuel_specifications_solid_fuels: DefaultDict = field(
+    table_3_fuel_specifications_solid_fuels: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Table_3_Fuel_Specifications_Solid_Fuels'))
 
     # Constants sheet, table: Table 4- Carbon and Sulfur Ratios of Pollutants
     # STATIC
-    table_4_carbon_and_sulfer_ratios: DefaultDict = field(
+    table_4_carbon_and_sulfer_ratios: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Table_4_Carbon_and_Sulfur_Ratios_of_Pollutants'))
 
     # Constants sheet, table: Table 5: Solid Fuel Densities
     # STATIC
-    table_5_solid_fuel_densities: DefaultDict = field(
+    table_5_solid_fuel_densities: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Table_5_Solid_Fuel_Densities'))
 
     # Constants sheet, table: Table 5: Solid Fuel Densities
     # STATIC
-    table_6_boe_conversions: DefaultDict = field(
+    table_6_boe_conversions: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Table_6_BOE_Conversions'))

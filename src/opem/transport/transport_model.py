@@ -1,5 +1,5 @@
 from dataclasses import InitVar, dataclass, field
-from typing import DefaultDict
+from typing import Dict
 from opem.transport.transport_EF import TransportEF
 
 from opem.utils import initialize_from_dataclass, initialize_from_list
@@ -22,7 +22,7 @@ class TransportModel:
                 "Please pass a list or dictionary to initialize")
 
     transport_ef: TransportEF
-    user_input: InitVar[DefaultDict] = {}
+    user_input: InitVar[Dict] = {}
 
-    transport_results: DefaultDict = field(
+    transport_results: Dict = field(
         default_factory=lambda: {})

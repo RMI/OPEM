@@ -1,5 +1,5 @@
 from dataclasses import InitVar, dataclass, field
-from typing import DefaultDict
+from typing import Dict
 from opem.constants import Constants
 
 from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells
@@ -73,14 +73,14 @@ class CombustionEF:
                               other_table_refs={"Table 2: Conversion Factors": self.constants.table_2_conversion_factors})
 
     constants: Constants
-    user_input: InitVar[DefaultDict] = {}
+    user_input: InitVar[Dict] = {}
 
   # Prod CombustEF sheet, table: Product Combustion Emission Factors -- Petroleum Products
   # CALCULATED
-    product_combustion_emission_factors_petroleum: DefaultDict = field(
+    product_combustion_emission_factors_petroleum: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Product_Combustion_Emission_Factors_Petroleum_Products'))
 
     # Prod CombustEF sheet, table: Product Combustion Emission Factors -- Fossil-Fuel-Derived Fuels (Solid)
     # CALCULATED
-    product_combustion_emission_factors_derived_solids: DefaultDict = field(
+    product_combustion_emission_factors_derived_solids: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Product_Combustion_Emission_Factors_Fossil_Fuel_Derived_Fuels_Solid'))

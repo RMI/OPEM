@@ -1,5 +1,5 @@
 from dataclasses import InitVar, dataclass, field
-from typing import DefaultDict
+from typing import Dict
 from opem.constants import Constants
 
 from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells
@@ -80,38 +80,38 @@ class PipelineEF:
                               )
     constants: Constants
     # will this cause problems if I try to pass in a list?
-    user_input: InitVar[DefaultDict] = {}
+    user_input: InitVar[Dict] = {}
 
     # PipelineEF sheet, table: Pipeline Emission Factors
     # all fuels for pipeline transport modes
     # CALCULATED
-    pipeline_emission_factors: DefaultDict = field(
+    pipeline_emission_factors: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Pipeline_Emission_Factors'))
 
     # PipelineEF sheet, table: Energy Intensity of Pipeline Transportation (Btu:ton-mile)
     # USER INPUT
-    energy_intensity_of_pipeline_transportation: DefaultDict = field(
+    energy_intensity_of_pipeline_transportation: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Energy_Intensity_of_Pipeline_Transportation'))
 
     # PipelineEF sheet, table: Share of Pipeline Technologies Used
     # USER INPUT
-    share_of_pipeline_technologies_used: DefaultDict = field(default_factory=lambda: build_dict_from_defaults(
+    share_of_pipeline_technologies_used: Dict = field(default_factory=lambda: build_dict_from_defaults(
         'Share_of_Pipeline_Technologies_Used'))
 
     # PipelineEF sheet, table: Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Turbine
     # STATIC
 
-    pipeline_emission_factors_combustion_pipeline_turbine: DefaultDict = field(default_factory=lambda: build_dict_from_defaults(
+    pipeline_emission_factors_combustion_pipeline_turbine: Dict = field(default_factory=lambda: build_dict_from_defaults(
         'Emission_Factors_of_Fuel_Combustion_Feedstock_and_Fuel_Transportation_From_Product_Origin_to_Product_Destination_Pipeline_Turbine'))
 
     # PipelineEF sheet, table: Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Reciprocating Engine: Current
     # STATIC
 
-    pipeline_emission_factors_combustion_pipeline_recip_engine_current: DefaultDict = field(default_factory=lambda: build_dict_from_defaults(
+    pipeline_emission_factors_combustion_pipeline_recip_engine_current: Dict = field(default_factory=lambda: build_dict_from_defaults(
      'Emission_Factors_of_Fuel_Combustion-_Feedstock_and_Fuel_Transportation_From_Product_Origin_to_Product_Destination_Pipeline_Reciprocating_Engine_Current'))
 
     # PipelineEF sheet, table: Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Reciprocating Engine: Future
     # STATIC
 
-    pipeline_emission_factors_combustion_pipeline_recip_engine_future: DefaultDict = field(default_factory=lambda: build_dict_from_defaults(
+    pipeline_emission_factors_combustion_pipeline_recip_engine_future: Dict = field(default_factory=lambda: build_dict_from_defaults(
      'Emission_Factors_of_Fuel_Combustion-_Feedstock_and_Fuel_Transportation_From_Product_Origin_to_Product_Destination_Pipeline_Reciprocating_Engine_Future'))

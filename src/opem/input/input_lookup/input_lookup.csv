@@ -1,7 +1,16 @@
 ﻿User Inputs & Results,Global:,Assay (Select Oil),-,`,product_name,,
-User Inputs & Results,Global:,Upstream Field Selection,-,`,,,
-User Inputs & Results,Global:,NGL Volume Source,-,`,,,
-User Inputs & Results,Global:,% Ethane Volume directly sent to cracker/chem plant allocated to Ethylene Conversion,-,`,,,
+User Inputs & Results,Global:,Upstream Field Selection,-,`,upstream_field_selection,,
+User Inputs & Results,Global:,Gas Production Volume (MCFD),-,`,gas_production_volume,,
+User Inputs & Results,Global:,Oil Production Volume (BOED),-,`,oil_production_volume,,
+User Inputs & Results,Global:,NGL Volume source,-,`,ngl_volume_source,,
+User Inputs & Results,Global:,NGL C2 Volume (BOED),-,`,ngl_c2_volume,,
+User Inputs & Results,Global:,NGL C3 Volume (BOED),-,`,ngl_c3_volume,,
+User Inputs & Results,Global:,NGL C4 Volume (BOED),-,`,ngl_c4_volume,,
+User Inputs & Results,Global:,NGL C5+ Volume (BOED),-,`,ngl_c5plus_volume,,
+User Inputs & Results,Global:,Total field NGL volume (BOED),-,`,total_field_ngl_volume,,
+User Inputs & Results,Global:,OPGEE Coke mass (kg/d),-,`,opgee_coke_mass,,
+User Inputs & Results,Global:,% Field NGL C2 Volume allocated to Ethylene converstion,-,`,percent_ngl_c2_to_ethylene,,
+,,,,,,,
 ,,,,,,,
 User Inputs & Results,Transport:,Fuel,Pipeline,`,transport_results,Pipeline Emissions,Choose Transport Fuel (from drop-down)
 User Inputs & Results,Transport:,Fuel,Rail,`,transport_results,Rail Emissions,Choose Transport Fuel (from drop-down)
@@ -22,21 +31,21 @@ User Inputs & Results,Combustion,Oil product Combustion efficiencies,Coke,`,comb
 User Inputs & Results,Combustion,Oil product Combustion efficiencies,Residual fuels,`,combustion_results,Residual fuels,% Combusted
 User Inputs & Results,Combustion,Oil product Combustion efficiencies,Liquefied Petroleum Gases (LPG),`,combustion_results,Liquefied Petroleum Gases (LPG),% Combusted
 ,,,,,,,
-Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 1,kg CO2 per gallon
-Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 8,g CH4 per gallon
-Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 5,g N2O per gallon
-Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 8,kg CO2 per gallon
-Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 9,g CH4 per gallon
-Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 8,g N2O per gallon
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 6,kg CO2 per gallon
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 5,g CH4 per gallon
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No2,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 8,g N2O per gallon
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 9,kg CO2 per gallon
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 7,g CH4 per gallon
+Prod Combustion EF,Combustion EF,Distillate Fuel Oil No4,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Distillate Fuel Oil No. 2,g N2O per gallon
 Prod Combustion EF,Combustion EF,Kerosene type jet fuel,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Kerosene-Type Jet Fuel,kg CO2 per gallon
 Prod Combustion EF,Combustion EF,Kerosene type jet fuel,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Kerosene-Type Jet Fuel,g CH4 per gallon
 Prod Combustion EF,Combustion EF,Kerosene type jet fuel,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Kerosene-Type Jet Fuel,g N2O per gallon
 Prod Combustion EF,Combustion EF,Motor Gasoline,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Motor Gasoline,kg CO2 per gallon
 Prod Combustion EF,Combustion EF,Motor Gasoline,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Motor Gasoline,g CH4 per gallon
 Prod Combustion EF,Combustion EF,Motor Gasoline,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Motor Gasoline,g N2O per gallon
-Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Residual Fuel Oil No. 5,kg CO2 per gallon
-Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Residual Fuel Oil No. 8,g CH4 per gallon
-Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Residual Fuel Oil No. 7,g N2O per gallon
+Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,kg CO2 per gallon,`,product_combustion_emission_factors_petroleum,Residual Fuel Oil No. 3,kg CO2 per gallon
+Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,g CH4 per gallon,`,product_combustion_emission_factors_petroleum,Residual Fuel Oil No. 7,g CH4 per gallon
+Prod Combustion EF,Combustion EF,Residual Fuel Oil No6,g N2O per gallon,`,product_combustion_emission_factors_petroleum,Residual Fuel Oil No. 6,g N2O per gallon
 Prod Combustion EF,Combustion EF,Petroleum Coke,kg CO2 per ton,`,product_combustion_emission_factors_derived_solids,Petroleum Coke,kg CO2 per ton
 Prod Combustion EF,Combustion EF,Petroleum Coke,g CH4 per ton,`,product_combustion_emission_factors_derived_solids,Petroleum Coke,g CH4 per ton
 Prod Combustion EF,Combustion EF,Petroleum Coke,g N2O per ton,`,product_combustion_emission_factors_derived_solids,Petroleum Coke,g N2O per ton
@@ -58,7 +67,7 @@ Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel T
 Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CO,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,CO,Class 8B Diesel Truck Emission Factors (g/mi.)
 Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),NOx,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,NOx,Class 8B Diesel Truck Emission Factors (g/mi.)
 Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM10,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,PM10,Class 8B Diesel Truck Emission Factors (g/mi.)
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM2.4,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,PM2.8,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM2.8,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,PM2.8,Class 8B Diesel Truck Emission Factors (g/mi.)
 Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),SOx,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,SOx,Class 8B Diesel Truck Emission Factors (g/mi.)
 Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),BC,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,BC,Class 8B Diesel Truck Emission Factors (g/mi.)
 Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),OC,`,truck_emission_factors_of_fuel_combustion_origin_to_destination,OC,Class 8B Diesel Truck Emission Factors (g/mi.)
@@ -68,7 +77,7 @@ Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel T
 Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),CO,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,CO,Class 8B Diesel Truck Emission Factors (g/mi.)
 Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),NOx,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,NOx,Class 8B Diesel Truck Emission Factors (g/mi.)
 Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM10,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,PM10,Class 8B Diesel Truck Emission Factors (g/mi.)
-Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM2.1,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,PM2.4,Class 8B Diesel Truck Emission Factors (g/mi.)
+Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),PM2.3,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,PM2.9,Class 8B Diesel Truck Emission Factors (g/mi.)
 Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),SOx,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,SOx,Class 8B Diesel Truck Emission Factors (g/mi.)
 Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),BC,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,BC,Class 8B Diesel Truck Emission Factors (g/mi.)
 Heavy-Duty Truck EF,Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned),Class 8B Diesel Truck Emission Factors (g/mi.),OC,`,truck_emission_factors_of_fuel_combustion_destination_to_origin,OC,Class 8B Diesel Truck Emission Factors (g/mi.)
@@ -202,16 +211,16 @@ Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,Renewable Diesel
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,Renewable Gasoline
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM10,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM10,Hydrogen
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.8,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.6,LNG
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.4,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.8,DME
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.2,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.2,FTD
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.3,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.9,E90
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.4,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.2,M90
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.8,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.9,LPG
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.7,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.8,Biodiesel
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.9,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.9,Renewable Diesel
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.7,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.5,Renewable Gasoline
-Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.8,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.3,Hydrogen
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.6,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.1,LNG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.2,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.2,DME
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.7,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.1,FTD
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.5,E90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.7,E90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.9,M90,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.9,M90
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.6,LPG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.8,LPG
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.2,Biodiesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.8,Biodiesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.4,Renewable Diesel,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.2,Renewable Diesel
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.7,Renewable Gasoline,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.2,Renewable Gasoline
+Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,PM2.2,Hydrogen,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,PM2.1,Hydrogen
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,LNG,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,LNG
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,DME,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,DME
 Heavy-Duty Truck EF,Emission Ratios by Fuel Type Relative to Baseline Fuel,BC,FTD,`,emission_ratios_by_fuel_type_relative_to_baseline_fuel,BC,FTD
