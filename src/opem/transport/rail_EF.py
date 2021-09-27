@@ -64,21 +64,21 @@ class RailEF:
     # RailEF sheet, table: Rail Emission Factors
     # CALCULATED
     rail_emission_factors: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Rail_Emission_Factors'))
+        default_factory=lambda: build_dict_from_defaults('Rail_Emission_Factors', 'rail'))
 
     # RailEF sheet, table: Energy Intensity of Rail Transportation (Btu:ton-mile)
     # USER INPUT
     energy_intensity_of_rail_transportation: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Energy_Intensity_of_Rail_Transportation'))
+        default_factory=lambda: build_dict_from_defaults('Energy_Intensity_of_Rail_Transportation', 'rail'))
 
     # RailEF sheet, table: Emission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Origin to Product Destination (grams per mmBtu of fuel burned)
     # STATIC
     rail_emission_factors_combustion_origin_to_destination: Dict = field(
         default_factory=lambda: build_dict_from_defaults(
-    "Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Origin_to_Product_Destination_Locomotive"))
+            "Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Origin_to_Product_Destination_Locomotive", 'rail'))
 
 # RailEF sheet, table: EEmission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned)
     # STATIC
     rail_emission_factors_combustion_destination_to_origin: Dict = field(
         default_factory=lambda: build_dict_from_defaults(
-      'Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Destination_Back_to_Product_Origin_Locomotive'))
+            'Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Destination_Back_to_Product_Origin_Locomotive', 'rail'))

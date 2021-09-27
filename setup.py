@@ -125,9 +125,9 @@ setup(
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
 
-    
+
     # we need backport "importlib_resorces for any python version < 3.9"
-    
+
     install_requires=[" importlib_resources ; python_version<'3.9'"],
 
     # List additional groups of dependencies here (e.g. development
@@ -149,7 +149,7 @@ setup(
         "opem": ["input/input_lookup/*.csv",
                  "products/product_slates/*.json",
                  "products/product_slates/*.csv",
-                 "defaults/*.csv"],
+                 "defaults/*/*.csv"],
     },
     # testing this option
     # include_package_data=True,

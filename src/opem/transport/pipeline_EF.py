@@ -20,10 +20,10 @@ def calc_pipeline_emissions_factors(row_key, col_key, target_table_ref=None, oth
 
 
 def calc_pipeline_emissions_factors_total(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    
+
     return sum(row[col_key] *
                other_table_refs[0]['Oil Product Pipeline'][other_tables_keymap[other_table_refs[0]
-                                                                            ["full_table_name"]]["col_keymap"][key]]
+                                                                               ["full_table_name"]]["col_keymap"][key]]
                for key, row in target_table_ref.items()
                if key not in ['full_table_name', 'row_index_name', 'Pipeline'])
 
@@ -86,32 +86,32 @@ class PipelineEF:
     # all fuels for pipeline transport modes
     # CALCULATED
     pipeline_emission_factors: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Pipeline_Emission_Factors'))
+        default_factory=lambda: build_dict_from_defaults('Pipeline_Emission_Factors', 'pipeline'))
 
     # PipelineEF sheet, table: Energy Intensity of Pipeline Transportation (Btu:ton-mile)
     # USER INPUT
     energy_intensity_of_pipeline_transportation: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Energy_Intensity_of_Pipeline_Transportation'))
+        default_factory=lambda: build_dict_from_defaults('Energy_Intensity_of_Pipeline_Transportation', 'pipeline'))
 
     # PipelineEF sheet, table: Share of Pipeline Technologies Used
     # USER INPUT
     share_of_pipeline_technologies_used: Dict = field(default_factory=lambda: build_dict_from_defaults(
-        'Share_of_Pipeline_Technologies_Used'))
+        'Share_of_Pipeline_Technologies_Used', 'pipeline'))
 
     # PipelineEF sheet, table: Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Turbine
     # STATIC
 
     pipeline_emission_factors_combustion_pipeline_turbine: Dict = field(default_factory=lambda: build_dict_from_defaults(
-        'Emission_Factors_of_Fuel_Combustion_Feedstock_and_Fuel_Transportation_From_Product_Origin_to_Product_Destination_Pipeline_Turbine'))
+        'Emission_Factors_of_Fuel_Combustion_Feedstock_and_Fuel_Transportation_From_Product_Origin_to_Product_Destination_Pipeline_Turbine', 'pipeline'))
 
     # PipelineEF sheet, table: Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Reciprocating Engine: Current
     # STATIC
 
     pipeline_emission_factors_combustion_pipeline_recip_engine_current: Dict = field(default_factory=lambda: build_dict_from_defaults(
-     'Emission_Factors_of_Fuel_Combustion-_Feedstock_and_Fuel_Transportation_From_Product_Origin_to_Product_Destination_Pipeline_Reciprocating_Engine_Current'))
+        'Emission_Factors_of_Fuel_Combustion-_Feedstock_and_Fuel_Transportation_From_Product_Origin_to_Product_Destination_Pipeline_Reciprocating_Engine_Current', 'pipeline'))
 
     # PipelineEF sheet, table: Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Reciprocating Engine: Future
     # STATIC
 
     pipeline_emission_factors_combustion_pipeline_recip_engine_future: Dict = field(default_factory=lambda: build_dict_from_defaults(
-     'Emission_Factors_of_Fuel_Combustion-_Feedstock_and_Fuel_Transportation_From_Product_Origin_to_Product_Destination_Pipeline_Reciprocating_Engine_Future'))
+        'Emission_Factors_of_Fuel_Combustion-_Feedstock_and_Fuel_Transportation_From_Product_Origin_to_Product_Destination_Pipeline_Reciprocating_Engine_Future', 'pipeline'))

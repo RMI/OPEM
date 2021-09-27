@@ -5,18 +5,16 @@ from typing import Dict, List
 import codecs
 import math
 import sys
-if sys.version_info >= (3.9,):
+if sys.version_info >= (3, 9):
     import importlib.resources as pkg_resources
 else:
     # Try backported to PY<37 `importlib_resources`.
-    # Also use for Python 3.8 because 'importlib.resources.files' 
+    # Also use for Python 3.8 because 'importlib.resources.files'
     # method is not implemented
     import importlib_resources as pkg_resources
 
-    
 
 from opem import defaults
-
 
 
 """
@@ -91,27 +89,27 @@ def isfloat(value):
 def read_input_structure(table_name):
     from opem.input.user_input import create_lookup_table
     lookup_table = create_lookup_table().values()
-    
+
     inputs_table_format = [[""]]
     visited_rows = []
     for row in lookup_table:
         if row[0] == table_name:
             if not row[2] in inputs_table_format[0]:
-               inputs_table_format[0].append(row[2])
+                inputs_table_format[0].append(row[2])
             if not row[1] in visited_rows:
-               inputs_table_format.append([row[1]])
-               visited_rows.append(row[1])
+                inputs_table_format.append([row[1]])
+                visited_rows.append(row[1])
     num_cols = len(inputs_table_format[0])-1
     for row in inputs_table_format[1:]:
-        for _ in range(num_cols): 
+        for _ in range(num_cols):
             row.append("")
     return inputs_table_format
 
 
-def read_model_table_defaults(table_name):
+def read_model_table_defaults(table_name, sheet_name):
     rows_and_header = []
     ref = pkg_resources.files(
-        defaults).joinpath(f"{table_name}.csv")
+        defaults).joinpath(f"{sheet_name}/{table_name}.csv")
     # if only 'utf-8' is specified then BOM character '\ufeff' is included in output
     utf8_reader = codecs.getreader("utf-8-sig")
     with ref.open('rb') as csvfile:
@@ -120,24 +118,25 @@ def read_model_table_defaults(table_name):
             rows_and_header.append(row)
         return rows_and_header
 
-def build_dict_from_defaults(table_name, read_defaults=read_model_table_defaults):
+
+def build_dict_from_defaults(table_name, sheet_name=None, read_defaults=read_model_table_defaults):
     # we should be able to pass in a different read_model_table_defaults
     # function here. should implement a version that reads from memory instead
     # of disk for more speed.
-      table_array = read_defaults(table_name)
-     
-      defaults = {}
-      headers = table_array[0]
-      defaults["full_table_name"] = table_name
-      defaults['row_index_name'] = headers[0]
-      for row in table_array[1:]:
+    if sheet_name is not None:
+        table_array = read_defaults(table_name, sheet_name)
+    else:
+        table_array = read_defaults(table_name)
+
+    defaults = {}
+    headers = table_array[0]
+    defaults["full_table_name"] = table_name
+    defaults['row_index_name'] = headers[0]
+    for row in table_array[1:]:
         if row[0] != '':
             defaults[row[0]] = {k: float(v) if isfloat(v) else v for (k, v) in filter(
-                lambda x: True if (x[0] != '' and x[1] != '') else False, zip(headers[1:], row[1:]))}    
-      return defaults
-
-
-
+                lambda x: True if (x[0] != '' and x[1] != '') else False, zip(headers[1:], row[1:]))}
+    return defaults
 
 
 def visit_dict(d, path=[]):
@@ -156,7 +155,7 @@ def initialize_from_dataclass(target, source: Dict):
         if key in target_keys:
             if type(source[key]) != dict:
                 if source[key] != '':
-                   setattr(target, key, source[key])
+                    setattr(target, key, source[key])
             else:
                 for path in visit_dict(source[key]):
 
@@ -170,10 +169,10 @@ def initialize_from_dataclass(target, source: Dict):
                     keys_length = len(path[0]) - 1
                     # get a reference to the object the holds the key/value pair we want to mutate
                     if path[-1] != '':
-                       ref = nested_access(
-                           dictionary=getattr(target, key), keys=path[0][0:keys_length])
-                    #if not math.isnan(path[-1]):
-                       ref[path[0][-1]] = path[-1]
+                        ref = nested_access(
+                            dictionary=getattr(target, key), keys=path[0][0:keys_length])
+                    # if not math.isnan(path[-1]):
+                        ref[path[0][-1]] = path[-1]
 
 
 def nested_access(dictionary, keys):

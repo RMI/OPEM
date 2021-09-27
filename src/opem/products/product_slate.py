@@ -13,8 +13,7 @@ class ProductSlate:
             # this allows us to get input from a dict generated from another dataclass
             initialize_from_dataclass(self, user_input)
         elif type(user_input) == list:
-           
-           
+
             initialize_from_list(self, user_input)
         else:
             raise ValueError("Please pass a list or dictionary to initialize")
@@ -26,8 +25,11 @@ class ProductSlate:
     # any default values in the dictionary fields
     user_input: InitVar[Dict] = {}
 
-    volume_flow_bbl: Dict = field(default_factory=lambda: build_dict_from_defaults("volume_flow_bbl"))
+    volume_flow_bbl: Dict = field(default_factory=lambda: build_dict_from_defaults(
+        "volume_flow_bbl", 'product_slate'))
 
-    energy_flow_MJ: Dict = field(default_factory=lambda: build_dict_from_defaults("energy_flow_MJ"))
+    energy_flow_MJ: Dict = field(default_factory=lambda: build_dict_from_defaults(
+        "energy_flow_MJ", 'product_slate'))
 
-    mass_flow_kg: Dict = field(default_factory=lambda: build_dict_from_defaults("mass_flow_kg"))
+    mass_flow_kg: Dict = field(default_factory=lambda: build_dict_from_defaults(
+        "mass_flow_kg", 'product_slate'))
