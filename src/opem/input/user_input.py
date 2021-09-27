@@ -3,11 +3,11 @@ import csv
 import json
 import sys
 
-if sys.version_info >= (3.9,):
+if sys.version_info >= (3, 9):
     import importlib.resources as pkg_resources
 else:
     # Try backported to PY<37 `importlib_resources`.
-    # Also use for Python 3.8 because 'importlib.resources.files' 
+    # Also use for Python 3.8 because 'importlib.resources.files'
     # method is not implemented
     import importlib_resources as pkg_resources
 

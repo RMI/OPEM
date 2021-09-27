@@ -114,9 +114,9 @@ class TransportEF:
     # collect references to nested objects for ease
     # CALCULATED
     transport_emission_factors_weighted_average: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors'))
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors', 'transport'))
 
     # TransportEF sheet, subtable: Manual Input
     # fraction of fuel type for each transport mode
     fraction_of_fuel_type_for_transport_mode: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Transport_Process_Fuel_Share'))
+        default_factory=lambda: build_dict_from_defaults('Transport_Process_Fuel_Share', 'transport'))
