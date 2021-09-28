@@ -96,8 +96,8 @@ class Constants:
 
     # Constants sheet, table: Table 1: Hundred-Year Global Warming Potentials
     # STATIC
-    table_1_100year_gwp: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Table_1_Hundred-Year_Global_Warming_Potentials', 'constants'))
+    table_1_gwp: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Table_1_Global_Warming_Potentials', 'constants'))
 
     # Constants sheet, table: Table 2: Conversion Factors
     # NOTE: I CHANGED THE ORDER OF COLUMNS from the Excel workbook (unit, factor)

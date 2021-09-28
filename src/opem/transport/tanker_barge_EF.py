@@ -8,10 +8,29 @@ from opem.utils import initialize_from_dataclass, initialize_from_list, build_di
 from statistics import mean
 # Define functions for filling calculated cells in the tables here
 
+# NOT IN OPEM 1.2
+# def calc_product_total_mass_flow(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+#     return sum(
+#         (float(value["Flow"]) for key, value in other_table_refs[0].items() if key not in ["full_table_name", "row_index_name"] and key not in extra["excluded_keys"] and value != None))
 
-def calc_product_total_mass_flow(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    return sum(
-        (float(value["Flow"]) for key, value in other_table_refs[0].items() if key not in ["full_table_name", "row_index_name"] and key not in extra["excluded_keys"] and value != None))
+# def calc_product_share(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+
+#     # there might be more keys: other_table_col_key1, other_table_col_key2, etc.
+#     other_table_col_key = col_key
+#     other_table_row_key = row_key
+#     if other_tables_keymap and other_table_refs[0]["full_table_name"] in other_tables_keymap.keys():
+#         if "col_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
+#             other_table_col_key = (lambda col_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"][col_key] if col_key in
+#                                    other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"].keys() else other_table_col_key)(col_key)
+#         if "row_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
+#             other_table_row_key = (lambda row_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"][row_key] if row_key in
+#                                    other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"].keys() else other_table_row_key)(row_key)
+
+#     if row_key == "Residual Oil":
+#         return (other_table_refs[0]["Fuel Oil"]["Flow"] + other_table_refs[0]["Residual fuels"]["Flow"]/target_table_ref["mass_flow_sum"]["total"])
+#     else:
+
+#         return other_table_refs[0][other_table_row_key]["Flow"]/target_table_ref["mass_flow_sum"]["total"]
 
 
 def calc_marine_heating_val(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -19,6 +38,14 @@ def calc_marine_heating_val(row_key, col_key, target_table_ref=None, other_table
     MJ_to_BTU = 947.817
 
     return other_table_refs[0]["Bunker fuel for ocean tanker"]["User Selection: LHV or HHV, Btu/gal"] / MJ_to_BTU / other_table_refs[0]["Bunker fuel for ocean tanker"]["Density, grams/gal"] * 1000
+
+
+def calc_marine_energy_consumption(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    MJ_to_BTU = 947.817
+
+    return (target_table_ref["Heating Value"]["properties"] *
+            float(target_table_ref["Brake Specific Fuel Consumption (BSFC, g/kWh operation)"]["properties"]) *
+            MJ_to_BTU / 1000)
 
 
 def calc_horsepower(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -35,45 +62,6 @@ def calc_tanker_barge_energy_consumption(row_key, col_key, target_table_ref=None
         return (14.42/target_table_ref["Load Factor"]["Barge"]+350)*0.735*other_table_refs[1]["Residual oil"]["User Selection: LHV or HHV, Btu/gal"]/other_table_refs[1]["Residual oil"]["Density, grams/gal"]
 
 
-def calc_marine_energy_consumption(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    MJ_to_BTU = 947.817
-
-    return (target_table_ref["Heating Value"]["properties"] *
-            float(target_table_ref["Brake Specific Fuel Consumption (BSFC, g/kWh operation)"]["properties"]) *
-            MJ_to_BTU / 1000)
-
-
-def calc_product_share(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-
-    # there might be more keys: other_table_col_key1, other_table_col_key2, etc.
-    other_table_col_key = col_key
-    other_table_row_key = row_key
-    if other_tables_keymap and other_table_refs[0]["full_table_name"] in other_tables_keymap.keys():
-        if "col_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
-            other_table_col_key = (lambda col_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"][col_key] if col_key in
-                                   other_tables_keymap[other_table_refs[0]["full_table_name"]]["col_keymap"].keys() else other_table_col_key)(col_key)
-        if "row_keymap" in other_tables_keymap[other_table_refs[0]["full_table_name"]].keys():
-            other_table_row_key = (lambda row_key: other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"][row_key] if row_key in
-                                   other_tables_keymap[other_table_refs[0]["full_table_name"]]["row_keymap"].keys() else other_table_row_key)(row_key)
-
-    if row_key == "Residual Oil":
-        return (other_table_refs[0]["Fuel Oil"]["Flow"] + other_table_refs[0]["Residual fuels"]["Flow"]/target_table_ref["mass_flow_sum"]["total"])
-    else:
-
-        return other_table_refs[0][other_table_row_key]["Flow"]/target_table_ref["mass_flow_sum"]["total"]
-
-
-def calc_barge_tanker_emissions(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    result = 0
-    for key, row in other_table_refs[0].items():
-        if key not in ['full_table_name', 'row_index_name']:
-            result += row[col_key] * \
-                other_table_refs[1][key]['GWP']
-    result = (result * other_table_refs[2]
-              [extra["trip_details"]][row_key])/1000000
-    return result
-
-
 def calc_energy_intensity_transport(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     return other_table_refs[0]["Energy Consumption (Btu/hphr)"][extra["trip_details"]] * \
         other_table_refs[0]["Load Factor"][extra["trip_details"]
@@ -84,29 +72,48 @@ def calc_energy_intensity_transport(row_key, col_key, target_table_ref=None, oth
         other_table_refs[4]["km per mile"]["Conversion Factor"]
 
 
-def calc_emission_factors_ocean_tanker_forward_backward(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    total = 0
-    for row in other_table_refs[0].keys():
-        if row != "full_table_name" and row != "row_index_name":
-            total += other_table_refs[0][row][col_key] * \
-                other_table_refs[1][row]["share"]
-    return total
+def calc_barge_tanker_emissions(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    result = 0
+    for key, row in other_table_refs[0].items():
+        if key not in ['full_table_name', 'row_index_name']:
+            result += row[col_key] * \
+                other_table_refs[1][key]['100 year GWP']
+    result = (result * other_table_refs[2]
+              [extra["trip_details"]][row_key])/1000000
+    return result
 
 
-def calc_emission_factors_ocean_tanker_total(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-
-    return target_table_ref["Ocean Tanker Forward Journey"][col_key] + target_table_ref["Ocean Tanker Backhaul"][col_key]
-
-
-def calc_emission_factors_barge_forward_backward(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    if row_key == "Barge Forward Journey":
-        return mean(other_table_refs[0][row][col_key] for row in other_table_refs[0].keys() if row != "full_table_name" and row != "row_index_name")
-    elif row_key == "Barge Backhaul":
-        return mean(other_table_refs[1][row][col_key] for row in other_table_refs[0].keys() if row != "full_table_name" and row != "row_index_name")
+def calc_barge_tanker_emiss_factor_gas(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    return other_table_refs[0][extra['gas']][col_key] * other_table_refs[1][extra['trip_details']][row_key]/1000000
 
 
-def calc_emission_factors_barge_total(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    return target_table_ref["Barge Forward Journey"][col_key] + target_table_ref["Barge Backhaul"][col_key]
+def calc_total_emiss_factor(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    return other_table_refs[0][row_key][col_key] + other_table_refs[1][row_key][col_key]
+
+# NOT USED
+# def calc_emission_factors_ocean_tanker_forward_backward(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+#     total = 0
+#     for row in other_table_refs[0].keys():
+#         if row != "full_table_name" and row != "row_index_name":
+#             total += other_table_refs[0][row][col_key] * \
+#                 other_table_refs[1][row]["share"]
+#     return total
+
+
+# def calc_emission_factors_ocean_tanker_total(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+
+#     return target_table_ref["Ocean Tanker Forward Journey"][col_key] + target_table_ref["Ocean Tanker Backhaul"][col_key]
+
+
+# def calc_emission_factors_barge_forward_backward(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+#     if row_key == "Barge Forward Journey":
+#         return mean(other_table_refs[0][row][col_key] for row in other_table_refs[0].keys() if row != "full_table_name" and row != "row_index_name")
+#     elif row_key == "Barge Backhaul":
+#         return mean(other_table_refs[1][row][col_key] for row in other_table_refs[0].keys() if row != "full_table_name" and row != "row_index_name")
+
+
+# def calc_emission_factors_barge_total(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+#     return target_table_ref["Barge Forward Journey"][col_key] + target_table_ref["Barge Backhaul"][col_key]
 
 
 @dataclass
@@ -121,22 +128,24 @@ class TankerBargeEF:
         else:
             raise ValueError("Please pass a list or dictionary to initialize")
 
-        fill_calculated_cells(target_table_ref=self.share_of_petroleum_products,
-                              func_to_apply=calc_product_total_mass_flow, included_rows=[
-                                  "mass_flow_sum"],
-                              included_cols=["total"],
-                              other_table_refs=[
-                                  self.product_slate.mass_flow_kg, ],
-                              # hack the keymap to pass excluded column when we iterate over other_table keys
-                              extra={"excluded_keys": ["Net Upstream Petcoke", ]})
+        # NOT IN OPEM 1.2
+        # fill_calculated_cells(target_table_ref=self.share_of_petroleum_products,
+        #                       func_to_apply=calc_product_total_mass_flow, included_rows=[
+        #                           "mass_flow_sum"],
+        #                       included_cols=["total"],
+        #                       other_table_refs=[
+        #                           self.product_slate.mass_flow_kg, ],
+        #                       # hack the keymap to pass excluded column when we iterate over other_table keys
+        #                       extra={"excluded_keys": ["Net Upstream Petcoke", ]})
 
-        fill_calculated_cells(target_table_ref=self.share_of_petroleum_products, other_table_refs=[
-            self.product_slate.mass_flow_kg, ],
-            func_to_apply=calc_product_share, excluded_rows=[
-            "mass_flow_sum", "row_index_name"],
-            other_tables_keymap={f"{self.product_slate.mass_flow_kg['full_table_name']}": {
-                "row_keymap": {"Petcoke": "Coke"}}})
+        # fill_calculated_cells(target_table_ref=self.share_of_petroleum_products, other_table_refs=[
+        #     self.product_slate.mass_flow_kg, ],
+        #     func_to_apply=calc_product_share, excluded_rows=[
+        #     "mass_flow_sum", "row_index_name"],
+        #     other_tables_keymap={f"{self.product_slate.mass_flow_kg['full_table_name']}": {
+        #         "row_keymap": {"Petcoke": "Coke"}}})
 
+        # calculate marine fuel properties and consumption
         fill_calculated_cells(target_table_ref=self.marine_fuel_properties_consumption,
                               included_rows=["Heating Value"], included_cols=["properties"],
                               func_to_apply=calc_marine_heating_val,
@@ -205,68 +214,185 @@ class TankerBargeEF:
                                                 self.cargo_payload,
                                                 self.constants.table_2_conversion_factors])
 
-        # calculate emissions factors from transport
-        fill_calculated_cells(target_table_ref=self.tanker_barge_emissions_factors_transport_forward_journey_barge,
+        # calculate emissions factors from transport, CO2eq
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_forward_journey_barge_co2eq,
                               func_to_apply=calc_barge_tanker_emissions,
                               extra={
                                   "trip_details": "Barge Forward Journey"},
                               other_table_refs=[self.tanker_barge_emissions_factors_combustion_origin_destination_barge,
-                                                self.constants.table_1_100year_gwp,
+                                                self.constants.table_1_gwp,
                                                 self.tanker_barge_energy_intensity_transport])
 
-        fill_calculated_cells(target_table_ref=self.tanker_barge_emissions_factors_transport_backhaul_barge,
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_backhaul_barge_co2eq,
                               func_to_apply=calc_barge_tanker_emissions,
                               extra={
                                   "trip_details": "Barge Backhaul"},
                               other_table_refs=[self.tanker_barge_emissions_factors_combustion_destination_origin_barge,
-                                                self.constants.table_1_100year_gwp,
+                                                self.constants.table_1_gwp,
                                                 self.tanker_barge_energy_intensity_transport])
 
-        fill_calculated_cells(target_table_ref=self.tanker_barge_emissions_factors_transport_forward_journey_ocean_tanker,
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_forward_journey_ocean_tanker_co2eq,
                               func_to_apply=calc_barge_tanker_emissions,
                               extra={
                                   "trip_details": "Ocean Tanker Forward Journey"},
                               other_table_refs=[self.tanker_barge_emissions_factors_combustion_origin_destination_ocean_tanker,
-                                                self.constants.table_1_100year_gwp,
+                                                self.constants.table_1_gwp,
                                                 self.tanker_barge_energy_intensity_transport])
 
-        fill_calculated_cells(target_table_ref=self.tanker_barge_emissions_factors_transport_backhaul_ocean_tanker,
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_backhaul_ocean_tanker_co2eq,
                               func_to_apply=calc_barge_tanker_emissions,
                               extra={
                                   "trip_details": "Ocean Tanker Backhaul"},
                               other_table_refs=[self.tanker_barge_emissions_factors_combustion_destination_origin_ocean_tanker,
-                                                self.constants.table_1_100year_gwp,
+                                                self.constants.table_1_gwp,
                                                 self.tanker_barge_energy_intensity_transport])
-        # calculate emission factors for ocean tanker, forward and backward
-        fill_calculated_cells(target_table_ref=self.tanker_barge_emission_factors,
-                              func_to_apply=calc_emission_factors_ocean_tanker_forward_backward,
-                              included_rows=[
-                                  "Ocean Tanker Forward Journey", "Ocean Tanker Backhaul"],
+
+        # calculate emissions factors from transport, CO2
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_forward_journey_barge_co2,
+                              func_to_apply=calc_barge_tanker_emiss_factor_gas,
+                              extra={"trip_details": "Barge Forward Journey",
+                                     "gas": "CO2"},
+                              other_table_refs=[self.tanker_barge_emissions_factors_combustion_origin_destination_barge,
+                                                self.tanker_barge_energy_intensity_transport])
+
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_backhaul_barge_co2,
+                              func_to_apply=calc_barge_tanker_emiss_factor_gas,
+                              extra={"trip_details": "Barge Backhaul",
+                                     "gas": "CO2"},
+                              other_table_refs=[self.tanker_barge_emissions_factors_combustion_destination_origin_barge,
+                                                self.tanker_barge_energy_intensity_transport])
+
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_forward_journey_ocean_tanker_co2,
+                              func_to_apply=calc_barge_tanker_emiss_factor_gas,
+                              extra={"trip_details": "Ocean Tanker Forward Journey",
+                                     "gas": "CO2"},
+                              other_table_refs=[self.tanker_barge_emissions_factors_combustion_origin_destination_ocean_tanker,
+                                                self.tanker_barge_energy_intensity_transport])
+
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_backhaul_ocean_tanker_co2,
+                              func_to_apply=calc_barge_tanker_emiss_factor_gas,
+                              extra={"trip_details": "Ocean Tanker Backhaul",
+                                     "gas": "CO2"},
+                              other_table_refs=[self.tanker_barge_emissions_factors_combustion_destination_origin_ocean_tanker,
+                                                self.tanker_barge_energy_intensity_transport])
+
+        # calculate emissions factors from transport, CH4
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_forward_journey_barge_ch4,
+                              func_to_apply=calc_barge_tanker_emiss_factor_gas,
+                              extra={"trip_details": "Barge Forward Journey",
+                                     "gas": "CH4"},
+                              other_table_refs=[self.tanker_barge_emissions_factors_combustion_origin_destination_barge,
+                                                self.tanker_barge_energy_intensity_transport])
+
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_backhaul_barge_ch4,
+                              func_to_apply=calc_barge_tanker_emiss_factor_gas,
+                              extra={"trip_details": "Barge Backhaul",
+                                     "gas": "CH4"},
+                              other_table_refs=[self.tanker_barge_emissions_factors_combustion_destination_origin_barge,
+                                                self.tanker_barge_energy_intensity_transport])
+
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_forward_journey_ocean_tanker_ch4,
+                              func_to_apply=calc_barge_tanker_emiss_factor_gas,
+                              extra={"trip_details": "Ocean Tanker Forward Journey",
+                                     "gas": "CH4"},
+                              other_table_refs=[self.tanker_barge_emissions_factors_combustion_origin_destination_ocean_tanker,
+                                                self.tanker_barge_energy_intensity_transport])
+
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_backhaul_ocean_tanker_ch4,
+                              func_to_apply=calc_barge_tanker_emiss_factor_gas,
+                              extra={"trip_details": "Ocean Tanker Backhaul",
+                                     "gas": "CH4"},
+                              other_table_refs=[self.tanker_barge_emissions_factors_combustion_destination_origin_ocean_tanker,
+                                                self.tanker_barge_energy_intensity_transport])
+
+        # calculate emissions factors from transport, N2O
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_forward_journey_barge_n2o,
+                              func_to_apply=calc_barge_tanker_emiss_factor_gas,
+                              extra={"trip_details": "Barge Forward Journey",
+                                     "gas": "N2O"},
+                              other_table_refs=[self.tanker_barge_emissions_factors_combustion_origin_destination_barge,
+                                                self.tanker_barge_energy_intensity_transport])
+
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_backhaul_barge_n2o,
+                              func_to_apply=calc_barge_tanker_emiss_factor_gas,
+                              extra={"trip_details": "Barge Backhaul",
+                                     "gas": "N2O"},
+                              other_table_refs=[self.tanker_barge_emissions_factors_combustion_destination_origin_barge,
+                                                self.tanker_barge_energy_intensity_transport])
+
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_forward_journey_ocean_tanker_n2o,
+                              func_to_apply=calc_barge_tanker_emiss_factor_gas,
+                              extra={"trip_details": "Ocean Tanker Forward Journey",
+                                     "gas": "N2O"},
+                              other_table_refs=[self.tanker_barge_emissions_factors_combustion_origin_destination_ocean_tanker,
+                                                self.tanker_barge_energy_intensity_transport])
+
+        fill_calculated_cells(target_table_ref=self.emissions_factors_transport_backhaul_ocean_tanker_n2o,
+                              func_to_apply=calc_barge_tanker_emiss_factor_gas,
+                              extra={"trip_details": "Ocean Tanker Backhaul",
+                                     "gas": "N2O"},
+                              other_table_refs=[self.tanker_barge_emissions_factors_combustion_destination_origin_ocean_tanker,
+                                                self.tanker_barge_energy_intensity_transport])
+
+        # calculate total emission factors for CO2eq
+        fill_calculated_cells(target_table_ref=self.tanker_emission_factors_co2eq,
+                              func_to_apply=calc_total_emiss_factor,
                               excluded_cols=["Residual Oil", "Biodiesel",
                                              "Renewable Diesel", "Renewable Gasoline"],
-                              other_table_refs=[self.tanker_barge_emissions_factors_transport_forward_journey_ocean_tanker,
-                                                self.share_of_petroleum_products])
-        fill_calculated_cells(target_table_ref=self.tanker_barge_emission_factors,
-                              func_to_apply=calc_emission_factors_ocean_tanker_total,
-                              included_rows=[
-                                  "Ocean Tanker Emissions"],
+                              other_table_refs=[self.emissions_factors_transport_forward_journey_ocean_tanker_co2eq,
+                                                self.emissions_factors_transport_backhaul_ocean_tanker_co2eq])
+
+        fill_calculated_cells(target_table_ref=self.barge_emission_factors_co2eq,
+                              func_to_apply=calc_total_emiss_factor,
+
+                              excluded_cols=["Bunker Fuel"],
+                              other_table_refs=[self.emissions_factors_transport_forward_journey_barge_co2eq,
+                                                self.emissions_factors_transport_backhaul_barge_co2eq])
+
+        # calculate total emission factors for CO2
+        fill_calculated_cells(target_table_ref=self.tanker_emission_factors_co2,
+                              func_to_apply=calc_total_emiss_factor,
                               excluded_cols=["Residual Oil", "Biodiesel",
                                              "Renewable Diesel", "Renewable Gasoline"],
-                              )
+                              other_table_refs=[self.emissions_factors_transport_forward_journey_ocean_tanker_co2,
+                                                self.emissions_factors_transport_backhaul_ocean_tanker_co2])
 
-        fill_calculated_cells(target_table_ref=self.tanker_barge_emission_factors,
-                              func_to_apply=calc_emission_factors_barge_forward_backward,
-                              included_rows=[
-                                  "Barge Forward Journey", "Barge Backhaul"],
-                              excluded_cols=["Bunker Fuel", ],
-                              other_table_refs=[self.tanker_barge_emissions_factors_transport_forward_journey_barge,
-                                                self.tanker_barge_emissions_factors_transport_backhaul_barge])
+        fill_calculated_cells(target_table_ref=self.barge_emission_factors_co2,
+                              func_to_apply=calc_total_emiss_factor,
 
-        fill_calculated_cells(target_table_ref=self.tanker_barge_emission_factors,
-                              func_to_apply=calc_emission_factors_barge_total,
-                              included_rows=[
-                                  "Barge Emissions"],
-                              excluded_cols=["Bunker Fuel"])
+                              excluded_cols=["Bunker Fuel"],
+                              other_table_refs=[self.emissions_factors_transport_forward_journey_barge_co2,
+                                                self.emissions_factors_transport_backhaul_barge_co2])
+
+        # calculate total emission factors for CH4
+        fill_calculated_cells(target_table_ref=self.tanker_emission_factors_ch4,
+                              func_to_apply=calc_total_emiss_factor,
+                              excluded_cols=["Residual Oil", "Biodiesel",
+                                             "Renewable Diesel", "Renewable Gasoline"],
+                              other_table_refs=[self.emissions_factors_transport_forward_journey_ocean_tanker_ch4,
+                                                self.emissions_factors_transport_backhaul_ocean_tanker_ch4])
+
+        fill_calculated_cells(target_table_ref=self.barge_emission_factors_ch4,
+                              func_to_apply=calc_total_emiss_factor,
+
+                              excluded_cols=["Bunker Fuel"],
+                              other_table_refs=[self.emissions_factors_transport_forward_journey_barge_ch4,
+                                                self.emissions_factors_transport_backhaul_barge_ch4])
+
+        # calculate total emission factors for N20
+        fill_calculated_cells(target_table_ref=self.tanker_emission_factors_n2o,
+                              func_to_apply=calc_total_emiss_factor,
+                              excluded_cols=["Residual Oil", "Biodiesel",
+                                             "Renewable Diesel", "Renewable Gasoline"],
+                              other_table_refs=[self.emissions_factors_transport_forward_journey_ocean_tanker_n2o,
+                                                self.emissions_factors_transport_backhaul_ocean_tanker_n2o])
+
+        fill_calculated_cells(target_table_ref=self.barge_emission_factors_n2o,
+                              func_to_apply=calc_total_emiss_factor,
+
+                              excluded_cols=["Bunker Fuel"],
+                              other_table_refs=[self.emissions_factors_transport_forward_journey_barge_n2o,
+                                                self.emissions_factors_transport_backhaul_barge_n2o])
 
     constants: Constants
 
@@ -374,29 +500,103 @@ class TankerBargeEF:
         default_factory=lambda: build_dict_from_defaults(
             'Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Destination_Back_to_Product_Origin_Barge', 'tanker_barge'))
 
+    # EMISSIONS FACTORS TRANSPORT
+
     # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g CO2 eq.:kgkm) -- Ocean Tanker Forward Journey
     # Calculated
-    tanker_barge_emissions_factors_transport_forward_journey_ocean_tanker: Dict = field(
+    emissions_factors_transport_forward_journey_ocean_tanker_co2eq: Dict = field(
         default_factory=lambda: build_dict_from_defaults(
-            'Ocean_Tanker_Emissions_From_Transport_Ocean_Tanker_Forward_Journey', 'tanker_barge'))
+            'Ocean_Tanker_Emissions_From_Transport_Ocean_Tanker_Forward_Journey_CO2eq', 'tanker_barge'))
 
-    # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g CO2 eq.:kgkm) -- Ocean Tanker Backhaul
+    # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g CO2:kgkm) -- Ocean Tanker Forward Journey
     # Calculated
-    tanker_barge_emissions_factors_transport_backhaul_ocean_tanker: Dict = field(
+    emissions_factors_transport_forward_journey_ocean_tanker_co2: Dict = field(
         default_factory=lambda: build_dict_from_defaults(
-            'Ocean_Tanker_Emissions_From_Transport_Ocean_Tanker_Backhaul', 'tanker_barge'))
+            'Ocean_Tanker_Emissions_From_Transport_Ocean_Tanker_Forward_Journey_CO2', 'tanker_barge'))
+
+    # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g CH4:kgkm) -- Ocean Tanker Forward Journey
+    # Calculated
+    emissions_factors_transport_forward_journey_ocean_tanker_ch4: Dict = field(
+        default_factory=lambda: build_dict_from_defaults(
+            'Ocean_Tanker_Emissions_From_Transport_Ocean_Tanker_Forward_Journey_CH4', 'tanker_barge'))
+
+    # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g N2O:kgkm) -- Ocean Tanker Forward Journey
+    # Calculated
+    emissions_factors_transport_forward_journey_ocean_tanker_n2o: Dict = field(
+        default_factory=lambda: build_dict_from_defaults(
+            'Ocean_Tanker_Emissions_From_Transport_Ocean_Tanker_Forward_Journey_N2O', 'tanker_barge'))
+
+    # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g CO2 eq.:kgkm) -- Backhaul
+    # Calculated
+    emissions_factors_transport_backhaul_ocean_tanker_co2eq: Dict = field(
+        default_factory=lambda: build_dict_from_defaults(
+            'Ocean_Tanker_Emissions_From_Transport_Ocean_Tanker_Backhaul_CO2eq', 'tanker_barge'))
+
+    # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g CO2:kgkm) -- Ocean Tanker Backhaul
+    # Calculated
+    emissions_factors_transport_backhaul_ocean_tanker_co2: Dict = field(
+        default_factory=lambda: build_dict_from_defaults(
+            'Ocean_Tanker_Emissions_From_Transport_Ocean_Tanker_Backhaul_CO2', 'tanker_barge'))
+
+    # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g CH4:kgkm) -- Ocean Tanker Backhaul
+    # Calculated
+    emissions_factors_transport_backhaul_ocean_tanker_ch4: Dict = field(
+        default_factory=lambda: build_dict_from_defaults(
+            'Ocean_Tanker_Emissions_From_Transport_Ocean_Tanker_Backhaul_CH4', 'tanker_barge'))
+
+    # Tanker & Barge EF sheet, table: Ocean Tanker Emissions From Transport (g N2O:kgkm) -- Ocean Tanker Backhaul
+    # Calculated
+    emissions_factors_transport_backhaul_ocean_tanker_n2o: Dict = field(
+        default_factory=lambda: build_dict_from_defaults(
+            'Ocean_Tanker_Emissions_From_Transport_Ocean_Tanker_Backhaul_N2O', 'tanker_barge'))
 
     # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g CO2 eq.:kgkm) -- Barge Forward Journey
     # Calculated
-    tanker_barge_emissions_factors_transport_forward_journey_barge: Dict = field(
+    emissions_factors_transport_forward_journey_barge_co2eq: Dict = field(
         default_factory=lambda: build_dict_from_defaults(
-            'Barge_Emissions_From_Transport_Barge_Forward_Journey', 'tanker_barge'))
+            'Barge_Emissions_From_Transport_Barge_Forward_Journey_CO2eq', 'tanker_barge'))
 
-    # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g CO2 eq.:kgkm) -- Barge Backhaul
+    # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g CO2:kgkm) -- Ocean Tanker Forward Journey
     # Calculated
-    tanker_barge_emissions_factors_transport_backhaul_barge: Dict = field(
+    emissions_factors_transport_forward_journey_barge_co2: Dict = field(
         default_factory=lambda: build_dict_from_defaults(
-            'Barge_Emissions_From_Transport_Barge_Backhaul', 'tanker_barge'))
+            'Barge_Emissions_From_Transport_Barge_Forward_Journey_CO2', 'tanker_barge'))
+
+    # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g CH4:kgkm) -- Ocean Tanker Forward Journey
+    # Calculated
+    emissions_factors_transport_forward_journey_barge_ch4: Dict = field(
+        default_factory=lambda: build_dict_from_defaults(
+            'Barge_Emissions_From_Transport_Barge_Forward_Journey_CH4', 'tanker_barge'))
+
+    # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g N2O:kgkm) -- Ocean Tanker Forward Journey
+    # Calculated
+    emissions_factors_transport_forward_journey_barge_n2o: Dict = field(
+        default_factory=lambda: build_dict_from_defaults(
+            'Barge_Emissions_From_Transport_Barge_Forward_Journey_N20', 'tanker_barge'))
+
+    # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g CO2 eq.:kgkm) -- Ocean Tanker Backhaul
+    # Calculated
+    emissions_factors_transport_backhaul_barge_co2eq: Dict = field(
+        default_factory=lambda: build_dict_from_defaults(
+            'Barge_Emissions_From_Transport_Barge_Backhaul_CO2eq', 'tanker_barge'))
+
+    # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g CO2:kgkm) -- Ocean Tanker Backhaul
+    # Calculated
+    emissions_factors_transport_backhaul_barge_co2: Dict = field(
+        default_factory=lambda: build_dict_from_defaults(
+            'Barge_Emissions_From_Transport_Barge_Backhaul_CO2', 'tanker_barge'))
+
+    # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g CH4:kgkm) -- Ocean Tanker Backhaul
+    # Calculated
+    emissions_factors_transport_backhaul_barge_ch4: Dict = field(
+        default_factory=lambda: build_dict_from_defaults(
+            'Barge_Emissions_From_Transport_Barge_Backhaul_CH4', 'tanker_barge'))
+
+    # Tanker & Barge EF sheet, table: Barge Emissions From Transport (g N2O:kgkm) -- Ocean Tanker Backhaul
+    # Calculated
+    emissions_factors_transport_backhaul_barge_n2o: Dict = field(
+        default_factory=lambda: build_dict_from_defaults(
+            'Barge_Emissions_From_Transport_Barge_Backhaul_N2O', 'tanker_barge'))
 
     # Tanker & Barge EF sheet, table: Marine Fuel Properties and Consumption (Residual Oil)
     # Calculated
@@ -404,14 +604,15 @@ class TankerBargeEF:
     marine_fuel_properties_consumption: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Marine_Fuel_Properties_and_Consumption_Residual_Oil', 'tanker_barge'))
 
-    # Tanker & Barge EF sheet, table: Share of Petroleum Products
-    # Calculated
-    # calculated from ProductSlate
-    share_of_petroleum_products: Dict = field(
-        default_factory=lambda: {"row_index_name": "Product Transported",
-                                 "mass_flow_sum": {"total": float},
-                                 "Gasoline": {"share": float},
-                                 "Diesel":  {"share": float},
-                                 "Jet Fuel":  {"share": float},
-                                 "Residual Oil":  {"share": float},
-                                 "Petcoke":  {"share": float}})
+    # NOT IN OPEM1.2
+    # # Tanker & Barge EF sheet, table: Share of Petroleum Products
+    # # Calculated
+    # # calculated from ProductSlate
+    # share_of_petroleum_products: Dict = field(
+    #     default_factory=lambda: {"row_index_name": "Product Transported",
+    #                              "mass_flow_sum": {"total": float},
+    #                              "Gasoline": {"share": float},
+    #                              "Diesel":  {"share": float},
+    #                              "Jet Fuel":  {"share": float},
+    #                              "Residual Oil":  {"share": float},
+    #                              "Petcoke":  {"share": float}})

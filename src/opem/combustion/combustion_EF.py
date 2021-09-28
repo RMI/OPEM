@@ -9,11 +9,11 @@ from opem.utils import initialize_from_dataclass, initialize_from_list, build_di
 
 def calc_total_ghg_per_gal(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     return target_table_ref["Product Combustion Emission Factors"][row_key]["kg CO2 per gallon"] * \
-        other_table_refs["Table 1: Hundred-Year Global Warming Potentials"]["CO2"]["GWP"] + \
+        other_table_refs["Table 1: Global Warming Potentials"]["CO2"]["100 year GWP"] + \
         target_table_ref["Product Combustion Emission Factors"][row_key]["g CH4 per gallon"] * \
-        other_table_refs["Table 1: Hundred-Year Global Warming Potentials"]["CH4"]["GWP"] / 1000 + \
+        other_table_refs["Table 1: Global Warming Potentials"]["CH4"]["100 year GWP"] / 1000 + \
         target_table_ref["Product Combustion Emission Factors"][row_key]["g N2O per gallon"] * \
-        other_table_refs["Table 1: Hundred-Year Global Warming Potentials"]["N2O"]["GWP"] / 1000
+        other_table_refs["Table 1: Global Warming Potentials"]["N2O"]["100 year GWP"] / 1000
 
 
 def calc_total_ghg_per_bbl(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -29,11 +29,11 @@ def calc_total_ghg_per_ton(row_key, col_key, target_table_ref=None, other_table_
 
     return ((target_table_ref["Product Combustion Emission Factors"][row_key]["kg CO2 per mmBtu"] +
             target_table_ref["Product Combustion Emission Factors"][row_key]["g CH4 per mmBtu"] *
-             other_table_refs["Table 1: Hundred-Year Global Warming Potentials"]["CH4"]["GWP"] / 1000 +
+             other_table_refs["Table 1: Global Warming Potentials"]["CH4"]["100 year GWP"] / 1000 +
 
              target_table_ref["Product Combustion Emission Factors"][row_key]["g N20 per mmBtu"] *
-             other_table_refs["Table 1: Hundred-Year Global Warming Potentials"]["N2O"]["GWP"] *
-             other_table_refs["Table 1: Hundred-Year Global Warming Potentials"]["CO2"]["GWP"] / 1000) *
+             other_table_refs["Table 1: Global Warming Potentials"]["N2O"]["100 year GWP"] *
+             other_table_refs["Table 1: Global Warming Potentials"]["CO2"]["100 year GWP"] / 1000) *
             target_table_ref["Product Combustion Emission Factors"][row_key]["mmBtu per ton"])
 
 
@@ -55,7 +55,7 @@ class CombustionEF:
                               func_to_apply=calc_total_ghg_per_gal,
                               included_cols=[
                                   "Total GHGs (kg CO2eq. per gallon)"],
-                              other_table_refs={"Table 1: Hundred-Year Global Warming Potentials": self.constants.table_1_100year_gwp})
+                              other_table_refs={"Table 1: Global Warming Potentials": self.constants.table_1_gwp})
 
         fill_calculated_cells(target_table_ref={"Product Combustion Emission Factors": self.product_combustion_emission_factors_petroleum, "has_wrapper": True},
                               func_to_apply=calc_total_ghg_per_bbl,
@@ -64,7 +64,7 @@ class CombustionEF:
         fill_calculated_cells(target_table_ref={"Product Combustion Emission Factors": self.product_combustion_emission_factors_derived_solids, "has_wrapper": True},
                               func_to_apply=calc_total_ghg_per_ton,
                               included_cols=["Total GHGs (kg CO2eq. per ton)"],
-                              other_table_refs={"Table 1: Hundred-Year Global Warming Potentials": self.constants.table_1_100year_gwp})
+                              other_table_refs={"Table 1: Global Warming Potentials": self.constants.table_1_gwp})
 
         fill_calculated_cells(target_table_ref={"Product Combustion Emission Factors": self.product_combustion_emission_factors_derived_solids, "has_wrapper": True},
                               func_to_apply=calc_total_ghg_per_kg_petcoke,
@@ -84,3 +84,8 @@ class CombustionEF:
     # CALCULATED
     product_combustion_emission_factors_derived_solids: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Product_Combustion_Emission_Factors_Fossil_Fuel_Derived_Fuels_Solid', 'combustion'))
+
+    # Prod CombustEF sheet, table: Product Combustion Emission Factors -- Natural Gas
+    # CALCULATED
+    product_combustion_emission_factors_natural_gas: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Product_Combustion_Emission_Factors_Natural_Gas', 'combustion'))

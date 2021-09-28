@@ -200,17 +200,16 @@ def calc_truck_emission_factors_forward_backward(row_key, col_key, target_table_
     fuel_sum = 0
     for key, row in other_table_refs[1].items():
         if key not in ["full_table_name", "row_index_name"]:
-            fuel_sum += row["GWP"] * \
+            fuel_sum += row["100 year GWP"] * \
                 other_table_refs[2][key][col_key]
-            # if col_key == "Diesel":
-            # print("from heavy duty Truck")
-            # print("key", key)
-            # print("row", row)
-            # print("col_key", col_key)
-            # print(row["GWP"])
-            # print(other_table_refs[2][key][col_key])
-            # print(row["GWP"]*other_table_refs[2][key][col_key])
     return consump_per_payload * fuel_sum
+
+
+def calc_truck_emission_factors_forward_backward_other_gases(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    return (other_table_refs[0][extra["trip_details"]
+                                ]["Energy Consumption (Btu/km)"]/1000000 /
+            other_table_refs[0][extra["trip_details"]]["Cargo Payload (kg)"] *
+            other_table_refs[1][extra['gas']][col_key])
 
 
 def calc_truck_emission_factors_total(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -332,7 +331,7 @@ class HeavyDutyTruckEF:
                                   self.constants.table_4_carbon_and_sulfer_ratios,
                               ],
                               other_tables_keymap={f"{self.constants.table_3_fuel_specifications_liquid_fuels['full_table_name']}": {
-                                  "row_keymap": {"LNG": "Liquefied natural gas (LNG)", "DME": "Dimethyl ether (DME)", "FTD": "Dimethyl ether (DME)", "LPG": "Liquefied petroleum gas (LPG)", "Biodiesel": "Methyl ester (biodiesel, BD)", "Hydrogen": "Liquid hydrogen", "Renewable Gasoline": "Renewable gasoline"}, "col_keymap": {}}},)
+                                  "row_keymap": {"LNG": "Liquefied natural gas (LNG)", "DME": "Dimethyl ether (DME)", "FTD": "Fischer-Tropsch diesel (FTD)", "LPG": "Liquefied petroleum gas (LPG)", "Biodiesel": "Methyl ester (biodiesel, BD)", "Hydrogen": "Liquid hydrogen", "Renewable Gasoline": "Renewable gasoline"}, "col_keymap": {}}},)
 
         fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_destination_to_origin,
                               func_to_apply=co2_emissions_factors_most_fuels,
@@ -343,7 +342,7 @@ class HeavyDutyTruckEF:
                                   self.constants.table_4_carbon_and_sulfer_ratios,
                               ],
                               other_tables_keymap={f"{self.constants.table_3_fuel_specifications_liquid_fuels['full_table_name']}": {
-                                  "row_keymap": {"LNG": "Liquefied natural gas (LNG)", "DME": "Dimethyl ether (DME)", "FTD": "Dimethyl ether (DME)", "LPG": "Liquefied petroleum gas (LPG)", "Biodiesel": "Methyl ester (biodiesel, BD)", "Hydrogen": "Liquid hydrogen", "Renewable Gasoline": "Renewable gasoline"}, "col_keymap": {}}},)
+                                  "row_keymap": {"LNG": "Liquefied natural gas (LNG)", "DME": "Dimethyl ether (DME)", "FTD": "Fischer-Tropsch diesel (FTD)", "LPG": "Liquefied petroleum gas (LPG)", "Biodiesel": "Methyl ester (biodiesel, BD)", "Hydrogen": "Liquid hydrogen", "Renewable Gasoline": "Renewable gasoline"}, "col_keymap": {}}},)
 
         fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_origin_to_destination,
                               func_to_apply=so2_emissions_factors,
@@ -354,7 +353,7 @@ class HeavyDutyTruckEF:
                                   self.constants.table_4_carbon_and_sulfer_ratios,
                               ],
                               other_tables_keymap={f"{self.constants.table_3_fuel_specifications_liquid_fuels['full_table_name']}": {
-                                  "row_keymap": {"LNG": "Liquefied natural gas (LNG)", "DME": "Dimethyl ether (DME)", "FTD": "Dimethyl ether (DME)", "LPG": "Liquefied petroleum gas (LPG)", "Biodiesel": "Methyl ester (biodiesel, BD)", "Hydrogen": "Liquid hydrogen", "Renewable Gasoline": "Renewable gasoline"}, "col_keymap": {}}},)
+                                  "row_keymap": {"LNG": "Liquefied natural gas (LNG)", "DME": "Dimethyl ether (DME)", "FTD": "Fischer-Tropsch diesel (FTD)", "LPG": "Liquefied petroleum gas (LPG)", "Biodiesel": "Methyl ester (biodiesel, BD)", "Hydrogen": "Liquid hydrogen", "Renewable Gasoline": "Renewable gasoline"}, "col_keymap": {}}},)
         fill_calculated_cells(target_table_ref=self.truck_emission_factors_of_fuel_combustion_destination_to_origin,
                               func_to_apply=so2_emissions_factors,
                               included_cols=[
@@ -364,30 +363,116 @@ class HeavyDutyTruckEF:
                                   self.constants.table_4_carbon_and_sulfer_ratios,
                               ],
                               other_tables_keymap={f"{self.constants.table_3_fuel_specifications_liquid_fuels['full_table_name']}": {
-                                  "row_keymap": {"LNG": "Liquefied natural gas (LNG)", "DME": "Dimethyl ether (DME)", "FTD": "Dimethyl ether (DME)", "LPG": "Liquefied petroleum gas (LPG)", "Biodiesel": "Methyl ester (biodiesel, BD)", "Hydrogen": "Liquid hydrogen", "Renewable Gasoline": "Renewable gasoline"}, "col_keymap": {}}},)
-        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors,
+                                  "row_keymap": {"LNG": "Liquefied natural gas (LNG)", "DME": "Dimethyl ether (DME)", "FTD": "Fischer-Tropsch diesel (FTD)", "LPG": "Liquefied petroleum gas (LPG)", "Biodiesel": "Methyl ester (biodiesel, BD)", "Hydrogen": "Liquid hydrogen", "Renewable Gasoline": "Renewable gasoline"}, "col_keymap": {}}},)
+
+        # calculate total emissions factors CO2eq
+        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors_co2eq,
                               func_to_apply=calc_truck_emission_factors_forward_backward,
 
                               included_rows=[
                                   "Heavy-Duty Truck Forward Journey (full load)"],
                               other_table_refs=[
                                   self.truck_fuel_economy_and_resultant_energy_consumption,
-                                  self.constants.table_1_100year_gwp,
+                                  self.constants.table_1_gwp,
                                   self.truck_emission_factors_of_fuel_combustion_origin_to_destination
                               ], extra={"trip_details": "Trip From Product Origin to Destination"})
 
-        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors,
+        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors_co2eq,
                               func_to_apply=calc_truck_emission_factors_forward_backward,
 
                               included_rows=[
                                   "Heavy-Duty Truck Backhaul (full load)"],
                               other_table_refs=[
                                   self.truck_fuel_economy_and_resultant_energy_consumption,
-                                  self.constants.table_1_100year_gwp,
+                                  self.constants.table_1_gwp,
                                   self.truck_emission_factors_of_fuel_combustion_destination_to_origin
                               ], extra={"trip_details": "Trip From Product Destination Back to Origin"})
 
-        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors,
+        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors_co2eq,
+                              func_to_apply=calc_truck_emission_factors_total,
+                              included_rows=[
+                                  "Heavy-Duty Truck Emissions (full load)"])
+
+        # calculate total emissions factors CO2
+        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors_co2,
+                              func_to_apply=calc_truck_emission_factors_forward_backward_other_gases,
+
+                              included_rows=[
+                                  "Heavy-Duty Truck Forward Journey (full load)"],
+                              other_table_refs=[
+                                  self.truck_fuel_economy_and_resultant_energy_consumption,
+                                  self.truck_emission_factors_of_fuel_combustion_origin_to_destination
+                              ], extra={"trip_details": "Trip From Product Origin to Destination",
+                                        "gas": "CO2"})
+
+        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors_co2,
+                              func_to_apply=calc_truck_emission_factors_forward_backward_other_gases,
+
+                              included_rows=[
+                                  "Heavy-Duty Truck Backhaul (full load)"],
+                              other_table_refs=[
+                                  self.truck_fuel_economy_and_resultant_energy_consumption,
+                                  self.truck_emission_factors_of_fuel_combustion_destination_to_origin
+                              ], extra={"trip_details": "Trip From Product Destination Back to Origin",
+                                        "gas": "CO2"})
+
+        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors_co2,
+                              func_to_apply=calc_truck_emission_factors_total,
+                              included_rows=[
+                                  "Heavy-Duty Truck Emissions (full load)"])
+
+        # calculate total emissions factors CH4
+        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors_ch4,
+                              func_to_apply=calc_truck_emission_factors_forward_backward_other_gases,
+
+                              included_rows=[
+                                  "Heavy-Duty Truck Forward Journey (full load)"],
+                              other_table_refs=[
+                                  self.truck_fuel_economy_and_resultant_energy_consumption,
+                                  self.truck_emission_factors_of_fuel_combustion_origin_to_destination
+                              ], extra={"trip_details": "Trip From Product Origin to Destination",
+                                        "gas": "CH4"})
+
+        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors_ch4,
+                              func_to_apply=calc_truck_emission_factors_forward_backward_other_gases,
+
+                              included_rows=[
+                                  "Heavy-Duty Truck Backhaul (full load)"],
+                              other_table_refs=[
+                                  self.truck_fuel_economy_and_resultant_energy_consumption,
+                                  self.truck_emission_factors_of_fuel_combustion_destination_to_origin
+                              ], extra={"trip_details": "Trip From Product Destination Back to Origin",
+                                        "gas": "CH4"})
+
+        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors_ch4,
+                              func_to_apply=calc_truck_emission_factors_total,
+                              included_rows=[
+                                  "Heavy-Duty Truck Emissions (full load)"])
+
+        # calculate total emissions factors N2O
+        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors_n2o,
+                              func_to_apply=calc_truck_emission_factors_forward_backward_other_gases,
+
+                              included_rows=[
+                                  "Heavy-Duty Truck Forward Journey (full load)"],
+                              other_table_refs=[
+                                  self.truck_fuel_economy_and_resultant_energy_consumption,
+                                  self.truck_emission_factors_of_fuel_combustion_origin_to_destination
+                              ], extra={"trip_details": "Trip From Product Origin to Destination",
+                                        "gas": "N2O"})
+
+        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors_n2o,
+                              func_to_apply=calc_truck_emission_factors_forward_backward_other_gases,
+
+                              included_rows=[
+                                  "Heavy-Duty Truck Backhaul (full load)"],
+                              other_table_refs=[
+                                  self.truck_fuel_economy_and_resultant_energy_consumption,
+                                  self.truck_emission_factors_of_fuel_combustion_destination_to_origin
+                              ], extra={"trip_details": "Trip From Product Destination Back to Origin",
+                                        "gas": "N2O"})
+
+        fill_calculated_cells(target_table_ref=self.heavy_duty_truck_emission_factors_n2o,
                               func_to_apply=calc_truck_emission_factors_total,
                               included_rows=[
                                   "Heavy-Duty Truck Emissions (full load)"])
@@ -435,9 +520,26 @@ class HeavyDutyTruckEF:
     # Heavy-Duty Truck EF sheet, table: Heavy-Duty Truck Emission Factors
     # all fuels for pipeline transport modes
     # CALCULATED
-    heavy_duty_truck_emission_factors: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Heavy_Duty_Truck_Emission_Factors', 'heavy_duty_truck'))
-    # 'Heavy-Duty Truck Emission Factors'))
+    heavy_duty_truck_emission_factors_co2eq: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Heavy_Duty_Truck_Emission_Factors_CO2eq', 'heavy_duty_truck'))
+
+    # Heavy-Duty Truck EF sheet, table: Heavy-Duty Truck Emission Factors
+    # all fuels for pipeline transport modes
+    # CALCULATED
+    heavy_duty_truck_emission_factors_co2: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Heavy_Duty_Truck_Emission_Factors_CO2', 'heavy_duty_truck'))
+
+    # Heavy-Duty Truck EF sheet, table: Heavy-Duty Truck Emission Factors
+    # all fuels for pipeline transport modes
+    # CALCULATED
+    heavy_duty_truck_emission_factors_ch4: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Heavy_Duty_Truck_Emission_Factors_CH4', 'heavy_duty_truck'))
+
+    # Heavy-Duty Truck EF sheet, table: Heavy-Duty Truck Emission Factors
+    # all fuels for pipeline transport modes
+    # CALCULATED
+    heavy_duty_truck_emission_factors_n2o: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Heavy_Duty_Truck_Emission_Factors_N2O', 'heavy_duty_truck'))
 
     # Heavy-Duty Truck EF sheet, table: Fuel Economy and Resultant Energy Consumption of Heavy-Duty Trucks
     # USER INPUT

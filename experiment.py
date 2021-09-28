@@ -7,6 +7,7 @@ from opem.input.user_input_dto import UserInputDto
 from opem.transport.pipeline_EF import PipelineEF
 from opem.transport.rail_EF import RailEF
 from opem.transport.tanker_barge_EF import TankerBargeEF
+from opem.transport.petrochem_EF import PetroChemEF
 from opem.transport.transport_EF import TransportEF
 from opem.utils import write_csv_output
 from opem.transport import HeavyDutyTruckEF
@@ -20,10 +21,10 @@ def main():
         input.get_csv_input, input.validate_input)
 
     print("Found opem_input.csv, running model.")
-    print(user_input)
+    # print(user_input)
 
     user_input_dto = UserInputDto(input_list=user_input)
-    print(user_input_dto.fraction_of_fuel_type_for_transport_mode)
+
     print("Fetching product slate . . .")
 
     product_slate = input.get_product_slate_csv(user_input_dto.product_name)
@@ -47,25 +48,31 @@ def main():
 
     print("Processing Pipeline Emission Factors . . .")
 
-    pipeline_ef = PipelineEF(user_input=asdict(user_input_dto), constants=constants)
+    pipeline_ef = PipelineEF(user_input=asdict(
+        user_input_dto), constants=constants)
 
-    transport_ef = TransportEF(user_input=asdict(user_input_dto), pipeline_ef=pipeline_ef,
-                               rail_ef=rail_ef,
-                               heavy_duty_truck_ef=heavy_duty_truck_ef,
-                               tanker_barge_ef=tanker_barge_ef)
+    petrochem_ef = PetroChemEF(user_input=asdict(
+        user_input_dto), constants=constants)
 
-    print("Processing Combustion Emission Factors . . .")
+    print(petrochem_ef.ethylene_conversion_20yr_gwp)
 
-    combustion_ef = CombustionEF(user_input=asdict(user_input_dto), constants=constants)
+    # transport_ef = TransportEF(user_input=asdict(user_input_dto), pipeline_ef=pipeline_ef,
+    #                            rail_ef=rail_ef,
+    #                            heavy_duty_truck_ef=heavy_duty_truck_ef,
+    #                            tanker_barge_ef=tanker_barge_ef)
 
-    print("Calculating results . . .")
-    opem = OPEM(user_input=asdict(user_input_dto), transport_ef=transport_ef,
-                combustion_ef=combustion_ef, product_slate=product_slate)
+    # print("Processing Combustion Emission Factors . . .")
 
-    print("Model run completed.")
-    print("Writing results . . .")
-    #print(user_input_dto)
-    print(opem.results())
+    # combustion_ef = CombustionEF(user_input=asdict(user_input_dto), constants=constants)
+
+    # print("Calculating results . . .")
+    # opem = OPEM(user_input=asdict(user_input_dto), transport_ef=transport_ef,
+    #             combustion_ef=combustion_ef, product_slate=product_slate)
+
+    # print("Model run completed.")
+    # print("Writing results . . .")
+    # #print(user_input_dto)
+    # print(opem.results())
 
     # question: are defualt dicts necessary for the dataclass fields?
     # other question, are default dicts haveing harmful effect?
@@ -74,5 +81,6 @@ def main():
     # does default dict mean that incorrect key in user input will add key to dict?
     # does default dict mean that incorrect key in calculation will add key to dict?
 
-if __name__=="__main__":
-	main()
+
+if __name__ == "__main__":
+    main()
