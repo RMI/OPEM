@@ -113,10 +113,86 @@ class TransportEF:
     # TransportEF sheet, table: Transport Emission Factors
     # collect references to nested objects for ease
     # CALCULATED
-    transport_emission_factors_weighted_average: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors', 'transport'))
+    transport_emission_factors_other_co2eq: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors_Other_CO2eq', 'transport'))
 
-    # TransportEF sheet, subtable: Manual Input
+    # TransportEF sheet, table: Transport Emission Factors
+    # collect references to nested objects for ease
+    # CALCULATED
+    transport_emission_factors_other_co2: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors_Other_CO2', 'transport'))
+
+    # TransportEF sheet, table: Transport Emission Factors
+    # collect references to nested objects for ease
+    # CALCULATED
+    transport_emission_factors_other_ch4: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors_Other_CH4', 'transport'))
+
+    # TransportEF sheet, table: Transport Emission Factors
+    # collect references to nested objects for ease
+    # CALCULATED
+    transport_emission_factors_other_n2o: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors_Other_N2O', 'transport'))
+
+    # TransportEF sheet, table: Transport Emission Factors
+    # collect references to nested objects for ease
+    # CALCULATED
+    transport_emission_factors_barge_co2eq: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors_Barge_CO2eq', 'transport'))
+
+    # TransportEF sheet, table: Transport Emission Factors
+    # collect references to nested objects for ease
+    # CALCULATED
+    transport_emission_factors_barge_co2: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors_Barge_CO2', 'transport'))
+
+    # TransportEF sheet, table: Transport Emission Factors
+    # collect references to nested objects for ease
+    # CALCULATED
+    transport_emission_factors_barge_ch4: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors_Barge_CH4', 'transport'))
+
+    # TransportEF sheet, table: Transport Emission Factors
+    # collect references to nested objects for ease
+    # CALCULATED
+    transport_emission_factors_barge_n2o: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors_Barge_N2O', 'transport'))
+
+    # TransportEF sheet, table: Transport Emission Factors
+    # collect references to nested objects for ease
+    # CALCULATED
+    transport_emission_factors_tanker_co2eq: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors_Tanker_CO2eq', 'transport'))
+
+    # TransportEF sheet, table: Transport Emission Factors
+    # collect references to nested objects for ease
+    # CALCULATED
+    transport_emission_factors_tanker_co2: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors_Tanker_CO2', 'transport'))
+
+    # TransportEF sheet, table: Transport Emission Factors
+    # collect references to nested objects for ease
+    # CALCULATED
+    transport_emission_factors_tanker_ch4: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors_Tanker_CH4', 'transport'))
+
+    # TransportEF sheet, table: Transport Emission Factors
+    # collect references to nested objects for ease
+    # CALCULATED
+    transport_emission_factors_tanker_n2o: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emission_Factors_Tanker_N2O', 'transport'))
+
+    # TransportEF sheet, subtable: Transport Fuel Manual Input
     # fraction of fuel type for each transport mode
     fraction_of_fuel_type_for_transport_mode: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Transport_Process_Fuel_Share', 'transport'))
+
+    # TransportEF sheet, subtable: Transport Distance Manual Input
+    # fraction of fuel type for each transport mode
+    transport_distance: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Distance', 'transport'))
+
+    # TransportEF sheet, subtable: Transport Emissions Factors by Product Mass
+    # fraction of fuel type for each transport mode
+    transport_emissions_by_prod_mass: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Transport_Emissions_Factors_by_Prod_Mass', 'transport'))

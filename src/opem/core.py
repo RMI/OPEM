@@ -183,24 +183,47 @@ class OPEM:
     # User Inputs & Results sheet, table: OPEM Transport
     # USER INPUT
     # CALCULATED
-    transport_results: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Transport', 'results'))
+    refinery_product_transport: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Refinery_Product_Transport', 'results'))
 
     # User Inputs & Results sheet, table: OPEM Transport
     # CALCULATED
-    transport_sum: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Transport_Sum', 'results'))
+    ngl_transport: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('NGL_Transport', 'results'))
 
     # User Inputs & Results sheet, table: OPEM Combustion
     # USER INPUT
     # CALCULATED
-    combustion_results: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Combustion', 'results'))
+    refinery_product_combustion: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Refinery_Product_Combustion', 'results'))
+
+    # User Inputs & Results sheet, table: OPEM Combustion
+    # USER INPUT
+    # CALCULATED
+    coke_combustion: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Coke_Combustion', 'results'))
+
+    # User Inputs & Results sheet, table: OPEM Combustion
+    # USER INPUT
+    # CALCULATED
+    natural_gas_combustion: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Natural_Gas_Combustion', 'results'))
+
+    # User Inputs & Results sheet, table: OPEM Combustion
+    # USER INPUT
+    # CALCULATED
+    ngl_combustion: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('NGL_Combustion', 'results'))
 
     # User Inputs & Results sheet, table: OPEM Combustion
     # CALCULATED
-    combustion_sum: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Combustion_Sum', 'results'))
+    total_combustion_emissions: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Total_Combustion_Emissions', 'results'))
+
+    # User Inputs & Results sheet, table: Non-combusted Product Emissions
+    # CALCULATED
+    non_combusted_product_emissions: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Non_Combusted_Product_Emissions', 'results'))
 
     # hold sum of product volume from product slate here
     # product_volume_sum: int = None

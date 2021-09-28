@@ -12,11 +12,18 @@ def calc_pipeline_emissions_factors(row_key, col_key, target_table_ref=None, oth
     for key, row in other_table_refs[0].items():
         if key not in ['full_table_name', 'row_index_name']:
             result += row[col_key] * \
-                other_table_refs[1][key]['GWP']
+                other_table_refs[1][key]['100 year GWP']
     result = (result * other_table_refs[2]["Oil Product Pipeline"][extra["trip_details"]]) / \
         1000000/other_table_refs[3]["kg per short ton"]["Conversion Factor"] / \
         other_table_refs[3]["km per mile"]["Conversion Factor"]
     return result
+
+
+def calc_pipeline_emissions_factors_other_gases(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+
+    return ((other_table_refs[0][extra["gas"]][col_key] * other_table_refs[1]["Oil Product Pipeline"][extra["trip_details"]]) /
+            1000000/other_table_refs[2]["kg per short ton"]["Conversion Factor"] /
+            other_table_refs[2]["km per mile"]["Conversion Factor"])
 
 
 def calc_pipeline_emissions_factors_total(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -39,45 +46,160 @@ class PipelineEF:
         else:
             raise ValueError("Please pass a list or dictionary to initialize")
 
-        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors,
+        # CO2eq
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_co2eq,
                               func_to_apply=calc_pipeline_emissions_factors,
                               extra={
                                   "trip_details": "Turbine"},
                               included_rows=["Pipeline Turbine"],
                               other_table_refs=[self.pipeline_emission_factors_combustion_pipeline_turbine,
-                                                self.constants.table_1_100year_gwp,
+                                                self.constants.table_1_gwp,
                                                 self.energy_intensity_of_pipeline_transportation,
                                                 self.constants.table_2_conversion_factors])
-        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors,
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_co2eq,
                               func_to_apply=calc_pipeline_emissions_factors,
                               extra={
                                   "trip_details": "Reciprocating Engine"},
                               included_rows=[
                                   "Pipeline Reciprocating Engine: Current"],
                               other_table_refs=[self.pipeline_emission_factors_combustion_pipeline_recip_engine_current,
-                                                self.constants.table_1_100year_gwp,
+                                                self.constants.table_1_gwp,
                                                 self.energy_intensity_of_pipeline_transportation,
                                                 self.constants.table_2_conversion_factors])
-        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors,
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_co2eq,
                               func_to_apply=calc_pipeline_emissions_factors,
                               extra={
                                   "trip_details": "NG Engine: Future"},
                               included_rows=[
                                   "Pipeline Reciprocating Engine: Future"],
                               other_table_refs=[self.pipeline_emission_factors_combustion_pipeline_recip_engine_future,
-                                                self.constants.table_1_100year_gwp,
+                                                self.constants.table_1_gwp,
                                                 self.energy_intensity_of_pipeline_transportation,
                                                 self.constants.table_2_conversion_factors])
-        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors,
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_co2eq,
                               func_to_apply=calc_pipeline_emissions_factors_total,
-                              extra={
-                                  "trip_details": "NG Engine: Future"},
                               included_rows=["Pipeline"],
                               other_table_refs=[
                                   self.share_of_pipeline_technologies_used],
                               other_tables_keymap={f"{self.share_of_pipeline_technologies_used['full_table_name']}": {
                                   "row_keymap": {}, "col_keymap": {"Pipeline Turbine": "Turbine", "Pipeline Reciprocating Engine: Current": "Reciprocating Engine", "Pipeline Reciprocating Engine: Future": "NG Engine: Future"}}},
                               )
+
+        # CO2
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_co2,
+                              func_to_apply=calc_pipeline_emissions_factors_other_gases,
+                              extra={
+                                  "trip_details": "Turbine",
+                                  "gas": "CO2"},
+                              included_rows=["Pipeline Turbine"],
+                              other_table_refs=[self.pipeline_emission_factors_combustion_pipeline_turbine,
+                                                self.energy_intensity_of_pipeline_transportation,
+                                                self.constants.table_2_conversion_factors])
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_co2,
+                              func_to_apply=calc_pipeline_emissions_factors_other_gases,
+                              extra={
+                                  "trip_details": "Reciprocating Engine",
+                                  "gas": "CO2"},
+                              included_rows=[
+                                  "Pipeline Reciprocating Engine: Current"],
+                              other_table_refs=[self.pipeline_emission_factors_combustion_pipeline_recip_engine_current,
+                                                self.energy_intensity_of_pipeline_transportation,
+                                                self.constants.table_2_conversion_factors])
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_co2,
+                              func_to_apply=calc_pipeline_emissions_factors_other_gases,
+                              extra={
+                                  "trip_details": "NG Engine: Future",
+                                  "gas": "CO2"},
+                              included_rows=[
+                                  "Pipeline Reciprocating Engine: Future"],
+                              other_table_refs=[self.pipeline_emission_factors_combustion_pipeline_recip_engine_future,
+                                                self.energy_intensity_of_pipeline_transportation,
+                                                self.constants.table_2_conversion_factors])
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_co2,
+                              func_to_apply=calc_pipeline_emissions_factors_total,
+                              included_rows=["Pipeline"],
+                              other_table_refs=[
+                                  self.share_of_pipeline_technologies_used],
+                              other_tables_keymap={f"{self.share_of_pipeline_technologies_used['full_table_name']}": {
+                                  "row_keymap": {}, "col_keymap": {"Pipeline Turbine": "Turbine", "Pipeline Reciprocating Engine: Current": "Reciprocating Engine", "Pipeline Reciprocating Engine: Future": "NG Engine: Future"}}},
+                              )
+        # CH4
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_ch4,
+                              func_to_apply=calc_pipeline_emissions_factors_other_gases,
+                              extra={
+                                  "trip_details": "Turbine",
+                                  "gas": "CH4"},
+                              included_rows=["Pipeline Turbine"],
+                              other_table_refs=[self.pipeline_emission_factors_combustion_pipeline_turbine,
+                                                self.energy_intensity_of_pipeline_transportation,
+                                                self.constants.table_2_conversion_factors])
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_ch4,
+                              func_to_apply=calc_pipeline_emissions_factors_other_gases,
+                              extra={
+                                  "trip_details": "Reciprocating Engine",
+                                  "gas": "CH4"},
+                              included_rows=[
+                                  "Pipeline Reciprocating Engine: Current"],
+                              other_table_refs=[self.pipeline_emission_factors_combustion_pipeline_recip_engine_current,
+                                                self.energy_intensity_of_pipeline_transportation,
+                                                self.constants.table_2_conversion_factors])
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_ch4,
+                              func_to_apply=calc_pipeline_emissions_factors_other_gases,
+                              extra={
+                                  "trip_details": "NG Engine: Future",
+                                  "gas": "CH4"},
+                              included_rows=[
+                                  "Pipeline Reciprocating Engine: Future"],
+                              other_table_refs=[self.pipeline_emission_factors_combustion_pipeline_recip_engine_future,
+                                                self.energy_intensity_of_pipeline_transportation,
+                                                self.constants.table_2_conversion_factors])
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_ch4,
+                              func_to_apply=calc_pipeline_emissions_factors_total,
+                              included_rows=["Pipeline"],
+                              other_table_refs=[
+                                  self.share_of_pipeline_technologies_used],
+                              other_tables_keymap={f"{self.share_of_pipeline_technologies_used['full_table_name']}": {
+                                  "row_keymap": {}, "col_keymap": {"Pipeline Turbine": "Turbine", "Pipeline Reciprocating Engine: Current": "Reciprocating Engine", "Pipeline Reciprocating Engine: Future": "NG Engine: Future"}}},
+                              )
+        # N2O
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_n2o,
+                              func_to_apply=calc_pipeline_emissions_factors_other_gases,
+                              extra={
+                                  "trip_details": "Turbine",
+                                  "gas": "N2O"},
+                              included_rows=["Pipeline Turbine"],
+                              other_table_refs=[self.pipeline_emission_factors_combustion_pipeline_turbine,
+                                                self.energy_intensity_of_pipeline_transportation,
+                                                self.constants.table_2_conversion_factors])
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_n2o,
+                              func_to_apply=calc_pipeline_emissions_factors_other_gases,
+                              extra={
+                                  "trip_details": "Reciprocating Engine",
+                                  "gas": "N2O"},
+                              included_rows=[
+                                  "Pipeline Reciprocating Engine: Current"],
+                              other_table_refs=[self.pipeline_emission_factors_combustion_pipeline_recip_engine_current,
+                                                self.energy_intensity_of_pipeline_transportation,
+                                                self.constants.table_2_conversion_factors])
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_n2o,
+                              func_to_apply=calc_pipeline_emissions_factors_other_gases,
+                              extra={
+                                  "trip_details": "NG Engine: Future",
+                                  "gas": "N2O"},
+                              included_rows=[
+                                  "Pipeline Reciprocating Engine: Future"],
+                              other_table_refs=[self.pipeline_emission_factors_combustion_pipeline_recip_engine_future,
+                                                self.energy_intensity_of_pipeline_transportation,
+                                                self.constants.table_2_conversion_factors])
+        fill_calculated_cells(target_table_ref=self.pipeline_emission_factors_n2o,
+                              func_to_apply=calc_pipeline_emissions_factors_total,
+                              included_rows=["Pipeline"],
+                              other_table_refs=[
+                                  self.share_of_pipeline_technologies_used],
+                              other_tables_keymap={f"{self.share_of_pipeline_technologies_used['full_table_name']}": {
+                                  "row_keymap": {}, "col_keymap": {"Pipeline Turbine": "Turbine", "Pipeline Reciprocating Engine: Current": "Reciprocating Engine", "Pipeline Reciprocating Engine: Future": "NG Engine: Future"}}},
+                              )
+
     constants: Constants
     # will this cause problems if I try to pass in a list?
     user_input: InitVar[Dict] = {}
@@ -85,8 +207,26 @@ class PipelineEF:
     # PipelineEF sheet, table: Pipeline Emission Factors
     # all fuels for pipeline transport modes
     # CALCULATED
-    pipeline_emission_factors: Dict = field(
-        default_factory=lambda: build_dict_from_defaults('Pipeline_Emission_Factors', 'pipeline'))
+    pipeline_emission_factors_co2eq: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Pipeline_Emission_Factors_CO2eq', 'pipeline'))
+
+    # PipelineEF sheet, table: Pipeline Emission Factors
+    # all fuels for pipeline transport modes
+    # CALCULATED
+    pipeline_emission_factors_co2: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Pipeline_Emission_Factors_CO2', 'pipeline'))
+
+    # PipelineEF sheet, table: Pipeline Emission Factors
+    # all fuels for pipeline transport modes
+    # CALCULATED
+    pipeline_emission_factors_ch4: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Pipeline_Emission_Factors_CH4', 'pipeline'))
+
+    # PipelineEF sheet, table: Pipeline Emission Factors
+    # all fuels for pipeline transport modes
+    # CALCULATED
+    pipeline_emission_factors_n2o: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('Pipeline_Emission_Factors_N2O', 'pipeline'))
 
     # PipelineEF sheet, table: Energy Intensity of Pipeline Transportation (Btu:ton-mile)
     # USER INPUT
