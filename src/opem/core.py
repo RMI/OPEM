@@ -4,6 +4,9 @@ from dataclasses import InitVar, dataclass, field
 from typing import Dict, Dict
 from math import isnan
 from opem.combustion.combustion_EF import CombustionEF
+from opem.constants import Constants
+from opem.input import user_input_dto
+from opem.input.opgee_input import OpgeeInput
 from opem.products.product_slate import ProductSlate
 
 from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells
@@ -20,28 +23,101 @@ def verify_user_fuel_shares(user_shares):
                     f'Shares of fuel types for {key} do not add to 1. Sum is {share_sum}'))
     print("fuel shares valid")
 # Define functions for filling calculated cells in the tables here
+def calc_gas_production_volume(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    return other_table_refs["gas_prod_volume"] / other_table_refs["table_6"]["Natural Gas (MCF/BOE)"]["conversion factor"]
 
+def calc_oil_volume_ratio(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    return other_table_refs["oil_volume"] / other_table_refs["product_slate"]["Barrels of Crude per Day"]["Flow"]
+
+def calc_total_field_ngl(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    if other_table_refs["ngl_volume_source"] == 1:
+        return 1
+    elif other_table_refs ["ngl_volume_source"] == 2:
+        return other_table_refs["c2"] + other_table_refs["c3"] + other_table_refs["c4"] + other_table_refs["c5"] 
+
+def calc_opgee_coke_mass(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None): 
+    return (other_table_refs["coke_mass"] * 
+         other_table_refs["table_5"]["Petroleum Coke Density, average bbl/ton"]["density"] /
+         other_table_refs["table_2"]["kg per short ton"]["Conversion Factor"])
+
+def calc_total_boe(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    return (other_table_refs["gas_vol"]["row"]["col"] +
+            other_table_refs["oil_vol"] +
+            other_table_refs["ngl_vol"] +
+            other_table_refs["coke_mass"])
+
+def calc_product_slate(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+   if row_key == "Coke" and target_table_ref["full_table_name"] == "Refinery_Product_Transport":
+       return other_table_refs["opgee_coke_mass"] + other_table_refs["product_slate"][row_key]["Flow"] * other_table_refs["oil_vol_ratio"]["row"]["col"]
+   return other_table_refs["product_slate"][row_key]["Flow"] * other_table_refs["oil_vol_ratio"]["row"]["col"]
+
+
+def calc_sum(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    sum = 0
+    # don't use name wrapper for target table, makes reuse difficult.
+    for row in target_table_ref.items():
+        if row[0] not in ["full_table_name", "row_index_name", "Sum"]:
+           sum += row[1][col_key]
+    return sum
 
 def lookup_emission_factors_transport(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    return other_table_refs["transport_em_factors_by_mass"][col_key][row_key]
 
-    return other_table_refs["TransportEF::TransportEmFactors"][row_key][target_table_ref["Transport Results"][row_key]["Choose Transport Fuel (from drop-down)"]]
+def calc_total_em(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    #print("")
+    return target_table_ref[row_key]["Kilograms of Product per Day"] * target_table_ref[row_key][other_tables_keymap[col_key]] / 1000
 
+def calc_em_intensity(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    return target_table_ref[row_key][other_tables_keymap[col_key]] / other_table_refs["row"]["col"]
 
+# NGL transport
+def calc_ngl_product_slate(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+   return (other_tables_keymap["opgee"][row_key] * 
+          other_table_refs[0][other_tables_keymap["constants"]
+                                    [row_key]]["Density, grams/gal"] *
+          42/1000)
+
+# coke combustion
+def fetch_upstream_coke(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+   if other_table_refs["opgee_coke_mass"] == 0:
+      return other_table_refs["product_slate"]["Net Upstream Petcoke"]["Flow"] 
+   return other_table_refs["opgee_coke_mass"] 
+
+def fetch_upstream_gas(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+   print(other_table_refs)
+   return other_table_refs["gas_prod_vol"]
+
+# combustion
 def lookup_emission_factors_combustion(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-
     if row_key == "Coke":
         return other_table_refs["CombustionEF::ProductEmFactorsSolid"][extra["fuel_lookup"][row_key]]["Total GHGs (kg CO2eq. per kg petcoke)"]
     else:
         return other_table_refs["CombustionEF::ProductEmFactorsPet"][extra["fuel_lookup"][row_key]]["Total GHGs (kg CO2eq. per bbl)"]
 
+def lookup_emission_factors_nat_gas(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    return other_table_refs["CombustionEF::ProductEmFactorsNaturalGas"][extra["fuel_lookup"][row_key]]["Total GHGs (kg CO2eq. per scf)"] * 1000
 
-def calc_emissions_transport(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    try:
-        return target_table_ref["Transport Results"][row_key]["Emission Factor (g CO2eq. / kgkm)"] * \
-            target_table_ref["Transport Results"][row_key]["Select Distance Traveled (km)"] * \
-            other_table_refs["TankerBargeEF::ShareOfPetProducts"]["mass_flow_sum"]["total"] / 100000000
-    except TypeError:
-        pass
+def calc_total_em_combust(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    if col_key == "Total Combustion Emissions (kg CO2eq/day)":
+       return (target_table_ref[row_key]["Volume or Mass of Product per Day"] *
+             target_table_ref[row_key]["Combustion Emission Factors"] *
+             target_table_ref[row_key]["% Combusted"])
+    if row_key == "Coke":
+        return (other_table_refs[1][extra["fuel_lookup"][row_key]]
+               [extra["coke_col_lookup"][col_key]] *
+                  target_table_ref[row_key]["Volume or Mass of Product per Day"] *
+                 target_table_ref[row_key]["% Combusted"] /
+                 other_table_refs[2]["kg per short ton"]["Conversion Factor"])
+    result =  (other_table_refs[0][extra["fuel_lookup"][row_key]]
+               [extra["col_lookup"][col_key]] *
+                  target_table_ref[row_key]["Volume or Mass of Product per Day"] *
+                 target_table_ref[row_key]["% Combusted"] * 42)
+    if col_key == "Total Combustion CO2 Emissions (kg CO2 /day)":
+       return result
+    return result / 1000
+
+    
+  
 
 
 def calc_emissions_combustion(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -56,6 +132,30 @@ def calc_emissions_combustion(row_key, col_key, target_table_ref=None, other_tab
                 target_table_ref["Combustion Results"][row_key]["% Combusted"] *
                 other_table_refs["ProductSlate::volume_flow"][row_key]["Flow"] /
                 other_table_refs["ProductSlate::volume_flow"]["Barrels of Crude per Day"]["Flow"])
+
+def calc_total_em_nat_gas(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    if col_key == "Total Combustion Emissions (kg CO2eq/day)":
+       return (target_table_ref[row_key]["Volume or Mass of Product per Day"] *
+             target_table_ref[row_key]["Combustion Emission Factors"] *
+             target_table_ref[row_key]["% Combusted"])
+    result =  (other_table_refs[0][extra["fuel_lookup"][row_key]]
+               [extra["col_lookup"][col_key]] *
+                  target_table_ref[row_key]["Volume or Mass of Product per Day"] 
+                 )
+    if col_key == "Total Combustion CO2 Emissions (kg CO2 /day)":
+       return result * 1000
+    return result 
+
+
+
+
+
+
+
+
+
+
+
 
 
 def calc_transport_sum(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -85,97 +185,490 @@ class OPEM:
         #                       func_to_apply=calc_product_slate_combustion_sum,
         #                       included_cols=["Transport Emissions (kg CO2eq. / bbl of crude)"],
         #                       other_table_refs=[self.transport_ef.tanker_barge_ef.share_of_petroleum_products])
+        
+        # fill calc fields related to OPGEE input
+        # calc_gas_production_volume
+        print(self.natural_gas_combustion) 
+        fill_calculated_cells(target_table_ref=self.gas_production_volume_boed,
+                              func_to_apply=calc_gas_production_volume,
+                              other_table_refs={"gas_prod_volume": self.opgee_input.gas_production_volume, 
+                                                "table_6": self.constants.table_6_boe_conversions})
+        # calc_oil_volume_ratio
+        fill_calculated_cells(target_table_ref=self.oil_volume_ratio_to_prelim,
+                              func_to_apply=calc_oil_volume_ratio,
+                              other_table_refs={"oil_volume": self.opgee_input.oil_production_volume, 
+                                                "product_slate": self.product_slate.volume_flow_bbl})
+            
+        # calc_total_field_ngl
+        fill_calculated_cells(target_table_ref=self.total_field_ngl_volume,
+                              func_to_apply=calc_total_field_ngl,
+                              other_table_refs={"ngl_volume_source": self.opgee_input.ngl_volume_source, 
+                                                "c2": self.opgee_input.ngl_c2_volume,
+                                                "c3": self.opgee_input.ngl_c3_volume,
+                                                "c4": self.opgee_input.ngl_c4_volume,
+                                                "c5": self.opgee_input.ngl_c5plus_volume})
+                        
+        # calc_opgee_coke_mass
+        fill_calculated_cells(target_table_ref=self.opgee_coke_mass_boed,
+                              func_to_apply=calc_opgee_coke_mass,
+                              other_table_refs={"coke_mass": self.opgee_input.opgee_coke_mass, 
+                                                "table_5": self.constants.table_5_solid_fuel_densities, 
+                                                "table_2": self.constants.table_2_conversion_factors})
+        # calc_total_boe           
+        fill_calculated_cells(target_table_ref=self.total_boe_produced,
+                              func_to_apply=calc_total_boe,
+                              other_table_refs={"gas_vol": self.gas_production_volume_boed,
+                                                "oil_vol": self.opgee_input.oil_production_volume,
+                                                "ngl_vol": self.opgee_input.total_field_ngl_volume,
+                                                "coke_mass": self.opgee_input.opgee_coke_mass}) 
 
-        fill_calculated_cells(target_table_ref={"Transport Results": self.transport_results, "has_wrapper": True},
+        # Refinery Transport Table
+        # calc_product_slate         
+        fill_calculated_cells(target_table_ref=self.refinery_product_transport,
+                              func_to_apply=calc_product_slate,
+                              included_cols=["Kilograms of Product per Day"],
+                              excluded_rows=["Sum"],
+                              other_table_refs={"product_slate": self.product_slate.mass_flow_kg,
+                                                "oil_vol_ratio": self.oil_volume_ratio_to_prelim,
+                                                "opgee_coke_mass": self.opgee_input.opgee_coke_mass}) 
+          
+
+        # lookup refinery transport emissions factors
+        fill_calculated_cells(target_table_ref={"refinery_prod_trans": self.refinery_product_transport, "has_wrapper": True},
                               func_to_apply=lookup_emission_factors_transport,
+                              included_cols=["Emissions Factor (g CO2eq/kg product)",
+                                             "CO2 Emissions Factor (g CO2/kg product)",
+                                             "CH4 Emissions Factor (g CH4/kg product)",
+                                             "N2O Emissions Factor (g N2O/kg product)",
+                                            ],
+                              excluded_rows=["Sum"],
+                              other_table_refs={"transport_em_factors_by_mass": self.transport_ef.transport_emissions_by_prod_mass})
+       
+        # calc total refinery transport emissions for all gasses
+        fill_calculated_cells(target_table_ref=self.refinery_product_transport,
+                              func_to_apply=calc_total_em,   
+                              included_cols=["Total Transport Emissions (kg CO2eq/ day)", 
+                                              "Total Transport CO2 Emissions (kg CO2/ day)",
+                                              "Total Transport CH4 Emissions (kg CH4/ day)",
+                                              "Total Transport N2O Emissions (kg N2O/ day)"],
+                              other_tables_keymap={"Total Transport Emissions (kg CO2eq/ day)": "Emissions Factor (g CO2eq/kg product)", 
+                                              "Total Transport CO2 Emissions (kg CO2/ day)":  "CO2 Emissions Factor (g CO2/kg product)",
+                                              "Total Transport CH4 Emissions (kg CH4/ day)": "CH4 Emissions Factor (g CH4/kg product)",
+                                              "Total Transport N2O Emissions (kg N2O/ day)": "N2O Emissions Factor (g N2O/kg product)"},
+                              excluded_rows=["Sum"],
+                              )
+        
+        
+        
+        # calc refinery product emissions intensity for all gasses
+        fill_calculated_cells(target_table_ref=self.refinery_product_transport,
+                              func_to_apply=calc_em_intensity,
+                              included_cols=["Transport Emissions Intensity (kg CO2eq. /BOE)",
+                                             "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)",
+                                             "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)",
+                                             "Total Transport N2O Emissions Intensity (kg N2O / BOE)"],
+                              other_tables_keymap={"Transport Emissions Intensity (kg CO2eq. /BOE)": "Total Transport Emissions (kg CO2eq/ day)",
+                                             "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)": "Total Transport CO2 Emissions (kg CO2/ day)",
+                                             "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)": "Total Transport CH4 Emissions (kg CH4/ day)",
+                                             "Total Transport N2O Emissions Intensity (kg N2O / BOE)": "Total Transport N2O Emissions (kg N2O/ day)"} ,
+                              excluded_rows=["Sum"],
+                              other_table_refs=self.total_boe_produced)
+
+
+        # Refinery transport Sums         
+        fill_calculated_cells(target_table_ref=self.refinery_product_transport,
+                              func_to_apply=calc_sum,
+                              included_cols=["Kilograms of Product per Day", 
+                              "Total Transport Emissions (kg CO2eq/ day)",
+                              "Transport Emissions Intensity (kg CO2eq. /BOE)",
+                              "Total Transport CO2 Emissions (kg CO2/ day)",
+                              "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)",
+                              "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)",
+                              "Total Transport CH4 Emissions (kg CH4/ day)",
+                              "Total Transport N2O Emissions (kg N2O/ day)",
+                              "Total Transport N2O Emissions Intensity (kg N2O / BOE)"
+                              ],
+                              included_rows=["Sum"])
+
+
+        # NGL Transport Table
+
+        # calc_product_slate_ngl         
+        fill_calculated_cells(target_table_ref=self.ngl_transport,
+                              func_to_apply=calc_ngl_product_slate,
+                              included_cols=["Kilograms of Product per Day"],
+                              #excluded_rows=["Sum"],
+                              other_table_refs=[self.constants.table_3_fuel_specifications_liquid_fuels],
+                              other_tables_keymap={"opgee": {"Ethane": self.opgee_input.ngl_c2_volume, 
+                                                                "Propane": self.opgee_input.ngl_c3_volume,
+                                                                "Butane": self.opgee_input.ngl_c4_volume,
+                                                                "Pentanes Plus": self.opgee_input.ngl_c5plus_volume,
+                                                                "NGLs": self.total_field_ngl_volume["row"]["col"]},
+                                                    "constants": {"Ethane":"Propane",
+                                                                  "Propane": "Propane",
+                                                                  "Butane": "Butane",
+                                                                  "Pentanes Plus": "n-Hexane",
+                                                                  "NGLs": "Natural gas liquids"
+                                                    }}) 
+          
+
+        # lookup ngl transport emissions factors
+        fill_calculated_cells(target_table_ref=self.ngl_transport,
+                              func_to_apply=lookup_emission_factors_transport,
+                              included_cols=["Emissions Factor (g CO2eq/kg product)",
+                                             "CO2 Emissions Factor (g CO2/kg product)",
+                                             "CH4 Emissions Factor (g CH4/kg product)",
+                                             "N2O Emissions Factor (g N2O/kg product)",
+                                            ],
+                             
+                              other_table_refs={"transport_em_factors_by_mass": self.transport_ef.transport_emissions_by_prod_mass})
+       
+        # calc total ngl transport emissions for all gasses
+        fill_calculated_cells(target_table_ref=self.ngl_transport,
+                              func_to_apply=calc_total_em,   
+                              included_cols=["Total Transport Emissions (kg CO2eq/ day)", 
+                                              "Total Transport CO2 Emissions (kg CO2/ day)",
+                                              "Total Transport CH4 Emissions (kg CH4/ day)",
+                                              "Total Transport N2O Emissions (kg N2O/ day)"],
+                              other_tables_keymap={"Total Transport Emissions (kg CO2eq/ day)": "Emissions Factor (g CO2eq/kg product)", 
+                                              "Total Transport CO2 Emissions (kg CO2/ day)":  "CO2 Emissions Factor (g CO2/kg product)",
+                                              "Total Transport CH4 Emissions (kg CH4/ day)": "CH4 Emissions Factor (g CH4/kg product)",
+                                              "Total Transport N2O Emissions (kg N2O/ day)": "N2O Emissions Factor (g N2O/kg product)"},
+                              
+                              )
+        
+        
+        
+        # calc ngl emissions intensity for all gasses
+        fill_calculated_cells(target_table_ref=self.ngl_transport,
+                              func_to_apply=calc_em_intensity,
+                              included_cols=["Transport Emissions Intensity (kg CO2eq. /BOE)",
+                                             "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)",
+                                             "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)",
+                                             "Total Transport N2O Emissions Intensity (kg N2O / BOE)"],
+                              other_tables_keymap={"Transport Emissions Intensity (kg CO2eq. /BOE)": "Total Transport Emissions (kg CO2eq/ day)",
+                                             "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)": "Total Transport CO2 Emissions (kg CO2/ day)",
+                                             "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)": "Total Transport CH4 Emissions (kg CH4/ day)",
+                                             "Total Transport N2O Emissions Intensity (kg N2O / BOE)": "Total Transport N2O Emissions (kg N2O/ day)"} ,
+                             
+                              other_table_refs=self.total_boe_produced)
+
+
+        # NGL transport Sums         
+        if self.ngl_volume_source == 1:
+           fill_calculated_cells(target_table_ref=self.refinery_product_transport,
+                              func_to_apply=calc_sum,
                               included_cols=[
-                                  "Emission Factor (g CO2eq. / kgkm)"],
-                              extra={"fuel_lookup": {"NG": "Natural Gas"
+                              "Total Transport Emissions (kg CO2eq/ day)",
+                              "Transport Emissions Intensity (kg CO2eq. /BOE)",
+                              "Total Transport CO2 Emissions (kg CO2/ day)",
+                              "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)",
+                              "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)",
+                              "Total Transport CH4 Emissions (kg CH4/ day)",
+                              "Total Transport N2O Emissions (kg N2O/ day)",
+                              "Total Transport N2O Emissions Intensity (kg N2O / BOE)"
+                              ],
+                              included_rows=["NGLs"])
 
-                                                     },
-                                     "keymap": {"Pipeline Emissions": (1, "Pipeline"),
-                                                "Rail Emissions": (2, "Rail Emissions"),
-                                                "Heavy-Duty Truck Emissions": (3, "Heavy-Duty Truck Emissions (full load)"),
-                                                "Ocean Tanker Emissions": (4, "Ocean Tanker Emissions"),
-                                                "Barge Emissions": (4, "Barge Emissions")}},
-                              other_table_refs={"TransportEF::TransportEmFactors": self.transport_ef.transport_emission_factors_weighted_average})
-
-        fill_calculated_cells(target_table_ref={"Combustion Results": self.combustion_results, "has_wrapper": True},
+        # refinery product combustion
+        # calc_product_slate refinery combustion         
+        fill_calculated_cells(target_table_ref=self.refinery_product_combustion,
+                              func_to_apply=calc_product_slate,
+                              included_cols=["Volume or Mass of Product per Day"],
+                              excluded_rows=["Sum"],
+                              other_table_refs={"product_slate": self.product_slate.volume_flow_bbl,
+                                                "oil_vol_ratio": self.oil_volume_ratio_to_prelim,
+                                                "opgee_coke_mass": self.opgee_input.opgee_coke_mass}) 
+        
+        # look up combustion factors
+        fill_calculated_cells(target_table_ref={"Combustion Results": self.refinery_product_combustion, "has_wrapper": True},
                               func_to_apply=lookup_emission_factors_combustion,
                               included_cols=["Combustion Emission Factors"],
                               excluded_rows=[
-                                  "Fuel Oil", "Residual fuels", "Liquefied Petroleum Gases (LPG)"],
+                                  "Sum"],
                               other_table_refs={"CombustionEF::ProductEmFactorsPet": self.combustion_ef.product_combustion_emission_factors_petroleum,
                                                 "CombustionEF::ProductEmFactorsSolid": self.combustion_ef.product_combustion_emission_factors_derived_solids},
                               extra={"fuel_lookup": {"Gasoline": "Motor Gasoline",
                                                      "Jet Fuel": "Kerosene-Type Jet Fuel",
                                                      "Diesel": "Distillate Fuel Oil No. 2",
-                                                     "Coke": "Petroleum Coke"
+                                                     "Coke": "Petroleum Coke",
+                                                     "Fuel Oil": "Distillate Fuel Oil No. 4",
+                                                     "Residual fuels": "Residual Fuel Oil No. 6",
+                                                     "Liquefied Petroleum Gases (LPG)": "Liquefied Petroleum Gases (LPG)"
+                                                     }})
+        # calc combustion emissions
+        fill_calculated_cells(target_table_ref=self.refinery_product_combustion,
+                              func_to_apply=calc_total_em_combust,
+                              included_cols=["Total Combustion Emissions (kg CO2eq/day)", 
+                                             "Total Combustion CO2 Emissions (kg CO2 /day)",
+                                             "Total Combustion CH4 Emissions (kg CH4/ day)",
+                                             "Total Combustion N2O Emissions (kg N2O/ day)"],
+                              excluded_rows=[
+                                  "Sum"],
+                              other_table_refs=[self.combustion_ef.product_combustion_emission_factors_petroleum,
+                                                self.combustion_ef.product_combustion_emission_factors_derived_solids,
+                                                self.constants.table_2_conversion_factors],
+                              extra={"fuel_lookup": {"Gasoline": "Motor Gasoline",
+                                                     "Jet Fuel": "Kerosene-Type Jet Fuel",
+                                                     "Diesel": "Distillate Fuel Oil No. 2",
+                                                     "Coke": "Petroleum Coke",
+                                                     "Fuel Oil": "Distillate Fuel Oil No. 4",
+                                                     "Residual fuels": "Residual Fuel Oil No. 6",
+                                                     "Liquefied Petroleum Gases (LPG)": "Liquefied Petroleum Gases (LPG)"
+                                                     },
+                                    "coke_col_lookup": {"Total Combustion CO2 Emissions (kg CO2 /day)": "kg CO2 per ton",
+                                                        "Total Combustion CH4 Emissions (kg CH4/ day)": "g CH4 per ton",
+                                                        "Total Combustion N2O Emissions (kg N2O/ day)": "g N2O per ton"},
+                                    "col_lookup": {
+                                        "Total Combustion CO2 Emissions (kg CO2 /day)": "kg CO2 per gallon",
+                                        "Total Combustion CH4 Emissions (kg CH4/ day)": "g CH4 per gallon",
+                                        "Total Combustion N2O Emissions (kg N2O/ day)": "g N2O per gallon"
+                                    }})
+
+        # calc refinery product combustion emissions intensity for all gasses
+        fill_calculated_cells(target_table_ref=self.refinery_product_combustion,
+                              func_to_apply=calc_em_intensity,
+                              included_cols=["Total Combustion Emissions Intensity (kg CO2eq. / BOE)",
+                                             "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)",
+                                             "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)",
+                                             "Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                              other_tables_keymap={"Total Combustion Emissions Intensity (kg CO2eq. / BOE)": "Total Combustion Emissions (kg CO2eq/day)",
+                                             "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)": "Total Combustion CO2 Emissions (kg CO2 /day)",
+                                             "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)": "Total Combustion CH4 Emissions (kg CH4/ day)",
+                                             "Total Combustion N2O Emissions Intensity (kg N2O / BOE)": "Total Combustion N2O Emissions (kg N2O/ day)"} ,
+                              excluded_rows=["Sum"],
+                              other_table_refs=self.total_boe_produced)
+        
+        # Refinery combustion Sums         
+        fill_calculated_cells(target_table_ref=self.refinery_product_combustion,
+                              func_to_apply=calc_sum,
+                              included_cols=["Volume or Mass of Product per Day", 
+                              "Total Combustion Emissions (kg CO2eq/day)",
+                              "Total Combustion Emissions Intensity (kg CO2eq. / BOE)",
+                              "Total Combustion CO2 Emissions (kg CO2 /day)",
+                              "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)",
+                              "Total Combustion CH4 Emissions (kg CH4/ day)",
+                              "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)",
+                              "Total Combustion N2O Emissions (kg N2O/ day)",
+                              "Total Combustion N2O Emissions Intensity (kg N2O / BOE)"
+                              ],
+                              included_rows=["Sum"])
+           
+
+        # coke combustion 
+        fill_calculated_cells(target_table_ref=self.coke_combustion,
+                              func_to_apply=fetch_upstream_coke,
+                              included_cols=["Volume or Mass of Product per Day"],
+                              #excluded_rows=["Sum"],
+                              other_table_refs={"product_slate": self.product_slate.mass_flow_kg,
+                                                "opgee_coke_mass": self.opgee_input.opgee_coke_mass})
+        
+        # look up combustion factors
+        fill_calculated_cells(target_table_ref={"Combustion Results": self.coke_combustion, "has_wrapper": True},
+                              func_to_apply=lookup_emission_factors_combustion,
+                              included_cols=["Combustion Emission Factors"],
+
+                              other_table_refs={"CombustionEF::ProductEmFactorsPet": self.combustion_ef.product_combustion_emission_factors_petroleum,
+                                                "CombustionEF::ProductEmFactorsSolid": self.combustion_ef.product_combustion_emission_factors_derived_solids},
+                              extra={"fuel_lookup": {"Gasoline": "Motor Gasoline",
+                                                     "Jet Fuel": "Kerosene-Type Jet Fuel",
+                                                     "Diesel": "Distillate Fuel Oil No. 2",
+                                                     "Coke": "Petroleum Coke",
+                                                     "Fuel Oil": "Distillate Fuel Oil No. 4",
+                                                     "Residual fuels": "Residual Fuel Oil No. 6",
+                                                     "Liquefied Petroleum Gases (LPG)": "Liquefied Petroleum Gases (LPG)"
                                                      }})
 
-        fill_calculated_cells(target_table_ref={"Transport Results": self.transport_results, "has_wrapper": True},
-                              func_to_apply=calc_emissions_transport,
-                              included_cols=[
-                                  "Transport Emissions (kg CO2eq. / bbl of crude)"],
-                              other_table_refs={"TankerBargeEF::ShareOfPetProducts": self.transport_ef.tanker_barge_ef.share_of_petroleum_products})
 
-        fill_calculated_cells(target_table_ref={"Combustion Results": self.combustion_results, "has_wrapper": True},
-                              func_to_apply=calc_emissions_combustion,
-                              other_table_refs={"ProductSlate::mass_flow": self.product_slate.mass_flow_kg,
-                                                "ProductSlate::volume_flow": self.product_slate.volume_flow_bbl},
-                              included_cols=["Total Combustion Emissions (kg CO2eq. / bbl of crude)"])
+        # calc combustion emissions coke
+        fill_calculated_cells(target_table_ref=self.coke_combustion,
+                              func_to_apply=calc_total_em_combust,
+                              included_cols=["Total Combustion Emissions (kg CO2eq/day)", 
+                                             "Total Combustion CO2 Emissions (kg CO2 /day)",
+                                             "Total Combustion CH4 Emissions (kg CH4/ day)",
+                                             "Total Combustion N2O Emissions (kg N2O/ day)"],
+                              excluded_rows=[
+                                  "Sum"],
+                              other_table_refs=[self.combustion_ef.product_combustion_emission_factors_natural_gas,
+                                                self.combustion_ef.product_combustion_emission_factors_derived_solids,
+                                                self.constants.table_2_conversion_factors],
+                              extra={"fuel_lookup": {"Gasoline": "Motor Gasoline",
+                                                     "Jet Fuel": "Kerosene-Type Jet Fuel",
+                                                     "Diesel": "Distillate Fuel Oil No. 2",
+                                                     "Coke": "Petroleum Coke",
+                                                     "Fuel Oil": "Distillate Fuel Oil No. 4",
+                                                     "Residual fuels": "Residual Fuel Oil No. 6",
+                                                     "Liquefied Petroleum Gases (LPG)": "Liquefied Petroleum Gases (LPG)"
+                                                     },
+                                    "coke_col_lookup": {"Total Combustion CO2 Emissions (kg CO2 /day)": "kg CO2 per ton",
+                                                        "Total Combustion CH4 Emissions (kg CH4/ day)": "g CH4 per ton",
+                                                        "Total Combustion N2O Emissions (kg N2O/ day)": "g N2O per ton"},
+                                    "col_lookup": {
+                                        "Total Combustion CO2 Emissions (kg CO2 /day)": "kg CO2 per scf",
+                                        "Total Combustion CH4 Emissions (kg CH4/ day)": "g CH4 per scf",
+                                        "Total Combustion N2O Emissions (kg N2O/ day)": "g N2O per scf"
+                                    }})
 
-        fill_calculated_cells(target_table_ref={"Transport Sum": self.transport_sum, "has_wrapper": True},
-                              func_to_apply=calc_transport_sum,
-                              other_table_refs={"Transport Results": self.transport_results})
+        # calc coke combustion emissions intensity for all gasses
+        fill_calculated_cells(target_table_ref=self.coke_combustion,
+                              func_to_apply=calc_em_intensity,
+                              included_cols=["Total Combustion Emissions Intensity (kg CO2eq. / BOE)",
+                                             "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)",
+                                             "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)",
+                                             "Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                              other_tables_keymap={"Total Combustion Emissions Intensity (kg CO2eq. / BOE)": "Total Combustion Emissions (kg CO2eq/day)",
+                                             "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)": "Total Combustion CO2 Emissions (kg CO2 /day)",
+                                             "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)": "Total Combustion CH4 Emissions (kg CH4/ day)",
+                                             "Total Combustion N2O Emissions Intensity (kg N2O / BOE)": "Total Combustion N2O Emissions (kg N2O/ day)"} ,
+                              excluded_rows=["Sum"],
+                              other_table_refs=self.total_boe_produced)
 
-        fill_calculated_cells(target_table_ref={"Combustion Sum": self.combustion_sum, "has_wrapper": True},
-                              func_to_apply=calc_combustion_sum,
-                              other_table_refs={"Combustion Results": self.combustion_results})
 
-    def results(self):
-        # should move mass flow total to a higher level object. It is strangle to
-        # find it only in the tanker_barge object.
-        return [["Output Name", "Value"],
-                ["--OPEM Transport--", ""],
-                ["Sum: Kilograms of Product per Day",
-                    self.transport_ef.tanker_barge_ef.share_of_petroleum_products["mass_flow_sum"]["total"]],
-                ["Transport Emissions (kg CO2eq. / bbl of crude)", ""],
-                ["Pipeline Emissions", self.transport_results["Pipeline Emissions"]
-                    ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Rail Emissions", self.transport_results["Rail Emissions"]
-                    ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Heavy-Duty Truck Emissions", self.transport_results["Heavy-Duty Truck Emissions"]
-                    ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Ocean Tanker Emissions", self.transport_results["Ocean Tanker Emissions"]
-                    ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Barge Emissions", self.transport_results["Barge Emissions"]
-                    ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Sum", self.transport_sum["Sum"]
-                    ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Sum Distance Travelled", self.transport_sum["Sum"]
-                    ["Select Distance Traveled (km)"]],
-                ["--OPEM Combustion--", ""],
-                ["Total Combustion Emissions (kg CO2eq. / bbl of crude)", ""],
-                ["Gasoline", self.combustion_results["Gasoline"]
-                    ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Jet Fuel", self.combustion_results["Jet Fuel"]
-                    ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Diesel", self.combustion_results["Diesel"]
-                    ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Fuel Oil", self.combustion_results["Fuel Oil"]
-                    ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Coke", self.combustion_results["Coke"]
-                    ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Residual fuels", self.combustion_results["Residual fuels"]
-                    ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Liquefied Petroleum Gases (LPG)", self.combustion_results["Liquefied Petroleum Gases (LPG)"]
-                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-                ["Sum", self.combustion_sum["Sum"]["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]]]
+        # Natural Gas
+ 
+        fill_calculated_cells(target_table_ref=self.natural_gas_combustion,
+                              func_to_apply=fetch_upstream_gas,
+                              included_cols=["Volume or Mass of Product per Day"],
+                              #excluded_rows=["Sum"],
+                              other_table_refs={"gas_prod_vol": self.gas_production_volume_boed["row"]["col"]})
 
+        # look up combustion factors
+        fill_calculated_cells(target_table_ref={"Combustion Results": self.natural_gas_combustion, "has_wrapper": True},
+                              func_to_apply=lookup_emission_factors_nat_gas,
+                              included_cols=["Combustion Emission Factors"],
+
+                              other_table_refs={"CombustionEF::ProductEmFactorsNaturalGas": self.combustion_ef.product_combustion_emission_factors_natural_gas,
+                                                },
+                              extra={"fuel_lookup": {"Gasoline": "Motor Gasoline",
+                                                     "Jet Fuel": "Kerosene-Type Jet Fuel",
+                                                     "Diesel": "Distillate Fuel Oil No. 2",
+                                                     "Coke": "Petroleum Coke",
+                                                     "Fuel Oil": "Distillate Fuel Oil No. 4",
+                                                     "Residual fuels": "Residual Fuel Oil No. 6",
+                                                     "Liquefied Petroleum Gases (LPG)": "Liquefied Petroleum Gases (LPG)",
+                                                     "Natural Gas": "Natural Gas"
+                                                     }}) 
+        
+        # calc combustion emissions natural gas
+        fill_calculated_cells(target_table_ref=self.natural_gas_combustion,
+                              func_to_apply=calc_total_em_nat_gas,
+                              included_cols=["Total Combustion Emissions (kg CO2eq/day)", 
+                                             "Total Combustion CO2 Emissions (kg CO2 /day)",
+                                             "Total Combustion CH4 Emissions (kg CH4/ day)",
+                                             "Total Combustion N2O Emissions (kg N2O/ day)"],
+                              other_table_refs=[self.combustion_ef.product_combustion_emission_factors_natural_gas,
+                                                self.combustion_ef.product_combustion_emission_factors_derived_solids,
+                                                self.constants.table_2_conversion_factors],
+                              extra={"fuel_lookup": {"Gasoline": "Motor Gasoline",
+                                                     "Jet Fuel": "Kerosene-Type Jet Fuel",
+                                                     "Diesel": "Distillate Fuel Oil No. 2",
+                                                     "Coke": "Petroleum Coke",
+                                                     "Fuel Oil": "Distillate Fuel Oil No. 4",
+                                                     "Residual fuels": "Residual Fuel Oil No. 6",
+                                                     "Liquefied Petroleum Gases (LPG)": "Liquefied Petroleum Gases (LPG)",
+                                                     "Natural Gas": "Natural Gas"
+                                                     },
+                                    "coke_col_lookup": {"Total Combustion CO2 Emissions (kg CO2 /day)": "kg CO2 per ton",
+                                                        "Total Combustion CH4 Emissions (kg CH4/ day)": "g CH4 per ton",
+                                                        "Total Combustion N2O Emissions (kg N2O/ day)": "g N2O per ton"},
+                                    "col_lookup": {
+                                        "Total Combustion CO2 Emissions (kg CO2 /day)": "kg CO2 per scf",
+                                        "Total Combustion CH4 Emissions (kg CH4/ day)": "g CH4 per scf",
+                                        "Total Combustion N2O Emissions (kg N2O/ day)": "g N2O per scf"
+                                    }})
+        fill_calculated_cells(target_table_ref=self.natural_gas_combustion,
+                              func_to_apply=calc_em_intensity,
+                              included_cols=["Total Combustion Emissions Intensity (kg CO2eq. / BOE)",
+                                             "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)",
+                                             "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)",
+                                             "Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                              other_tables_keymap={"Total Combustion Emissions Intensity (kg CO2eq. / BOE)": "Total Combustion Emissions (kg CO2eq/day)",
+                                             "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)": "Total Combustion CO2 Emissions (kg CO2 /day)",
+                                             "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)": "Total Combustion CH4 Emissions (kg CH4/ day)",
+                                             "Total Combustion N2O Emissions Intensity (kg N2O / BOE)": "Total Combustion N2O Emissions (kg N2O/ day)"} ,
+                              excluded_rows=["Sum"],
+                              other_table_refs=self.total_boe_produced)
+
+                
+        
+    
+ 
+        
+        # fill_calculated_cells(target_table_ref={"Transport Results": self.transport_results, "has_wrapper": True},
+        #                       func_to_apply=calc_emissions_transport,
+        #                       included_cols=[
+        #                           "Transport Emissions (kg CO2eq. / bbl of crude)"],
+        #                       other_table_refs={"TankerBargeEF::ShareOfPetProducts": self.transport_ef.tanker_barge_ef.share_of_petroleum_products})
+
+        # fill_calculated_cells(target_table_ref={"Combustion Results": self.combustion_results, "has_wrapper": True},
+        #                       func_to_apply=calc_emissions_combustion,
+        #                       other_table_refs={"ProductSlate::mass_flow": self.product_slate.mass_flow_kg,
+        #                                         "ProductSlate::volume_flow": self.product_slate.volume_flow_bbl},
+        #                       included_cols=["Total Combustion Emissions (kg CO2eq. / bbl of crude)"])
+
+        # fill_calculated_cells(target_table_ref={"Transport Sum": self.transport_sum, "has_wrapper": True},
+        #                       func_to_apply=calc_transport_sum,
+        #                       other_table_refs={"Transport Results": self.transport_results})
+
+        # fill_calculated_cells(target_table_ref={"Combustion Sum": self.combustion_sum, "has_wrapper": True},
+        #                       func_to_apply=calc_combustion_sum,
+        #                       other_table_refs={"Combustion Results": self.combustion_results})
+
+    # def results(self):
+    #     # should move mass flow total to a higher level object. It is strangle to
+    #     # find it only in the tanker_barge object.
+    #     return [["Output Name", "Value"],
+    #             ["--OPEM Transport--", ""],
+    #             ["Sum: Kilograms of Product per Day",
+    #                 self.transport_ef.tanker_barge_ef.share_of_petroleum_products["mass_flow_sum"]["total"]],
+    #             ["Transport Emissions (kg CO2eq. / bbl of crude)", ""],
+    #             ["Pipeline Emissions", self.transport_results["Pipeline Emissions"]
+    #                 ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Rail Emissions", self.transport_results["Rail Emissions"]
+    #                 ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Heavy-Duty Truck Emissions", self.transport_results["Heavy-Duty Truck Emissions"]
+    #                 ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Ocean Tanker Emissions", self.transport_results["Ocean Tanker Emissions"]
+    #                 ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Barge Emissions", self.transport_results["Barge Emissions"]
+    #                 ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Sum", self.transport_sum["Sum"]
+    #                 ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Sum Distance Travelled", self.transport_sum["Sum"]
+    #                 ["Select Distance Traveled (km)"]],
+    #             ["--OPEM Combustion--", ""],
+    #             ["Total Combustion Emissions (kg CO2eq. / bbl of crude)", ""],
+    #             ["Gasoline", self.combustion_results["Gasoline"]
+    #                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Jet Fuel", self.combustion_results["Jet Fuel"]
+    #                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Diesel", self.combustion_results["Diesel"]
+    #                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Fuel Oil", self.combustion_results["Fuel Oil"]
+    #                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Coke", self.combustion_results["Coke"]
+    #                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Residual fuels", self.combustion_results["Residual fuels"]
+    #                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Liquefied Petroleum Gases (LPG)", self.combustion_results["Liquefied Petroleum Gases (LPG)"]
+    #              ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
+    #             ["Sum", self.combustion_sum["Sum"]["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]]]
+    constants: Constants
     transport_ef: TransportEF
     combustion_ef: CombustionEF
     product_slate: ProductSlate
+    opgee_input: OpgeeInput
+
+    # calculate these in post_init
+    gas_production_volume_boed = {"row": { "col": None }}
+    oil_volume_ratio_to_prelim = {"row": { "col": None }}
+    total_field_ngl_volume = {"row": { "col": None }}
+    opgee_coke_mass_boed = {"row": { "col": None }}
+    total_boe_produced = {"row": { "col": None }}
+
+    # fill from user_input_dto
+    ngl_volume_source = None
+    percent_ngl_c2_to_ethylene = None
 
     # will this cause problems if I try to pass in a list?
     user_input: InitVar[Dict] = {}

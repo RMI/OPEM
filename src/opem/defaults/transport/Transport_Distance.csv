@@ -1,6 +1,6 @@
 ﻿Mode of Transport,Gasoline,Jet Fuel,Diesel,Fuel Oil,Coke,Residual fuels,Liquefied Petroleum Gases (LPG),Petrochemical Feedstocks,Asphalt,Sulphur,Surplus RFG,Surplus NCR H2,Ethane,Propane,Butane,Pentanes Plus,NGLs
-Pipeline,2414.00,2414.00,2414.00,2414.00,0.00,2414.00,2414.00,2414.00,0.00,0.00,2414.00,2414.00,2414.00,2414.00,2414.00,2414.00,2414.00
-Rail ,NaN,NaN,NaN,NaN,2414.00,NaN,NaN,NaN,2414.00,2414.00,NaN,NaN,NaN,NaN,NaN,NaN,NaN
-Heavy-Duty Truck ,380.00,380.00,380.00,380.00,380.00,380.00,380.00,380.00,380.00,380.00,380.00,380.00,380.00,380.00,380.00,380.00,380.00
-Ocean Tanker ,NaN,NaN,NaN,NaN,NaN,NaN,NaN,0.00,0.00,0.00,0.00,0.00,0.00,NaN,NaN,NaN,NaN
-Barge ,NaN,NaN,NaN,NaN,NaN,NaN,NaN,0.00,0.00,0.00,0.00,0.00,0.00,NaN,NaN,NaN,NaN
+Pipeline,2414,2414,2414,2414,0,2414,2414,2414,0,0,2414,2414,2414,2414,2414,2414,2414
+Rail,NaN,NaN,NaN,NaN,2414,NaN,NaN,NaN,2414,2414,NaN,NaN,NaN,NaN,NaN,NaN,NaN
+Heavy-Duty Truck,380,380,380,380,380,380,380,380,380,380,380,380,380,380,380,380,380
+Ocean Tanker,NaN,NaN,NaN,NaN,NaN,NaN,NaN,0,0,0,0,0,0,NaN,NaN,NaN,NaN
+Barge,NaN,NaN,NaN,NaN,NaN,NaN,NaN,0,0,0,0,0,0,NaN,NaN,NaN,NaN

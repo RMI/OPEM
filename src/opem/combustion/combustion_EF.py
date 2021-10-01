@@ -36,6 +36,24 @@ def calc_total_ghg_per_ton(row_key, col_key, target_table_ref=None, other_table_
              other_table_refs["Table 1: Global Warming Potentials"]["CO2"]["100 year GWP"] / 1000) *
             target_table_ref["Product Combustion Emission Factors"][row_key]["mmBtu per ton"])
 
+def calc_total_ghg_per_scf(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    return (target_table_ref["Product Combustion Emission Factors"][row_key]["kg CO2 per scf"] *
+             other_table_refs["Table 1: Global Warming Potentials"]["CO2"]["100 year GWP"] +
+             target_table_ref["Product Combustion Emission Factors"][row_key]["g CH4 per scf"] *
+             other_table_refs["Table 1: Global Warming Potentials"]["CH4"]["100 year GWP"]/1000 +
+             target_table_ref["Product Combustion Emission Factors"][row_key]["g N2O per scf"] *
+             other_table_refs["Table 1: Global Warming Potentials"]["N2O"]["100 year GWP"]/1000)
+
+def calc_total_ghg_per_boe(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    return (target_table_ref["Product Combustion Emission Factors"][row_key]["Total GHGs (kg CO2eq. per scf)"] *
+            other_table_refs["Table 6: BOE conversions"]["Natural Gas (MCF/BOE)"]["conversion factor"]) * 1000
+
+def calc_ngl_estimate(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    sum = 0
+    for row in other_table_refs["pet products"].items():
+        if row[0] in extra["included_products"]:
+           sum += row[1][col_key]
+    return sum/len(extra["included_products"])
 
 @dataclass
 class CombustionEF:
@@ -71,6 +89,22 @@ class CombustionEF:
                               included_cols=[
                                   "Total GHGs (kg CO2eq. per kg petcoke)"],
                               other_table_refs={"Table 2: Conversion Factors": self.constants.table_2_conversion_factors})
+                        
+        fill_calculated_cells(target_table_ref={"Product Combustion Emission Factors": self.product_combustion_emission_factors_natural_gas, "has_wrapper": True},
+                              func_to_apply=calc_total_ghg_per_scf,
+                              included_cols=["Total GHGs (kg CO2eq. per scf)"],
+                              other_table_refs={"Table 1: Global Warming Potentials": self.constants.table_1_gwp})
+                    
+        fill_calculated_cells(target_table_ref={"Product Combustion Emission Factors": self.product_combustion_emission_factors_natural_gas, "has_wrapper": True},
+                              func_to_apply=calc_total_ghg_per_boe,
+                              included_cols=[
+                                  "Total GHGs (kg CO2eq. per boe)"],
+                              other_table_refs={"Table 6: BOE conversions": self.constants.table_6_boe_conversions})
+
+        fill_calculated_cells(target_table_ref={"Product Combustion Emission Factors": self.ngl_estimate, "has_wrapper": True},
+                              func_to_apply=calc_ngl_estimate,
+                              other_table_refs={"pet products": self.product_combustion_emission_factors_petroleum},
+                              extra={"included_products": ["Butane", "Ethane", "Pentanes Plus", "Propane"]})
 
     constants: Constants
     user_input: InitVar[Dict] = {}
@@ -89,3 +123,8 @@ class CombustionEF:
     # CALCULATED
     product_combustion_emission_factors_natural_gas: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Product_Combustion_Emission_Factors_Natural_Gas', 'combustion'))
+
+    # Prod CombustEF sheet, 
+    # CALCULATED
+    ngl_estimate: Dict = field(
+        default_factory=lambda: build_dict_from_defaults('NGL_Estimate', 'combustion'))
