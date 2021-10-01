@@ -1,4 +1,5 @@
 from dataclasses import InitVar, dataclass, field
+from math import isnan
 from typing import Dict
 from opem.constants import Constants
 
@@ -73,7 +74,7 @@ class RailEF:
                               other_table_refs=[self.rail_emission_factors_combustion_origin_to_destination,
                                                 self.energy_intensity_of_rail_transportation,
                                                 self.constants.table_2_conversion_factors])
-        fill_calculated_cells(target_table_ref=self.rail_emission_factors_co2eq,
+        fill_calculated_cells(target_table_ref=self.rail_emission_factors_co2,
                               func_to_apply=calc_rail_emissions_factors_other_gases,
                               extra={
                                   "trip_details": "Trip From Product Destination Back to Origin",

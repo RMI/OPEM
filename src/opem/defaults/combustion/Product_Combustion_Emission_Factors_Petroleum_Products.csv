@@ -1,32 +1,32 @@
-﻿Petroleum Products,mmBtu per gallon,kg CO2 per mmBtu,g CH4 per mmBtu,g N2O per mmBtu,kg CO2 per gallon,g CH4 per gallon,g N2O per gallon,Total GHGs (kg CO2eq. per gallon),Total GHGs (kg CO2eq. per bbl),,,,,
-Asphalt and Road Oil,4.250,59.88,2.5,9.39,34.10,7.36,6.12,NaN,NaN,,,,,
-Aviation Gasoline,7.572,33.36,3.1,1.95,1.49,2.72,9.91,NaN,NaN,,,,,
-Butane,4.363,25.48,5.5,6.42,3.79,1.11,5.86,NaN,NaN,,,,,
-Butylene,7.571,96.64,3.7,2.40,3.79,8.31,4.48,NaN,NaN,,,,,
-Crude Oil,2.815,48.30,9.6,3.80,62.62,6.96,8.16,NaN,NaN,,,,,
-Distillate Fuel Oil No. 7,6.448,39.89,1.6,3.46,67.13,9.38,8.19,NaN,NaN,,,,,
-Distillate Fuel Oil No. 1,3.928,70.35,1.4,2.64,15.23,5.34,5.57,NaN,NaN,,,,,
-Distillate Fuel Oil No. 4,3.977,10.89,5.1,1.47,84.72,1.98,6.88,NaN,NaN,,,,,
-Ethane,9.491,12.92,1.4,6.49,7.49,4.1,8.32,NaN,NaN,,,,,
-Ethylene,6.303,69.88,1.2,6.18,6.74,1.99,7.12,NaN,NaN,,,,,
-Heavy Gas Oils,4.758,58.19,2.9,5.88,70.67,5.19,8.22,NaN,NaN,,,,,
-Isobutane,7.337,84.86,3.7,5.93,5.16,5.1,8.81,NaN,NaN,,,,,
-Isobutylene,1.245,23.14,1.5,9.25,8.73,1.19,4.64,NaN,NaN,,,,,
-Kerosene,4.592,94.79,8.7,9.29,70.28,9.11,9.41,NaN,NaN,,,,,
-Kerosene-Type Jet Fuel,9.249,24.73,3.7,9.65,7.29,2.38,7.14,NaN,NaN,,,,,
-Liquefied Petroleum Gases (LPG),6.975,90.18,6.9,6.91,4.62,1.73,6.35,NaN,NaN,,,,,
-Lubricants,3.198,53.23,3.5,3.90,50.30,5.97,2.31,NaN,NaN,,,,,
-Motor Gasoline,9.427,84.37,7.9,9.55,2.31,8.54,3.75,NaN,NaN,,,,,
-Naphtha (<422 deg F),3.603,64.77,4.5,1.61,2.1,8.28,8.74,NaN,NaN,,,,,
-Natural Gasoline,4.849,19.35,5.2,5.16,4.67,9.43,4.67,NaN,NaN,,,,,
-Other Oil (>762 deg F),1.262,29.25,5.7,4.23,18.92,7.26,2.55,NaN,NaN,,,,,
-Pentanes Plus,5.184,59.24,7.7,6.27,3.1,7.46,1.38,NaN,NaN,,,,,
-Petrochemical Feedstocks,1.471,46.26,3.1,3.26,7.19,2.44,5.52,NaN,NaN,,,,,
-Propane,4.244,32.45,8.9,5.16,7.97,4.51,6.99,NaN,NaN,,,,,
-Propylene,4.184,55.47,3.7,1.83,7,6.37,1.69,NaN,NaN,,,,,
-Residual Fuel Oil No. 9,5.184,15.16,5.6,7.74,49.36,4.74,7.17,NaN,NaN,,,,,
-Residual Fuel Oil No. 4,5.132,52.24,4.4,6.55,35.47,9.24,1.12,NaN,NaN,,,,,
-Special Naphtha,6.229,45.13,9.5,3.47,3.76,4.47,3.89,NaN,NaN,,,,,
-Still Gas,5.762,96.49,8.9,5.37,4.52,6.45,4.25,NaN,NaN,,,,,
-Unfinished Oils,2.780,54.21,2.4,1.53,55.83,3.67,5.24,NaN,NaN,,,,,
-Used Oil,7.602,12.75,3.5,1.89,71.69,7.13,4.87,NaN,NaN,,,,,
+﻿Petroleum Products,mmBtu per gallon,kg CO2 per mmBtu,g CH4 per mmBtu,g N2O per mmBtu,kg CO2 per gallon,g CH4 per gallon,g N2O per gallon,Total GHGs (kg CO2eq. per gallon),Total GHGs (kg CO2eq. per bbl)
+Asphalt and Road Oil,8.931,48.94,2,9.3,65.15,1.48,4.71,NaN,NaN
+Aviation Gasoline,7.52,65.15,6,1.1,8.74,1.19,6.49,NaN,NaN
+Butane,1.677,49.69,6,8.2,6.76,1.23,4.43,NaN,NaN
+Butylene,7.439,86.20,2,2.4,5.22,6.44,4.88,NaN,NaN
+Crude Oil,5.723,35.80,4,6.4,49.65,4.15,9.67,NaN,NaN
+Distillate Fuel Oil No. 5,1.128,90.34,2,6.3,64.26,5.36,3.29,NaN,NaN
+Distillate Fuel Oil No. 9,9.182,60.61,8,3.7,71.23,7.39,5.42,NaN,NaN
+Distillate Fuel Oil No. 9,7.918,45.97,2,5.2,76.72,1.86,2.90,NaN,NaN
+Ethane,2.597,30.3,4,2.7,3.48,4.3,3.42,NaN,NaN
+Ethylene,8.740,90.27,2,6.4,8.74,2.27,3.15,NaN,NaN
+Heavy Gas Oils,1.801,93.59,8,6.4,24.89,9.19,5.87,NaN,NaN
+Isobutane,5.460,47.80,7,1.3,7.47,4.5,1.21,NaN,NaN
+Isobutylene,8.708,78.91,4,3.7,3.96,4.95,3.98,NaN,NaN
+Kerosene,1.165,47.6,3,1.3,25.11,4.11,6.16,NaN,NaN
+Kerosene-Type Jet Fuel,5.579,93.46,9,1.3,2.10,2.78,8.62,NaN,NaN
+Liquefied Petroleum Gases (LPG),2.769,11.86,2,2.1,6.47,8.71,3.62,NaN,NaN
+Lubricants,9.689,89.53,5,5.9,56.49,5.91,5.98,NaN,NaN
+Motor Gasoline,6.270,65.77,8,3.9,9.13,4.52,1.99,NaN,NaN
+Naphtha (<723 deg F),5.345,20.58,5,7.5,6.3,5.49,3.29,NaN,NaN
+Natural Gasoline,8.87,84.54,6,7.9,2.86,6.90,8.12,NaN,NaN
+Other Oil (>290 deg F),2.571,64.38,8,3.3,53.89,3.72,4.12,NaN,NaN
+Pentanes Plus,6.28,34.97,3,9.6,9.4,3.85,5.32,NaN,NaN
+Petrochemical Feedstocks,1.583,61.39,7,1.4,8.45,4.87,5.78,NaN,NaN
+Propane,7.913,31.17,6,6.3,4.39,9.39,5.93,NaN,NaN
+Propylene,1.921,58.65,8,9.7,4,9.51,2.94,NaN,NaN
+Residual Fuel Oil No. 7,8.18,30.93,5,4.9,79.59,2.32,1.65,NaN,NaN
+Residual Fuel Oil No. 5,5.43,35.9,1,7.2,34.54,9.89,1.68,NaN,NaN
+Special Naphtha,7.250,16.27,7,3.9,4.38,8.95,1.39,NaN,NaN
+Still Gas,6.373,53.44,4,5.5,8.45,5.95,8.48,NaN,NaN
+Unfinished Oils,7.690,57.76,3,5.5,12.83,1.73,9.63,NaN,NaN
+Used Oil,6.742,81,4,5.7,87.24,7.67,4.86,NaN,NaN
