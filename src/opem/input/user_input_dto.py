@@ -21,16 +21,10 @@ class UserInputDto:
     
 
     # user inputs global model scope
-    # Assay (Select Oil)
-    gas_production_volume: int = 600000 
-    oil_production_volume: int = 10000 
-    ngl_c2_volume: int = 0 
-    ngl_c3_volume: int = 0 
+    # Assay (Select Oil
 
-    ngl_c4_volume: int = 0
-    ngl_c5plus_volume: int = 0
-    total_field_ngl_volume: int = 0
-    opgee_coke_mass: int = 0
+
+    
     percent_ngl_c2_to_ethylene: float = 0
 
     product_name: str = None

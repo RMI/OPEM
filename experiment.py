@@ -26,7 +26,7 @@ def main():
 
     user_input_dto = UserInputDto(input_list=user_input)
 
-    opgee_input = OpgeeInput(input_list = asdict(user_input_dto))
+    opgee_input = OpgeeInput(input_list=user_input)
 
     
 
@@ -71,11 +71,15 @@ def main():
     combustion_ef = CombustionEF(user_input=asdict(user_input_dto), constants=constants)
 
     print("Calculating results . . .")
+
     opem = OPEM(user_input=asdict(user_input_dto), transport_ef=transport_ef,
-                combustion_ef=combustion_ef, product_slate=product_slate, opgee_input=opgee_input, constants=constants)
+                combustion_ef=combustion_ef, petrochem_ef=petrochem_ef, product_slate=product_slate, opgee_input=opgee_input, constants=constants)
        
-    print(opem.natural_gas_combustion) 
-    print(opem.coke_combustion)
+    print(opem.non_combusted_product_emissions) 
+
+
+    
+   
 
 
 

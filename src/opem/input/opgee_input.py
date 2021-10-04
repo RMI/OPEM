@@ -17,8 +17,7 @@ class OpgeeInput:
         else:
             raise ValueError("Please pass a list or dictionary to initialize")
 	    
-    # must pass to constructor
-    upstream_field_selection: str = None
+
     # user inputs global model scope
     # Assay (Select Oil)
     gas_production_volume: int = 600000 
@@ -30,11 +29,12 @@ class OpgeeInput:
     ngl_c5plus_volume: int = 0
     total_field_ngl_volume: int = 0
     opgee_coke_mass: int = 0
-    percent_ngl_c2_to_ethylene: float = 0
+   
+    
 
     
     
-    ngl_volume_source: int = 2
+    
     
     
 
