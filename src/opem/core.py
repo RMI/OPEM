@@ -1,16 +1,27 @@
 
 
-from dataclasses import InitVar, dataclass, field
-from typing import Dict, Dict
+
+
+
+
+
+from opem.input.user_input_dto import UserInputDto
+from opem.transport.pipeline_EF import PipelineEF
+from opem.transport.rail_EF import RailEF
+from opem.transport.tanker_barge_EF import TankerBargeEF
+
+from opem.transport import HeavyDutyTruckEF
+from dataclasses import InitVar, dataclass, field, asdict
+from typing import Dict
 from math import isnan
 from opem.combustion.combustion_EF import CombustionEF
 from opem.constants import Constants
-from opem.input import user_input_dto
+from opem.input import get_product_slate_csv
 from opem.input.opgee_input import OpgeeInput
 from opem.products.product_slate import ProductSlate
 from opem.transport.petrochem_EF import PetroChemEF
 
-from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells
+from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells, count_list
 from opem.transport.transport_EF import TransportEF
 
 
@@ -44,9 +55,10 @@ def calc_opgee_coke_mass(row_key, col_key, target_table_ref=None, other_table_re
          other_table_refs["table_2"]["kg per short ton"]["Conversion Factor"])
 
 def calc_total_boe(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+
     return (other_table_refs["gas_vol"]["row"]["col"] +
             other_table_refs["oil_vol"] +
-            other_table_refs["ngl_vol"] +
+            other_table_refs["ngl_vol"]["row"]["col"] +
             other_table_refs["coke_mass"])
 
 def calc_product_slate(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -75,7 +87,7 @@ def calc_em_intensity(row_key, col_key, target_table_ref=None, other_table_refs=
 
 # NGL transport
 def calc_ngl_product_slate(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-   print(row_key)
+   
    return (other_tables_keymap["opgee"][row_key] * 
           other_table_refs[0][other_tables_keymap["constants"]
                                     [row_key]]["Density, grams/gal"] *
@@ -206,9 +218,7 @@ def calc_total_em_non_combust(row_key, col_key, target_table_ref=None, other_tab
     if col_key == "Total Process CO2 Emissions (kg CO2)":
         return petrochem_em
     if col_key == "Total Process CH4 Emissions (kg CH4)":
-       print("PETROCHEM")
-       print(other_table_refs[0][extra[col_key]]["mass"])
-       print(other_table_refs[1]["Natural Gas Liquids"]["bbl (HHV)"])
+      
        return petrochem_em/1000
     if col_key == "Total Process N2O Emissions (kg N2O)":
        return petrochem_em/1000000
@@ -217,20 +227,6 @@ def calc_total_em_non_combust(row_key, col_key, target_table_ref=None, other_tab
 
 
 
-
-
-
-
-
-def calc_transport_sum(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-
-    return sum(other_table_refs["Transport Results"][key][col_key]
-               for key, row in other_table_refs["Transport Results"].items() if key not in ["full_table_name", "row_index_name"])
-
-
-def calc_combustion_sum(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    return sum(other_table_refs["Combustion Results"][key][col_key]
-               for key, row in other_table_refs["Combustion Results"].items() if key not in ["full_table_name", "row_index_name"])
 
 
 @dataclass
@@ -257,7 +253,7 @@ class OPEM:
                               func_to_apply=calc_gas_production_volume,
                               other_table_refs={"gas_prod_volume": self.opgee_input.gas_production_volume, 
                                                 "table_6": self.constants.table_6_boe_conversions})
-        print("gas prod volume",self.gas_production_volume_boed)
+       
         # calc_oil_volume_ratio
         fill_calculated_cells(target_table_ref=self.oil_volume_ratio_to_prelim,
                               func_to_apply=calc_oil_volume_ratio,
@@ -265,7 +261,7 @@ class OPEM:
                                                 "product_slate": self.product_slate.volume_flow_bbl})
             
         # calc_total_field_ngl
-        print("before call total field ngl")
+       
         fill_calculated_cells(target_table_ref=self.total_field_ngl_volume,
                               func_to_apply=calc_total_field_ngl,
                               other_table_refs={"ngl_volume_source": self.ngl_volume_source, 
@@ -273,7 +269,7 @@ class OPEM:
                                                 "c3": self.opgee_input.ngl_c3_volume,
                                                 "c4": self.opgee_input.ngl_c4_volume,
                                                 "c5": self.opgee_input.ngl_c5plus_volume})
-                        
+       
         # calc_opgee_coke_mass
         fill_calculated_cells(target_table_ref=self.opgee_coke_mass_boed,
                               func_to_apply=calc_opgee_coke_mass,
@@ -285,8 +281,9 @@ class OPEM:
                               func_to_apply=calc_total_boe,
                               other_table_refs={"gas_vol": self.gas_production_volume_boed,
                                                 "oil_vol": self.opgee_input.oil_production_volume,
-                                                "ngl_vol": self.opgee_input.total_field_ngl_volume,
+                                                "ngl_vol": self.total_field_ngl_volume,
                                                 "coke_mass": self.opgee_input.opgee_coke_mass}) 
+       
 
         # Refinery Transport Table
         # calc_product_slate         
@@ -358,7 +355,7 @@ class OPEM:
 
 
         # NGL Transport Table
-        print("before calc product slate", self.total_field_ngl_volume)
+     
         # calc_product_slate_ngl         
         fill_calculated_cells(target_table_ref=self.ngl_transport,
                               func_to_apply=calc_ngl_product_slate,
@@ -790,11 +787,11 @@ class OPEM:
         # emissions intensity non-combusted
         fill_calculated_cells(target_table_ref=self.non_combusted_product_emissions,
                               func_to_apply=calc_em_intensity,
-                              included_cols=["Total Process Emissions Intensity (kg CO2eq./boe total",
+                              included_cols=["Total Process Emissions Intensity (kg CO2eq./boe total)",
                                              "Total Process CO2 Emissions Intensity (kg CO2/boe total)",      
                                              "Total ProcessCH4  Emissions Intensity (kg CH4/boe total)",
                                              "Total Process N2O Emissions Intensity (kg N2O./boe total)"],
-                              other_tables_keymap={"Total Process Emissions Intensity (kg CO2eq./boe total": "Total Process Emissions (kg CO2eq.)",
+                              other_tables_keymap={"Total Process Emissions Intensity (kg CO2eq./boe total)": "Total Process Emissions (kg CO2eq.)",
                                              "Total Process CO2 Emissions Intensity (kg CO2/boe total)": "Total Process CO2 Emissions (kg CO2)",      
                                              "Total ProcessCH4  Emissions Intensity (kg CH4/boe total)": "Total Process CH4 Emissions (kg CH4)",
                                              "Total Process N2O Emissions Intensity (kg N2O./boe total)": "Total Process N2O Emissions (kg N2O)"} ,
@@ -805,7 +802,7 @@ class OPEM:
                               func_to_apply=calc_sum,
                               included_cols=[
                               "Volume or Mass of Product per Day",
-                              "Total Process Emissions Intensity (kg CO2eq./boe total",
+                              "Total Process Emissions Intensity (kg CO2eq./boe total)",
                               "Total Process CO2 Emissions Intensity (kg CO2/boe total)",      
                               "Total ProcessCH4  Emissions Intensity (kg CH4/boe total)",
                               "Total Process N2O Emissions Intensity (kg N2O./boe total)",
@@ -816,67 +813,58 @@ class OPEM:
                               ],
                               included_rows=["Sum"])
     
- 
-        
-        # fill_calculated_cells(target_table_ref={"Transport Results": self.transport_results, "has_wrapper": True},
-        #                       func_to_apply=calc_emissions_transport,
-        #                       included_cols=[
-        #                           "Transport Emissions (kg CO2eq. / bbl of crude)"],
-        #                       other_table_refs={"TankerBargeEF::ShareOfPetProducts": self.transport_ef.tanker_barge_ef.share_of_petroleum_products})
-
-        # fill_calculated_cells(target_table_ref={"Combustion Results": self.combustion_results, "has_wrapper": True},
-        #                       func_to_apply=calc_emissions_combustion,
-        #                       other_table_refs={"ProductSlate::mass_flow": self.product_slate.mass_flow_kg,
-        #                                         "ProductSlate::volume_flow": self.product_slate.volume_flow_bbl},
-        #                       included_cols=["Total Combustion Emissions (kg CO2eq. / bbl of crude)"])
-
-        # fill_calculated_cells(target_table_ref={"Transport Sum": self.transport_sum, "has_wrapper": True},
-        #                       func_to_apply=calc_transport_sum,
-        #                       other_table_refs={"Transport Results": self.transport_results})
-
-        # fill_calculated_cells(target_table_ref={"Combustion Sum": self.combustion_sum, "has_wrapper": True},
-        #                       func_to_apply=calc_combustion_sum,
-        #                       other_table_refs={"Combustion Results": self.combustion_results})
-
-    # def results(self):
-    #     # should move mass flow total to a higher level object. It is strangle to
-    #     # find it only in the tanker_barge object.
-    #     return [["Output Name", "Value"],
-    #             ["--OPEM Transport--", ""],
-    #             ["Sum: Kilograms of Product per Day",
-    #                 self.transport_ef.tanker_barge_ef.share_of_petroleum_products["mass_flow_sum"]["total"]],
-    #             ["Transport Emissions (kg CO2eq. / bbl of crude)", ""],
-    #             ["Pipeline Emissions", self.transport_results["Pipeline Emissions"]
-    #                 ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Rail Emissions", self.transport_results["Rail Emissions"]
-    #                 ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Heavy-Duty Truck Emissions", self.transport_results["Heavy-Duty Truck Emissions"]
-    #                 ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Ocean Tanker Emissions", self.transport_results["Ocean Tanker Emissions"]
-    #                 ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Barge Emissions", self.transport_results["Barge Emissions"]
-    #                 ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Sum", self.transport_sum["Sum"]
-    #                 ["Transport Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Sum Distance Travelled", self.transport_sum["Sum"]
-    #                 ["Select Distance Traveled (km)"]],
-    #             ["--OPEM Combustion--", ""],
-    #             ["Total Combustion Emissions (kg CO2eq. / bbl of crude)", ""],
-    #             ["Gasoline", self.combustion_results["Gasoline"]
-    #                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Jet Fuel", self.combustion_results["Jet Fuel"]
-    #                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Diesel", self.combustion_results["Diesel"]
-    #                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Fuel Oil", self.combustion_results["Fuel Oil"]
-    #                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Coke", self.combustion_results["Coke"]
-    #                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Residual fuels", self.combustion_results["Residual fuels"]
-    #                 ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Liquefied Petroleum Gases (LPG)", self.combustion_results["Liquefied Petroleum Gases (LPG)"]
-    #              ["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]],
-    #             ["Sum", self.combustion_sum["Sum"]["Total Combustion Emissions (kg CO2eq. / bbl of crude)"]]]
+    def results(self):
+        # should move mass flow total to a higher level object. It is strangle to
+        # find it only in the tanker_barge object.
+        return [["Output Name", "RESULTS"],
+                ["Selected Oil", self.product_slate.product_name],
+                ["Total BOE Produced", self.total_boe_produced["row"]["col"]],
+                ["--OPEM Transport--", ""],
+                ["-Refinery Product Transport-", ""],
+                ["Sum: Kilograms of Product per Day",
+                    self.refinery_product_transport["Sum"]["Kilograms of Product per Day"]],
+                ["Transport Emissions Intensity (kg CO2eq. /BOE)", self.refinery_product_transport["Sum"]["Transport Emissions Intensity (kg CO2eq. /BOE)"]],
+                ["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)", self.refinery_product_transport["Sum"]["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)", self.refinery_product_transport["Sum"]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"]],    
+                ["Total Transport N2O Emissions Intensity (kg N2O / BOE)", self.refinery_product_transport["Sum"]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"]],    
+                ["-NGL Product Transport-", ""],
+                ["Sum: Kilograms of Product per Day",
+                    self.ngl_transport["NGLs"]["Kilograms of Product per Day"]],
+                ["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)", self.ngl_transport["NGLs"]["Transport Emissions Intensity (kg CO2eq. /BOE)"]],
+                ["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)", self.ngl_transport["NGLs"]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"]],    
+                ["Total Transport N2O Emissions Intensity (kg N2O / BOE)", self.ngl_transport["NGLs"]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"]],     
+                ["--OPEM Combustion--", ""],
+                ["-Refinery Product Combustion-", ""],
+                ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)", self.refinery_product_combustion["Sum"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)", self.refinery_product_combustion["Sum"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)", self.refinery_product_combustion["Sum"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)", self.refinery_product_combustion["Sum"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["-Coke Combustion (direct offtake and transport from upstream field)-", ""],
+                ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)", self.coke_combustion["Coke"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)", self.coke_combustion["Coke"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)", self.coke_combustion["Coke"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)", self.coke_combustion["Coke"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["-Natural Gas Combustion (direct offtake and transport from upstream field)-", ""],
+                ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)", self.natural_gas_combustion["Natural Gas"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)", self.natural_gas_combustion["Natural Gas"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)", self.natural_gas_combustion["Natural Gas"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)", self.natural_gas_combustion["Natural Gas"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["-NGL Combustion (direct offtake and transport from upstream field)-", ""],
+                ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)", self.ngl_combustion["Sum"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)", self.ngl_combustion["Sum"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)", self.ngl_combustion["Sum"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)", self.ngl_combustion["Sum"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["-Total Combustion emissions-", ""],
+                ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)", self.total_combustion_emissions["Sum"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)", self.total_combustion_emissions["Sum"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)", self.total_combustion_emissions["Sum"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)", self.total_combustion_emissions["Sum"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["--Non-combusted product emissions--", ""],
+                ["Sum: BOED", self.non_combusted_product_emissions["Sum"]["Volume or Mass of Product per Day"]],
+                ["Total Process Emissions Intensity (kg CO2eq./boe total)", self.non_combusted_product_emissions["Sum"]["Total Process Emissions Intensity (kg CO2eq./boe total)"]],
+                ["Total Process CO2 Emissions Intensity (kg CO2/boe total)",self.non_combusted_product_emissions["Sum"]["Total Process CO2 Emissions Intensity (kg CO2/boe total)"]],
+                ["Total ProcessCH4  Emissions Intensity (kg CH4/boe total)",self.non_combusted_product_emissions["Sum"]["Total ProcessCH4  Emissions Intensity (kg CH4/boe total)"]],
+                ["Total Process N2O Emissions Intensity (kg N2O./boe total)",self.non_combusted_product_emissions["Sum"]["Total Process N2O Emissions Intensity (kg N2O./boe total)"]]]
     constants: Constants
     transport_ef: TransportEF
     petrochem_ef: PetroChemEF
@@ -966,33 +954,64 @@ class CombustionResults:
 #     opem_total: float
 
 
-# def run_model():
-#     # orchestrator function
-#     # will call input functions,
-#     # initialize EF objects
-#     # and calculate opem
-#     # main should call this function when it is ready.
-#     user_params = input.initialize_model_inputs(
-#         input.get_csv_input, input.validate_input)
-#     product_slate = input.get_product_slate('test')
-
-#     calculate_opem()
+def run_model(user_input):  
+    results = []
+    for batch in user_input:
+        results.append(run_batch(batch))
+    return results
 
 
-def calculate_opem_transport(user_input):
-    # -> TransportResults:
-    # instantiate all transport model EF objects (using the input dto),
-    # pull required params for each object out of the generic user params input
-    # object by turning the input object in a dictionary and using
-    # TransportObj(for key in transport_obj.properties: input_dict[key])
-    # then use them to instantiate total transport EF object
-    # then us the Transport EF object, the product slate, and the input dto to
-    # create the results object
-    return TransportEF(user_input=user_input)
+def run_batch(user_input):
+    user_input_dto = UserInputDto(input_list=user_input)
+    opgee_input = OpgeeInput(input_list=user_input)
+
+    print("Fetching product slate . . .")
+
+    product_slate = get_product_slate_csv(user_input_dto.product_name)
+
+    # make a constants object and pass a ref to heavy_duty truck
+    constants = Constants()
+
+    print("Processing Tanker/Barge Emission Factors . . .")
+
+    tanker_barge_ef = TankerBargeEF(
+        user_input=asdict(user_input_dto), constants=constants, product_slate=product_slate)
+
+    print("Processing Heavy-Duty Truck Emission Factors . . .")
+
+    heavy_duty_truck_ef = HeavyDutyTruckEF(
+        user_input=asdict(user_input_dto), constants=constants)
+
+    print("Processing Rail Emission Factors . . .")
+
+    rail_ef = RailEF(user_input=asdict(user_input_dto), constants=constants)
+
+    print("Processing Pipeline Emission Factors . . .")
+
+    pipeline_ef = PipelineEF(user_input=asdict(
+        user_input_dto), constants=constants)
+
+    petrochem_ef = PetroChemEF(user_input=asdict(
+        user_input_dto), constants=constants)
+
+    
+    transport_ef = TransportEF(user_input=asdict(user_input_dto), pipeline_ef=pipeline_ef,
+                               rail_ef=rail_ef,
+                               heavy_duty_truck_ef=heavy_duty_truck_ef,
+                               tanker_barge_ef=tanker_barge_ef)
+    
+    print("Processing Combustion Emission Factors . . .")
+
+    combustion_ef = CombustionEF(user_input=asdict(user_input_dto), constants=constants)
+
+    print("Calculating results . . .")
+
+    opem = OPEM(user_input=asdict(user_input_dto), transport_ef=transport_ef,
+                combustion_ef=combustion_ef, petrochem_ef=petrochem_ef, product_slate=product_slate, opgee_input=opgee_input, constants=constants)
+    print("Model run completed.")
+    return opem.results()
+
+    
 
 
-# def calculate_opem() -> ResultsDto:
 
-#     calculate_opem_transport():
-
-#     caclulate_opem_combustion():
