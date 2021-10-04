@@ -1,6 +1,6 @@
 import collections
 import csv
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, fields
 from typing import Dict, List
 import codecs
 import math
@@ -151,11 +151,22 @@ def visit_dict(d, path=[]):
 def initialize_from_dataclass(target, source: Dict):
     # this allows us to get input from a dict generated from another dataclass
     target_keys = asdict(target).keys()
+    if "refinery_product_combustion" in target_keys:
+        print("found opem object", target_keys)
     for key in source.keys():
+        
         if key in target_keys:
+            
             if type(source[key]) != dict:
                 if source[key] != '':
+                   
                     setattr(target, key, source[key])
+                    if key == "ngl_volume_source":
+                        print("FOUND NGL VOL SOURCE")
+                        
+                        print(target_keys)
+                        print(getattr(target, key))
+                    
             else:
                 for path in visit_dict(source[key]):
 
