@@ -53,7 +53,7 @@ source venv/bin/activate
 Use pip to install OPEM from the downloaded file. For example, if you have a .whl file in your current working directory:
 
 ```
-pip install opem-1.0.1a0-py3-none-any.whl
+pip install opem-1.0.4a0-py3-none-any.whl
 ```
 
 
@@ -63,6 +63,6 @@ opem will look for a file named 'opem_input.csv' in your current working directo
 
 If it can find 'opem_input.csv' the program will run and write results to a new file 'opem_output.csv', saved to your current working directory.
 
-The input and output files are based on the 'OPEM Input Outputs' excel workbook created by Raghav (included in this repo). Please refer to this workbook to see how the names in the input/output csv filed map to parameters in the OPEM1.1 workbook.
+The input and output files are based on the 'OPEM 3.0 Input Outputs' excel workbook created by Raghav Muralidharan (included in this repo). Please refer to this workbook to see how the names in the input/output csv filed map to parameters in the OPEM3.0 workbook.
 
 

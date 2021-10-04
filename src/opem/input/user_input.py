@@ -47,31 +47,44 @@ def get_csv_input(validate_input_func):
     input_lookup = create_lookup_table()
 
     all_user_input = []
+    csv_file_array = []
     try:
         with open('opem_input.csv', newline='', encoding="utf-8-sig") as csvfile:
-
             reader = csv.reader(csvfile)
-
             for row in reader:
-                try:
-                    validate_input_func(row)
-                except ValueError:
-                    raise ValueError("input is invalid!")
-                # lambda function here to get nesting of arbitrary depth
-                # lambda: for each item in row if index(row[item]) exists
-                # then all_user_input[row] = {}
-                if row[0] != "":
-                    try:
-                        all_user_input.append(
-                            input_lookup[create_key_from_csv(row[:4])] + [float(row[4]) if isfloat(row[4]) else row[4]])
-                    except KeyError:
-                        print(
-                            f"Name {row[:4]} does not match expected user input.")
-                        print("Ignoring this input and using defaults.")
+                csv_file_array.append(row)
+
     except FileNotFoundError:
         raise FileNotFoundError(
             "Please include opem_input.csv in your current working directory!")
-
+            
+    first_row = csv_file_array[0]
+  
+    i = 0
+    while 5+i <= len(first_row) and first_row[4+i] != "":
+        batch = []
+        for row in csv_file_array:
+            try:
+                validate_input_func(row)
+            except ValueError:
+                raise ValueError("input is invalid!")
+            # lambda function here to get nesting of arbitrary depth
+            # lambda: for each item in row if index(row[item]) exists
+            # then all_user_input[row] = {}
+            if row[0] != "" and len(row) >= 5+i:
+               
+                try:
+                  
+                    batch.append(
+                            input_lookup[create_key_from_csv(row[:4])] + [float(row[4+i]) if isfloat(row[4+i]) else row[4+i]])
+                except KeyError:
+                    print(
+                            f"Name {row[:4+i]} does not match expected user input.")
+                    print("Ignoring this input and using defaults.")
+            
+        all_user_input.append(batch)
+        i += 1
+    
     return all_user_input
 
 
