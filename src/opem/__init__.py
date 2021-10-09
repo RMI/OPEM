@@ -16,15 +16,17 @@ from opem.utils import write_csv_output
 from opem import input
 
 def main():
-    """Entry point for the application script"""
+    
     print("Welcome to OPEM V.1.2")
 
     user_input = input.initialize_model_inputs(
         input.get_csv_input, input.validate_input)
+ 
+    processed_input = [{"user_input": input } for input in user_input]
 
     print("Found opem_input.csv, running model.")
 
-    results = run_model(user_input)
+    results = run_model(processed_input, return_dict=False)
      
     print("Writing results . . .")
  
