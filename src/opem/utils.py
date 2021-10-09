@@ -17,31 +17,31 @@ else:
 from opem import defaults
 
 
-"""
-@param func_to_apply: function
-     this is a user defined function that will return a value to be 
-     written to the table cell that this function navigates to.
-     it takes row_key and col_key as arguments 
 
-@param other_tables_keymap: dict
-     should be of the form 
-     {
-         other_table_1: {
-             row_keymap: {"[target_table_key]": "[other_table_key]"}, 
-             col_keymap: {"[target_table_key]": "[other_table_key]"}},
+# param func_to_apply: function
+#      this is a user defined function that will return a value to be 
+#      written to the table cell that this function navigates to.
+#      it takes row_key and col_key as arguments 
 
-        other_table_1: {
-             row_keymap: {"[target_table_key]": "[other_table_key]"}, 
-             col_keymap: {"[target_table_key]": "[other_table_key]"}},
+# param other_tables_keymap: dict
+#      should be of the form 
+#      {
+#          other_table_1: {
+#              row_keymap: {"[target_table_key]": "[other_table_key]"}, 
+#              col_keymap: {"[target_table_key]": "[other_table_key]"}},
+
+#         other_table_1: {
+#              row_keymap: {"[target_table_key]": "[other_table_key]"}, 
+#              col_keymap: {"[target_table_key]": "[other_table_key]"}},
             
-     }
-     for other_table name use the "full_table_name" table attribute. 
-      example: f"{self.product_slate.mass_flow_kg['full_table_name']}"
+#      }
+#      for other_table name use the "full_table_name" table attribute. 
+#       example: f"{self.product_slate.mass_flow_kg['full_table_name']}"
 
-@param extra: dict
-      used to pass extra config into function
+# param extra: dict
+#       used to pass extra config into function
 
-"""
+
 
 
 def fill_calculated_cells(target_table_ref, func_to_apply, other_table_refs=None,  included_rows=[], included_cols=[], excluded_rows=[], excluded_cols=[], other_tables_keymap={}, extra={}):
@@ -247,11 +247,11 @@ def isAtomOrFlat(d):
 
 
 def leafPaths(nestedDicts, noDeeper=isAtomOrFlat):
-    """
-        For each leaf in NESTEDDICTS, this yields a 
-        dictionary consisting of only the entries between the root
-        and the leaf.
-    """
+    
+        # For each leaf in NESTEDDICTS, this yields a 
+        # dictionary consisting of only the entries between the root
+        # and the leaf.
+    
     for key, value in nestedDicts.items():
         if noDeeper(value):
             yield {key: value}

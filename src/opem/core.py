@@ -1,10 +1,4 @@
-
-
-
-
-
-
-
+from opem.input.user_input import standardize_input
 from opem.input.user_input_dto import UserInputDto
 from opem.transport.pipeline_EF import PipelineEF
 from opem.transport.rail_EF import RailEF
@@ -813,9 +807,24 @@ class OPEM:
                               ],
                               included_rows=["Sum"])
     
-    def results(self):
+    def results(self, return_dict=True):
         # should move mass flow total to a higher level object. It is strangle to
         # find it only in the tanker_barge object.
+        if return_dict:
+            return {"Selected Oil": self.product_slate.product_name,
+                "Total BOE Produced": self.total_boe_produced["row"]["col"],
+                "Sum: Kilograms of Product per Day":
+                    self.refinery_product_transport["Sum"]["Kilograms of Product per Day"],
+                    "Transport Emissions Intensity (kg CO2eq. /BOE)": self.refinery_product_transport["Sum"]["Transport Emissions Intensity (kg CO2eq. /BOE)"],
+                "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)": self.refinery_product_transport["Sum"]["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"],
+                "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)": self.refinery_product_transport["Sum"]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"],    
+                "Total Transport N2O Emissions Intensity (kg N2O / BOE)": self.refinery_product_transport["Sum"]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"],   
+                "Sum: Kilograms of Product per Day":
+                    self.ngl_transport["NGLs"]["Kilograms of Product per Day"],
+                "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)": self.ngl_transport["NGLs"]["Transport Emissions Intensity (kg CO2eq. /BOE)"],
+                "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)": self.ngl_transport["NGLs"]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"],    
+                "Total Transport N2O Emissions Intensity (kg N2O / BOE)": self.ngl_transport["NGLs"]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"],      
+                }
         return [["Output Name", "RESULTS"],
                 ["Selected Oil", self.product_slate.product_name],
                 ["Total BOE Produced", self.total_boe_produced["row"]["col"]],
@@ -830,7 +839,8 @@ class OPEM:
                 ["-NGL Product Transport-", ""],
                 ["Sum: Kilograms of Product per Day",
                     self.ngl_transport["NGLs"]["Kilograms of Product per Day"]],
-                ["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)", self.ngl_transport["NGLs"]["Transport Emissions Intensity (kg CO2eq. /BOE)"]],
+                ["Transport Emissions Intensity (kg CO2eq. /BOE)[", self.ngl_transport["NGLs"]["Transport Emissions Intensity (kg CO2eq. /BOE)"]]    
+                ["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)", self.ngl_transport["NGLs"]["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"]],
                 ["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)", self.ngl_transport["NGLs"]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"]],    
                 ["Total Transport N2O Emissions Intensity (kg N2O / BOE)", self.ngl_transport["NGLs"]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"]],     
                 ["--OPEM Combustion--", ""],
@@ -942,9 +952,7 @@ class OPEM:
     # product_volume_sum: int = None
 
 
-@dataclass
-class CombustionResults:
-    pass
+
 
 
 # @dataclass
@@ -953,21 +961,87 @@ class CombustionResults:
 #     combustion: CombustionResults
 #     opem_total: float
 
+# user_input = [ {"user_input": [[]], "opgee_input": [[]], "product_slate":[[]]}, ]
+# or 
+# user_input = [ {"user_input": {}, "opgee_input": {}, "product_slate": {} ]
 
-def run_model(user_input):  
+#now make sure to change the .results() method on the
+#opem object. if it returns a list of lists it should not include
+# headers (keep that in the print function)
+# and it should return a dictionary if results_as_dict =True
+def run_model(input, return_dict=True):
+    """Summary line.
+
+    example_1 (dictionary holding lists of lists): 
+                { "user_input": [["User Inputs & Results" , "Global:" , "Assay (Select Oil)", "-" ,"Canada Athabasca DC SCO"]],
+                  "opgee_input": [["User Inputs & Results", "Global:", "Gas Production Volume (MCFD)", "-", 600000],
+                                   "User Inputs & Results", "Global:", "Oil Production Volume (BOED)", "-", 100000]]
+                   "product_slate": [["volume_flow_bbl", "Barrels of Crude per Day", "Flow", 99885.29447], 
+                                     ["volume_flow_bbl", "Gasoline", "Flow", 16267.50216], 
+                                     ["volume_flow_bbl", "Jet Fuel", "Flow", 29642.5287], 
+                                     ["volume_flow_bbl", "Diesel", "Flow", 18614.94977]] }
+                            
+    example_2 (dictionary holding dictionaries): 
+                { "user_input": {("User Inputs & Results" , "Global:" , "Assay (Select Oil)", "-"): "Canada Athabasca DC SCO"},
+                  "opgee_input": {("User Inputs & Results", "Global:", "Gas Production Volume (MCFD)", "-"): 600000,
+                                  ("User Inputs & Results", "Global:", "Oil Production Volume (BOED)", "-"): 100000,
+                  "product_slate": {("volume_flow_bbl", "Barrels of Crude per Day", "Flow"): 99885.29447, 
+                                    ("volume_flow_bbl", "Gasoline", "Flow"): 16267.50216, 
+                                    ("volume_flow_bbl", "Jet Fuel", "Flow"): 29642.5287, 
+                                    ("volume_flow_bbl", "Diesel", "Flow"): 18614.94977 }
+
+    Args:
+        input (list/dict): Either a single dictionary of input parameters, or a list of 
+                           dictionaries, each one of which is a set of input parameters for one 
+                           run of the model. The input dictionaries must contain a key "user_input"
+                           and may also contain keys "opgee_input" and "product_slate". The values for
+                           each key may be either a dictionary or a list of lists. If it is a dictionary,
+                           the keys must be tuples of strings which name the input parameter (see opem_input.csv, and product_slate_input.csv). 
+                           If the value is a list of lists, each list represents one row of input; the first elements 
+                           of the list must be the string names and the last element is the value of the input parameter.
+
+                           OPGEE input parameters may be included with "user_input" values. In this case 
+                           the "opgee_input" should be omitted.
+
+                           The "product_slate" key should provide complete product slate information for a single product (see product_slate_input.csv).
+                           If the "product_slate" key is omitted the program will use the value of the "Assay (Select Oil)" under "user_input" to 
+                           look up the product slate in an internal csv file. Omitting both "product_slate" and "Assay (Select Oil)" will result in an error. 
+
+                           
+
+        return_dict (bool): If true, the function will return model results in the 
+        form of a dictionary. Otherwise model results will be held in a list of lists.
+
+    Returns:
+        list/dict: If a single param dictionary is passed as input,
+                   the function will return either a dictionary or list of lists (controlled
+                   by the return_dict argument) containing results. If a list of 
+                   param dictionaries are passed, a list will be returned, holding 
+                   results objects (dictionary or list of lists) for each set of input params.
+       
+
+    """
+    standardized_input = standardize_input(input)
+    if isinstance(standardized_input, dict):
+        return run_batch(**standardized_input)
     results = []
-    for batch in user_input:
-        results.append(run_batch(batch))
+    for batch in standardized_input:
+        results.append(run_batch(**batch, return_dict=return_dict))
     return results
 
 
-def run_batch(user_input):
+def run_batch(user_input, opgee_input=None, product_slate=None, return_dict=True):
     user_input_dto = UserInputDto(input_list=user_input)
-    opgee_input = OpgeeInput(input_list=user_input)
+    if opgee_input is not None:
+       opgee_input = OpgeeInput(input_list=opgee_input)
+    else: 
+       opgee_input = OpgeeInput(input_list=user_input)
 
     print("Fetching product slate . . .")
-
-    product_slate = get_product_slate_csv(user_input_dto.product_name)
+    if product_slate is not None:
+       product_slate = ProductSlate(product_slate)
+    else:
+       product_slate = get_product_slate_csv(user_input_dto.product_name)
 
     # make a constants object and pass a ref to heavy_duty truck
     constants = Constants()
@@ -1009,7 +1083,7 @@ def run_batch(user_input):
     opem = OPEM(user_input=asdict(user_input_dto), transport_ef=transport_ef,
                 combustion_ef=combustion_ef, petrochem_ef=petrochem_ef, product_slate=product_slate, opgee_input=opgee_input, constants=constants)
     print("Model run completed.")
-    return opem.results()
+    return opem.results(return_dict)
 
     
 

@@ -6,8 +6,7 @@ from opem.utils import build_dict_from_defaults, initialize_from_dataclass, init
 
 @dataclass
 class ProductSlate:
-    def __post_init__(self, product_name, user_input):
-        self.product_name = product_name
+    def __post_init__(self, user_input):
 
         if type(user_input) == dict:
             # this allows us to get input from a dict generated from another dataclass
@@ -18,7 +17,7 @@ class ProductSlate:
         else:
             raise ValueError("Please pass a list or dictionary to initialize")
 
-    product_name: InitVar[str]
+    product_name: str = None
 
     # We will us an initvar and custom function to fill
     # the fields from json so that we don't overwrite
