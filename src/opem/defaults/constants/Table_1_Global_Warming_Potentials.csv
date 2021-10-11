@@ -1,12 +1,12 @@
-﻿Gas,495 year GWP,28 year GWP
-VOC,5,8
-CO,5,3
-NOx,9,4
-PM10,4,6
-PM2.5,4,8
-SOx,9,5
-BC,2,2
-OC,5,2
-CH4,41,46
-N2O,515,934
-CO2,5,7
+﻿Gas,889 year GWP,85 year GWP,User Selection
+VOC,9,5,NaN
+CO,3,2,NaN
+NOx,8,1,NaN
+PM10,8,1,NaN
+PM2.7,9,8,NaN
+SOx,7,3,NaN
+BC,4,4,NaN
+OC,2,7,NaN
+CH4,40,47,NaN
+N2O,935,819,NaN
+CO2,9,6,NaN

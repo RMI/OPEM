@@ -36,9 +36,13 @@ def calc_oil_volume_ratio(row_key, col_key, target_table_ref=None, other_table_r
     return other_table_refs["oil_volume"] / other_table_refs["product_slate"]["Barrels of Crude per Day"]["Flow"]
 
 def calc_total_field_ngl(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+
     if other_table_refs["ngl_volume_source"] == 1:
-    
-        return 1
+        if other_table_refs["user_input_field_volume"] is None:
+            print("Expected user input for Total field NGL volume (BOED) but none was given.")
+            print("Using default value of 1000.")
+            return 1000
+        return other_table_refs["user_input_field_volume"]
     elif other_table_refs ["ngl_volume_source"] == 2:
         
         return other_table_refs["c2"] + other_table_refs["c3"] + other_table_refs["c4"] + other_table_refs["c5"] 
@@ -65,8 +69,9 @@ def calc_sum(row_key, col_key, target_table_ref=None, other_table_refs=None, oth
     sum = 0
     # don't use name wrapper for target table, makes reuse difficult.
     for row in target_table_ref.items():
-        if row[0] not in ["full_table_name", "row_index_name", "Sum"]:
+        if row[0] not in ["full_table_name", "row_index_name", "Sum", "NGLs"]:
            sum += row[1][col_key]
+    
     return sum
 
 def lookup_emission_factors_transport(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -76,7 +81,9 @@ def calc_total_em(row_key, col_key, target_table_ref=None, other_table_refs=None
     #print("")
     return target_table_ref[row_key]["Kilograms of Product per Day"] * target_table_ref[row_key][other_tables_keymap[col_key]] / 1000
 
+
 def calc_em_intensity(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+        
     return target_table_ref[row_key][other_tables_keymap[col_key]] / other_table_refs["row"]["col"]
 
 # NGL transport
@@ -176,8 +183,8 @@ def calc_total_em_nat_gas(row_key, col_key, target_table_ref=None, other_table_r
 
 def calc_total_em_sum_ngl(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     if other_table_refs[0] == 1:
-        if col_key == "Total Combustion Emissions (kg CO2eq. / day)":
-            return (target_table_ref[row_key]["Volume of Product per Day"] * 
+        if col_key == "Total Combustion Emissions (kg CO2eq/day)":
+            return (target_table_ref[row_key]["Volume or Mass of Product per Day"] * 
                  target_table_ref[row_key]["Combustion Emission Factors"] * 
                  target_table_ref[row_key]["% Combusted"])
         return (other_table_refs[1]["Natural Gas Liquid Average Estimate"][extra[col_key]])
@@ -242,7 +249,6 @@ class OPEM:
         
         # fill calc fields related to OPGEE input
         # calc_gas_production_volume
-     
         fill_calculated_cells(target_table_ref=self.gas_production_volume_boed,
                               func_to_apply=calc_gas_production_volume,
                               other_table_refs={"gas_prod_volume": self.opgee_input.gas_production_volume, 
@@ -255,10 +261,11 @@ class OPEM:
                                                 "product_slate": self.product_slate.volume_flow_bbl})
             
         # calc_total_field_ngl
-       
+        
         fill_calculated_cells(target_table_ref=self.total_field_ngl_volume,
                               func_to_apply=calc_total_field_ngl,
-                              other_table_refs={"ngl_volume_source": self.ngl_volume_source, 
+                              other_table_refs={"ngl_volume_source": self.ngl_volume_source,
+                                                "user_input_field_volume": self.total_field_ngl_volume_user_input, 
                                                 "c2": self.opgee_input.ngl_c2_volume,
                                                 "c3": self.opgee_input.ngl_c3_volume,
                                                 "c4": self.opgee_input.ngl_c4_volume,
@@ -350,7 +357,7 @@ class OPEM:
 
         # NGL Transport Table
      
-        # calc_product_slate_ngl         
+        # calc_product_slate_ngl      
         fill_calculated_cells(target_table_ref=self.ngl_transport,
                               func_to_apply=calc_ngl_product_slate,
                               included_cols=["Kilograms of Product per Day"],
@@ -410,12 +417,25 @@ class OPEM:
                              
                               other_table_refs=self.total_boe_produced)
 
+        # special case for CO2 emissions intensity
+        fill_calculated_cells(target_table_ref=self.ngl_transport,
+                              func_to_apply=calc_em_intensity,
+                              included_cols=["Transport Emissions Intensity (kg CO2eq. /BOE)"],
+                              included_rows=["NGLS"],
+                              other_tables_keymap={"Transport Emissions Intensity (kg CO2eq. /BOE)": "Total Transport Emissions (kg CO2eq/ day)",
+                                             "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)": "Total Transport CO2 Emissions (kg CO2/ day)",
+                                             "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)": "Total Transport CH4 Emissions (kg CH4/ day)",
+                                             "Total Transport N2O Emissions Intensity (kg N2O / BOE)": "Total Transport N2O Emissions (kg N2O/ day)"} ,
+                             
+                              other_table_refs=self.total_field_ngl_volume)
+
 
         # NGL transport Sums         
-        if self.ngl_volume_source == 1:
-           fill_calculated_cells(target_table_ref=self.refinery_product_transport,
+        if self.ngl_volume_source == 2:
+           fill_calculated_cells(target_table_ref=self.ngl_transport,
                               func_to_apply=calc_sum,
                               included_cols=[
+                              "Kilograms of Product per Day",
                               "Total Transport Emissions (kg CO2eq/ day)",
                               "Transport Emissions Intensity (kg CO2eq. /BOE)",
                               "Total Transport CO2 Emissions (kg CO2/ day)",
@@ -426,6 +446,7 @@ class OPEM:
                               "Total Transport N2O Emissions Intensity (kg N2O / BOE)"
                               ],
                               included_rows=["NGLs"])
+       
 
         # refinery product combustion
         # calc_product_slate refinery combustion         
@@ -719,6 +740,7 @@ class OPEM:
                               included_rows=["Sum"],
                               other_table_refs=[self.ngl_volume_source, self.combustion_ef.ngl_estimate],
                               extra={
+                                    
                                         "Total Combustion CO2 Emissions (kg CO2 /day)": "kg CO2 per gallon",
                                         "Total Combustion CH4 Emissions (kg CH4/ day)": "g CH4 per gallon",
                                         "Total Combustion N2O Emissions (kg N2O/ day)": "g N2O per gallon"
@@ -839,7 +861,7 @@ class OPEM:
                 ["-NGL Product Transport-", ""],
                 ["Sum: Kilograms of Product per Day",
                     self.ngl_transport["NGLs"]["Kilograms of Product per Day"]],
-                ["Transport Emissions Intensity (kg CO2eq. /BOE)[", self.ngl_transport["NGLs"]["Transport Emissions Intensity (kg CO2eq. /BOE)"]]    
+                ["Transport Emissions Intensity (kg CO2eq. /BOE)", self.ngl_transport["NGLs"]["Transport Emissions Intensity (kg CO2eq. /BOE)"]],
                 ["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)", self.ngl_transport["NGLs"]["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"]],
                 ["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)", self.ngl_transport["NGLs"]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"]],    
                 ["Total Transport N2O Emissions Intensity (kg N2O / BOE)", self.ngl_transport["NGLs"]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"]],     
@@ -895,9 +917,12 @@ class OPEM:
         default_factory=lambda:{"row": { "col": None }})
 
     # fill from user_input_dto
-    # DTO CAN"T FILL
     ngl_volume_source: int = None
     percent_ngl_c2_to_ethylene: int = None
+    # carries value from user input
+    # total_field_ngl_volume will copy this
+    # if volume source==1
+    total_field_ngl_volume_user_input: int = None
  
 
     # will this cause problems if I try to pass in a list?
@@ -1022,11 +1047,25 @@ def run_model(input, return_dict=True):
 
     """
     standardized_input = standardize_input(input)
+    run_number = 1
     if isinstance(standardized_input, dict):
-        return run_batch(**standardized_input)
+        print(f"Run Number {run_number}")
+        try:
+           return run_batch(**standardized_input)
+        except:
+            print("Error")
+            return [[f"ERROR in run number {run_number}"]]
     results = []
     for batch in standardized_input:
-        results.append(run_batch(**batch, return_dict=return_dict))
+        print("")
+        print(f"Run Number {run_number}")
+        try:
+           results.append(run_batch(**batch, return_dict=return_dict))
+        except:
+            print("")
+            print("Error! Please check your inputs.")
+            results.append([["", f"ERROR in run number {run_number}"]])
+        run_number += 1
     return results
 
 
@@ -1036,15 +1075,15 @@ def run_batch(user_input, opgee_input=None, product_slate=None, return_dict=True
        opgee_input = OpgeeInput(input_list=opgee_input)
     else: 
        opgee_input = OpgeeInput(input_list=user_input)
-
+    print(f"Oil Name: {user_input_dto.product_name}")
     print("Fetching product slate . . .")
     if product_slate is not None:
        product_slate = ProductSlate(product_slate)
     else:
        product_slate = get_product_slate_csv(user_input_dto.product_name)
 
-    # make a constants object and pass a ref to heavy_duty truck
-    constants = Constants()
+  
+    constants = Constants(user_input=asdict(user_input_dto))
 
     print("Processing Tanker/Barge Emission Factors . . .")
 
@@ -1079,10 +1118,11 @@ def run_batch(user_input, opgee_input=None, product_slate=None, return_dict=True
     combustion_ef = CombustionEF(user_input=asdict(user_input_dto), constants=constants)
 
     print("Calculating results . . .")
-
     opem = OPEM(user_input=asdict(user_input_dto), transport_ef=transport_ef,
                 combustion_ef=combustion_ef, petrochem_ef=petrochem_ef, product_slate=product_slate, opgee_input=opgee_input, constants=constants)
     print("Model run completed.")
+
+   
     return opem.results(return_dict)
 
     

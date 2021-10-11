@@ -173,6 +173,5 @@ def get_product_slate_csv(product_name: str):
             input_paths.append([table_names[name_index], row[0],
                                 "Flow", float(row[selected_index])])
     input_paths.append(["product_name", "", product_name])
-    print(input_paths)
     #return ProductSlate(user_input=input_paths, product_name=product_name)
     return ProductSlate(user_input=input_paths)
