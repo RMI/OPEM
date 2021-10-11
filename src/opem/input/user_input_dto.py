@@ -32,6 +32,11 @@ class UserInputDto:
     
     ngl_volume_source: int = 2
     
+    # if ngl_volume_source==1 this must come from user input
+    total_field_ngl_volume_user_input: int = None
+
+    GWP: int = 100
+    
     
 
    # input obj, bypasses default constructor (implicit __init__) and is passed to __post_init__

@@ -216,11 +216,16 @@ def write_csv_output(output, path="opem_output.csv"):
 
         writer = csv.writer(csvfile)
         results = []
-        for row in output[0]:
-            results.append(row)
-        for batch in output[1:]:
-            for i in range(len(batch)):
-                results[i].append(batch[i][1])
+        for run in output:
+            if run[0][0] == "Output Name":
+               for row in run:
+                   results.append([row[0]])
+        for run in output:
+            for i in range(len(results)):
+                try:
+                   results[i].append(run[i][1])
+                except:
+                    results[i].append("")
 
         for row in results:
             writer.writerow(row)

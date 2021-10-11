@@ -22,6 +22,12 @@ def hv_ratio(row_key, col_key, target_table_ref=None, other_table_refs=None, oth
 def s_ratio(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     return target_table_ref[row_key]["S ratio, (ppm by wt)"]/1000000
 
+def fill_gwp_selection(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
+    if other_table_refs == 100:
+       return target_table_ref[row_key]["100 year GWP"] 
+    elif other_table_refs == 20:
+        return target_table_ref[row_key]["20 year GWP"]  
+
 
 @dataclass
 class Constants:
@@ -85,14 +91,21 @@ class Constants:
                               # hacked the keymap to get around the different units in the HV keys
                               # so I can reuse the hv_ratio function
                               extra={'LHV': "LHV, Btu/ton", 'HHV': "HHV, Btu/ton"})
-        # print(
-        #     self.table_3_fuel_specifications_liquid_fuels)
+
+        fill_calculated_cells(target_table_ref=self.table_1_gwp,
+                              func_to_apply=fill_gwp_selection, included_cols=[
+                                  "User Selection"],
+                                  other_table_refs=self.GWP)
 
     user_input: InitVar[Dict] = {}
 
     # Constants sheet, table: User Selection, LHV or HHV
     # USER_INPUT
     hv: str = "LHV"
+
+    # Constants sheet, table: User Selection, 100 or 20 (yr GWP)
+    # USER_INPUT
+    GWP: int = 100
 
     # Constants sheet, table: Table 1: Hundred-Year Global Warming Potentials
     # STATIC

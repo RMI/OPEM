@@ -7,9 +7,10 @@ User Inputs & Results,Global:,NGL C2 Volume (BOED),-,`,ngl_c2_volume,,
 User Inputs & Results,Global:,NGL C3 Volume (BOED),-,`,ngl_c3_volume,,
 User Inputs & Results,Global:,NGL C4 Volume (BOED),-,`,ngl_c4_volume,,
 User Inputs & Results,Global:,NGL C5+ Volume (BOED),-,`,ngl_c5plus_volume,,
-User Inputs & Results,Global:,Total field NGL volume (BOED),-,`,total_field_ngl_volume,,
+User Inputs & Results,Global:,Total field NGL volume (BOED),-,`,total_field_ngl_volume_user_input,,
 User Inputs & Results,Global:,OPGEE Coke mass (kg/d),-,`,opgee_coke_mass,,
 User Inputs & Results,Global:,% Field NGL C2 Volume allocated to Ethylene converstion,-,`,percent_ngl_c2_to_ethylene,,
+User Inputs & Results,Global:,"GWP selection (yr period, 100 or 20)",-,`,GWP,,
 User Inputs & Results,Combustion,Oil product Combustion efficiencies,Gasoline,`,refinery_product_combustion,Gasoline,% Combusted
 User Inputs & Results,Combustion,Oil product Combustion efficiencies,Jet Fuel,`,refinery_product_combustion,Jet Fuel,% Combusted
 User Inputs & Results,Combustion,Oil product Combustion efficiencies,Diesel,`,refinery_product_combustion,Diesel,% Combusted
@@ -27,9 +28,7 @@ User Inputs & Results,Combustion,NGL Combustion efficiencies,Sum,`,ngl_combustio
 ,,,,,,,
 ,,,,,,,
 Transport EF,Transport Fuel Shares,Pipeline,Natural Gas,`,fraction_of_fuel_type_for_transport_mode,Pipeline,Natural Gas
-Transport EF,Transport Fuel Shares,Pipeline,LNG,`,fraction_of_fuel_type_for_transport_mode,Pipeline,LNG
 Transport EF,Transport Fuel Shares,Pipeline,Diesel,`,fraction_of_fuel_type_for_transport_mode,Pipeline,Diesel
-Transport EF,Transport Fuel Shares,Pipeline,Bunker Fuel,`,fraction_of_fuel_type_for_transport_mode,Pipeline,Bunker Fuel
 Transport EF,Transport Fuel Shares,Pipeline,Residual Oil,`,fraction_of_fuel_type_for_transport_mode,Pipeline,Residual Oil
 Transport EF,Transport Fuel Shares,Pipeline,LPG,`,fraction_of_fuel_type_for_transport_mode,Pipeline,LPG
 Transport EF,Transport Fuel Shares,Pipeline,DME,`,fraction_of_fuel_type_for_transport_mode,Pipeline,DME
@@ -38,13 +37,8 @@ Transport EF,Transport Fuel Shares,Pipeline,Biodiesel,`,fraction_of_fuel_type_fo
 Transport EF,Transport Fuel Shares,Pipeline,Renewable Diesel,`,fraction_of_fuel_type_for_transport_mode,Pipeline,Renewable Diesel
 Transport EF,Transport Fuel Shares,Pipeline,Renewable Gasoline,`,fraction_of_fuel_type_for_transport_mode,Pipeline,Renewable Gasoline
 Transport EF,Transport Fuel Shares,Pipeline,Hydrogen,`,fraction_of_fuel_type_for_transport_mode,Pipeline,Hydrogen
-Transport EF,Transport Fuel Shares,Pipeline,Ethanol,`,fraction_of_fuel_type_for_transport_mode,Pipeline,Ethanol
-Transport EF,Transport Fuel Shares,Pipeline,Methanol,`,fraction_of_fuel_type_for_transport_mode,Pipeline,Methanol
 Transport EF,Transport Fuel Shares,Rail,Natural Gas,`,fraction_of_fuel_type_for_transport_mode,Rail,Natural Gas
-Transport EF,Transport Fuel Shares,Rail,LNG,`,fraction_of_fuel_type_for_transport_mode,Rail,LNG
 Transport EF,Transport Fuel Shares,Rail,Diesel,`,fraction_of_fuel_type_for_transport_mode,Rail,Diesel
-Transport EF,Transport Fuel Shares,Rail,Bunker Fuel,`,fraction_of_fuel_type_for_transport_mode,Rail,Bunker Fuel
-Transport EF,Transport Fuel Shares,Rail,Residual Oil,`,fraction_of_fuel_type_for_transport_mode,Rail,Residual Oil
 Transport EF,Transport Fuel Shares,Rail,LPG,`,fraction_of_fuel_type_for_transport_mode,Rail,LPG
 Transport EF,Transport Fuel Shares,Rail,DME,`,fraction_of_fuel_type_for_transport_mode,Rail,DME
 Transport EF,Transport Fuel Shares,Rail,FTD,`,fraction_of_fuel_type_for_transport_mode,Rail,FTD
@@ -52,13 +46,8 @@ Transport EF,Transport Fuel Shares,Rail,Biodiesel,`,fraction_of_fuel_type_for_tr
 Transport EF,Transport Fuel Shares,Rail,Renewable Diesel,`,fraction_of_fuel_type_for_transport_mode,Rail,Renewable Diesel
 Transport EF,Transport Fuel Shares,Rail,Renewable Gasoline,`,fraction_of_fuel_type_for_transport_mode,Rail,Renewable Gasoline
 Transport EF,Transport Fuel Shares,Rail,Hydrogen,`,fraction_of_fuel_type_for_transport_mode,Rail,Hydrogen
-Transport EF,Transport Fuel Shares,Rail,Ethanol,`,fraction_of_fuel_type_for_transport_mode,Rail,Ethanol
-Transport EF,Transport Fuel Shares,Rail,Methanol,`,fraction_of_fuel_type_for_transport_mode,Rail,Methanol
-Transport EF,Transport Fuel Shares,Heavy-Duty Truck,Natural Gas,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck,Natural Gas
 Transport EF,Transport Fuel Shares,Heavy-Duty Truck,LNG,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck,LNG
 Transport EF,Transport Fuel Shares,Heavy-Duty Truck,Diesel,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck,Diesel
-Transport EF,Transport Fuel Shares,Heavy-Duty Truck,Bunker Fuel,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck,Bunker Fuel
-Transport EF,Transport Fuel Shares,Heavy-Duty Truck,Residual Oil,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck,Residual Oil
 Transport EF,Transport Fuel Shares,Heavy-Duty Truck,LPG,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck,LPG
 Transport EF,Transport Fuel Shares,Heavy-Duty Truck,DME,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck,DME
 Transport EF,Transport Fuel Shares,Heavy-Duty Truck,FTD,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck,FTD
@@ -69,23 +58,14 @@ Transport EF,Transport Fuel Shares,Heavy-Duty Truck,Hydrogen,`,fraction_of_fuel_
 Transport EF,Transport Fuel Shares,Heavy-Duty Truck,Ethanol,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck,Ethanol
 Transport EF,Transport Fuel Shares,Heavy-Duty Truck,Methanol,`,fraction_of_fuel_type_for_transport_mode,Heavy-Duty Truck,Methanol
 Transport EF,Transport Fuel Shares,Ocean Tanker,Natural Gas,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,Natural Gas
-Transport EF,Transport Fuel Shares,Ocean Tanker,LNG,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,LNG
 Transport EF,Transport Fuel Shares,Ocean Tanker,Diesel,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,Diesel
 Transport EF,Transport Fuel Shares,Ocean Tanker,Bunker Fuel,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,Bunker Fuel
-Transport EF,Transport Fuel Shares,Ocean Tanker,Residual Oil,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,Residual Oil
 Transport EF,Transport Fuel Shares,Ocean Tanker,LPG,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,LPG
 Transport EF,Transport Fuel Shares,Ocean Tanker,DME,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,DME
 Transport EF,Transport Fuel Shares,Ocean Tanker,FTD,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,FTD
-Transport EF,Transport Fuel Shares,Ocean Tanker,Biodiesel,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,Biodiesel
-Transport EF,Transport Fuel Shares,Ocean Tanker,Renewable Diesel,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,Renewable Diesel
-Transport EF,Transport Fuel Shares,Ocean Tanker,Renewable Gasoline,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,Renewable Gasoline
 Transport EF,Transport Fuel Shares,Ocean Tanker,Hydrogen,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,Hydrogen
-Transport EF,Transport Fuel Shares,Ocean Tanker,Ethanol,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,Ethanol
-Transport EF,Transport Fuel Shares,Ocean Tanker,Methanol,`,fraction_of_fuel_type_for_transport_mode,Ocean Tanker,Methanol
 Transport EF,Transport Fuel Shares,Barge,Natural Gas,`,fraction_of_fuel_type_for_transport_mode,Barge,Natural Gas
-Transport EF,Transport Fuel Shares,Barge,LNG,`,fraction_of_fuel_type_for_transport_mode,Barge,LNG
 Transport EF,Transport Fuel Shares,Barge,Diesel,`,fraction_of_fuel_type_for_transport_mode,Barge,Diesel
-Transport EF,Transport Fuel Shares,Barge,Bunker Fuel,`,fraction_of_fuel_type_for_transport_mode,Barge,Bunker Fuel
 Transport EF,Transport Fuel Shares,Barge,Residual Oil,`,fraction_of_fuel_type_for_transport_mode,Barge,Residual Oil
 Transport EF,Transport Fuel Shares,Barge,LPG,`,fraction_of_fuel_type_for_transport_mode,Barge,LPG
 Transport EF,Transport Fuel Shares,Barge,DME,`,fraction_of_fuel_type_for_transport_mode,Barge,DME
@@ -94,18 +74,13 @@ Transport EF,Transport Fuel Shares,Barge,Biodiesel,`,fraction_of_fuel_type_for_t
 Transport EF,Transport Fuel Shares,Barge,Renewable Diesel,`,fraction_of_fuel_type_for_transport_mode,Barge,Renewable Diesel
 Transport EF,Transport Fuel Shares,Barge,Renewable Gasoline,`,fraction_of_fuel_type_for_transport_mode,Barge,Renewable Gasoline
 Transport EF,Transport Fuel Shares,Barge,Hydrogen,`,fraction_of_fuel_type_for_transport_mode,Barge,Hydrogen
-Transport EF,Transport Fuel Shares,Barge,Ethanol,`,fraction_of_fuel_type_for_transport_mode,Barge,Ethanol
-Transport EF,Transport Fuel Shares,Barge,Methanol,`,fraction_of_fuel_type_for_transport_mode,Barge,Methanol
 Transport EF,Transport Distance,Pipeline,Gasoline,`,transport_distance,Pipeline,Gasoline
 Transport EF,Transport Distance,Pipeline,Jet Fuel,`,transport_distance,Pipeline,Jet Fuel
 Transport EF,Transport Distance,Pipeline,Diesel,`,transport_distance,Pipeline,Diesel
 Transport EF,Transport Distance,Pipeline,Fuel Oil,`,transport_distance,Pipeline,Fuel Oil
-Transport EF,Transport Distance,Pipeline,Coke,`,transport_distance,Pipeline,Coke
 Transport EF,Transport Distance,Pipeline,Residual fuels,`,transport_distance,Pipeline,Residual fuels
 Transport EF,Transport Distance,Pipeline,Liquefied Petroleum Gases (LPG),`,transport_distance,Pipeline,Liquefied Petroleum Gases (LPG)
 Transport EF,Transport Distance,Pipeline,Petrochemical Feedstocks,`,transport_distance,Pipeline,Petrochemical Feedstocks
-Transport EF,Transport Distance,Pipeline,Asphalt,`,transport_distance,Pipeline,Asphalt
-Transport EF,Transport Distance,Pipeline,Sulphur,`,transport_distance,Pipeline,Sulphur
 Transport EF,Transport Distance,Pipeline,Surplus RFG,`,transport_distance,Pipeline,Surplus RFG
 Transport EF,Transport Distance,Pipeline,Surplus NCR H2,`,transport_distance,Pipeline,Surplus NCR H2
 Transport EF,Transport Distance,Pipeline,Ethane,`,transport_distance,Pipeline,Ethane
@@ -154,12 +129,6 @@ Transport EF,Transport Distance,Ocean Tanker,Fuel Oil,`,transport_distance,Ocean
 Transport EF,Transport Distance,Ocean Tanker,Coke,`,transport_distance,Ocean Tanker,Coke
 Transport EF,Transport Distance,Ocean Tanker,Residual fuels,`,transport_distance,Ocean Tanker,Residual fuels
 Transport EF,Transport Distance,Ocean Tanker,Liquefied Petroleum Gases (LPG),`,transport_distance,Ocean Tanker,Liquefied Petroleum Gases (LPG)
-Transport EF,Transport Distance,Ocean Tanker,Petrochemical Feedstocks,`,transport_distance,Ocean Tanker,Petrochemical Feedstocks
-Transport EF,Transport Distance,Ocean Tanker,Asphalt,`,transport_distance,Ocean Tanker,Asphalt
-Transport EF,Transport Distance,Ocean Tanker,Sulphur,`,transport_distance,Ocean Tanker,Sulphur
-Transport EF,Transport Distance,Ocean Tanker,Surplus RFG,`,transport_distance,Ocean Tanker,Surplus RFG
-Transport EF,Transport Distance,Ocean Tanker,Surplus NCR H2,`,transport_distance,Ocean Tanker,Surplus NCR H2
-Transport EF,Transport Distance,Ocean Tanker,Ethane,`,transport_distance,Ocean Tanker,Ethane
 Transport EF,Transport Distance,Ocean Tanker,Propane,`,transport_distance,Ocean Tanker,Propane
 Transport EF,Transport Distance,Ocean Tanker,Butane,`,transport_distance,Ocean Tanker,Butane
 Transport EF,Transport Distance,Ocean Tanker,Pentanes Plus,`,transport_distance,Ocean Tanker,Pentanes Plus
@@ -171,12 +140,6 @@ Transport EF,Transport Distance,Barge,Fuel Oil,`,transport_distance,Barge,Fuel O
 Transport EF,Transport Distance,Barge,Coke,`,transport_distance,Barge,Coke
 Transport EF,Transport Distance,Barge,Residual fuels,`,transport_distance,Barge,Residual fuels
 Transport EF,Transport Distance,Barge,Liquefied Petroleum Gases (LPG),`,transport_distance,Barge,Liquefied Petroleum Gases (LPG)
-Transport EF,Transport Distance,Barge,Petrochemical Feedstocks,`,transport_distance,Barge,Petrochemical Feedstocks
-Transport EF,Transport Distance,Barge,Asphalt,`,transport_distance,Barge,Asphalt
-Transport EF,Transport Distance,Barge,Sulphur,`,transport_distance,Barge,Sulphur
-Transport EF,Transport Distance,Barge,Surplus RFG,`,transport_distance,Barge,Surplus RFG
-Transport EF,Transport Distance,Barge,Surplus NCR H2,`,transport_distance,Barge,Surplus NCR H2
-Transport EF,Transport Distance,Barge,Ethane,`,transport_distance,Barge,Ethane
 Transport EF,Transport Distance,Barge,Propane,`,transport_distance,Barge,Propane
 Transport EF,Transport Distance,Barge,Butane,`,transport_distance,Barge,Butane
 Transport EF,Transport Distance,Barge,Pentanes Plus,`,transport_distance,Barge,Pentanes Plus
