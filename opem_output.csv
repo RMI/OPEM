@@ -1,48 +1,48 @@
-﻿Output Name,ERROR in run number 5,RESULTS
-Selected Oil,,Field Name B
-Total BOE Produced,,505660.8
---OPEM Transport--,,
--Refinery Product Transport-,,
-Sum: Kilograms of Product per Day,,88303265.59837408
-Transport Emissions Intensity (kg CO2eq. /BOE),,3.5437627837045369
-Total Transport CO2 Emissions Intensity (kg CO2 / BOE),,1.91565401881790
-Total Transport CH4 Emissions Intensity (kg CH4. / BOE),,9.892047202395467391
-Total Transport N2O Emissions Intensity (kg N2O / BOE),,6.238487141094327e-68
--NGL Product Transport-,,
-Sum: Kilograms of Product per Day,,12049331.462
-Transport Emissions Intensity (kg CO2eq. /BOE),,6.604635640004510
-Total Transport CO2 Emissions Intensity (kg CO2 / BOE),,9.751347733417600
-Total Transport CH4 Emissions Intensity (kg CH4. / BOE),,4.6756633275796432672
-Total Transport N2O Emissions Intensity (kg N2O / BOE),,4.853742410799241e-36
---OPEM Combustion--,,
--Refinery Product Combustion-,,
-Total Combustion Emissions Intensity (kg CO2eq. / BOE),,277.19065920508142
-Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),,909.41818773922445
-Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),,2.676200570049418084
-Total Combustion N2O Emissions Intensity (kg N2O / BOE),,3.3129621952156976393
--Coke Combustion (direct offtake and transport from upstream field)-,,
-Total Combustion Emissions Intensity (kg CO2eq. / BOE),,54.52885704747607
-Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),,62.753454134165600
-Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),,3.999170535284582292
-Total Combustion N2O Emissions Intensity (kg N2O / BOE),,5.9847341525451703685
--Natural Gas Combustion (direct offtake and transport from upstream field)-,,
-Total Combustion Emissions Intensity (kg CO2eq. / BOE),,50.588381092797339
-Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),,73.474150429616849
-Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),,5.5098094132670425818
-Total Combustion N2O Emissions Intensity (kg N2O / BOE),,2.343385779911601e-94
--NGL Combustion (direct offtake and transport from upstream field)-,,
-Total Combustion Emissions Intensity (kg CO2eq. / BOE),,56.54274593328802
-Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),,3.017733318176651e-28
-Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),,7.277895539254693e-12
-Total Combustion N2O Emissions Intensity (kg N2O / BOE),,5.8388621789513807e-81
--Total Combustion emissions-,,
-Total Combustion Emissions Intensity (kg CO2eq. / BOE),,943.16971450274637
-Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),,267.24749945449308
-Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),,3.240460861474818390
-Total Combustion N2O Emissions Intensity (kg N2O / BOE),,9.91986582320509157
---Non-combusted product emissions--,,
-Sum: BOED,,2.3
-Total Process Emissions Intensity (kg CO2eq./boe total),,6.9
-Total Process CO2 Emissions Intensity (kg CO2/boe total),,8.2
-Total ProcessCH4  Emissions Intensity (kg CH4/boe total),,1.4
-Total Process N2O Emissions Intensity (kg N2O./boe total),,4.8
+﻿Output Name,RESULTS
+Selected Oil,Field Name C
+Total BOE Produced,8002721.8
+--OPEM Transport--,
+-Refinery Product Transport-,
+Sum: Kilograms of Product per Day,26024496.629126722
+Transport Emissions Intensity (kg CO2eq. /BOE),7.9427313311643384
+Total Transport CO2 Emissions Intensity (kg CO2 / BOE),1.7479785353639431
+Total Transport CH4 Emissions Intensity (kg CH4. / BOE),9.3557877970251686387
+Total Transport N2O Emissions Intensity (kg N2O / BOE),7.7608121154570586e-98
+-NGL Product Transport-,
+Sum: Kilograms of Product per Day,85905087.9
+Transport Emissions Intensity (kg CO2eq. /BOE),2.47595441647021
+Total Transport CO2 Emissions Intensity (kg CO2 / BOE),1.39841866171859
+Total Transport CH4 Emissions Intensity (kg CH4. / BOE),5.2477217065911484890
+Total Transport N2O Emissions Intensity (kg N2O / BOE),2.257242173282831e-80
+--OPEM Combustion--,
+-Refinery Product Combustion-,
+Total Combustion Emissions Intensity (kg CO2eq. / BOE),92.452254666941600
+Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),61.210567014663879
+Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),4.708942470245672
+Total Combustion N2O Emissions Intensity (kg N2O / BOE),3.50571093309495437
+-Coke Combustion (direct offtake and transport from upstream field)-,
+Total Combustion Emissions Intensity (kg CO2eq. / BOE),1.2
+Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),3.1
+Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),1.4
+Total Combustion N2O Emissions Intensity (kg N2O / BOE),1.6
+-Natural Gas Combustion (direct offtake and transport from upstream field)-,
+Total Combustion Emissions Intensity (kg CO2eq. / BOE),8.660814967718670
+Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),7.223852905783436
+Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),1.583333333333335e-97
+Total Combustion N2O Emissions Intensity (kg N2O / BOE),3.333333333333334e-37
+-NGL Combustion (direct offtake and transport from upstream field)-,
+Total Combustion Emissions Intensity (kg CO2eq. / BOE),7.1
+Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),9.4
+Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),8.4
+Total Combustion N2O Emissions Intensity (kg N2O / BOE),4.8
+-Total Combustion emissions-,
+Total Combustion Emissions Intensity (kg CO2eq. / BOE),82.96873152749204
+Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),32.49776958472019
+Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),6.3983775743300081
+Total Combustion N2O Emissions Intensity (kg N2O / BOE),8.8110543391645653
+--Non-combusted product emissions--,
+Sum: BOED,7369872.2
+Total Process Emissions Intensity (kg CO2eq./boe total),42.34110254711048
+Total Process CO2 Emissions Intensity (kg CO2/boe total),60.15883971111674
+Total ProcessCH4  Emissions Intensity (kg CH4/boe total),1.66342586701898206
+Total Process N2O Emissions Intensity (kg N2O./boe total),8.8051131919588074487

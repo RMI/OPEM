@@ -60,9 +60,14 @@ def calc_total_boe(row_key, col_key, target_table_ref=None, other_table_refs=Non
             other_table_refs["coke_mass"])
 
 def calc_product_slate(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-   if row_key == "Coke" and target_table_ref["full_table_name"] == "Refinery_Product_Transport":
-       return other_table_refs["opgee_coke_mass"] + other_table_refs["product_slate"][row_key]["Flow"] * other_table_refs["oil_vol_ratio"]["row"]["col"]
-   return other_table_refs["product_slate"][row_key]["Flow"] * other_table_refs["oil_vol_ratio"]["row"]["col"]
+   if target_table_ref["full_table_name"] == "Refinery_Product_Transport":
+       if row_key == "Coke":
+          return other_table_refs["opgee_coke_mass"] + other_table_refs["product_slate_mass"][row_key]["Flow"] * other_table_refs["oil_vol_ratio"]["row"]["col"]
+       return other_table_refs["product_slate_mass"][row_key]["Flow"] * other_table_refs["oil_vol_ratio"]["row"]["col"] 
+   if target_table_ref["full_table_name"] == "refinery_product_combustion":
+       if row_key == "Coke":
+          return other_table_refs["product_slate_mass"][row_key]["Flow"] * other_table_refs["oil_vol_ratio"]["row"]["col"]
+       return other_table_refs["product_slate_vol"][row_key]["Flow"] * other_table_refs["oil_vol_ratio"]["row"]["col"]
 
 
 def calc_sum(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -139,7 +144,7 @@ def calc_total_em_combust(row_key, col_key, target_table_ref=None, other_table_r
                   target_table_ref[row_key]["Volume or Mass of Product per Day"] *
                  target_table_ref[row_key]["% Combusted"] /
                  other_table_refs[2]["kg per short ton"]["Conversion Factor"])
-        if col_key == "Total Combustion CO2 Emissions (kg CO2 /day)":
+        if col_key == "Total Combustion CO2 Emissions (kg CO2 /day)" or target_table_ref["full_table_name"] == "refinery_product_combustion":
             return emissions
         return emissions / 1000
     result =  (other_table_refs[0][extra["fuel_lookup"][row_key]]
@@ -292,7 +297,7 @@ class OPEM:
                               func_to_apply=calc_product_slate,
                               included_cols=["Kilograms of Product per Day"],
                               excluded_rows=["Sum"],
-                              other_table_refs={"product_slate": self.product_slate.mass_flow_kg,
+                              other_table_refs={"product_slate_mass": self.product_slate.mass_flow_kg,
                                                 "oil_vol_ratio": self.oil_volume_ratio_to_prelim,
                                                 "opgee_coke_mass": self.opgee_input.opgee_coke_mass}) 
           
@@ -454,7 +459,8 @@ class OPEM:
                               func_to_apply=calc_product_slate,
                               included_cols=["Volume or Mass of Product per Day"],
                               excluded_rows=["Sum"],
-                              other_table_refs={"product_slate": self.product_slate.volume_flow_bbl,
+                              other_table_refs={"product_slate_mass": self.product_slate.mass_flow_kg,
+                                                "product_slate_vol": self.product_slate.volume_flow_bbl,
                                                 "oil_vol_ratio": self.oil_volume_ratio_to_prelim,
                                                 "opgee_coke_mass": self.opgee_input.opgee_coke_mass}) 
         
@@ -1122,7 +1128,7 @@ def run_batch(user_input, opgee_input=None, product_slate=None, return_dict=True
                 combustion_ef=combustion_ef, petrochem_ef=petrochem_ef, product_slate=product_slate, opgee_input=opgee_input, constants=constants)
     print("Model run completed.")
 
-   
+    print(opem.refinery_product_combustion)
     return opem.results(return_dict)
 
     
