@@ -23,25 +23,41 @@ def initialize_model_inputs(get_input_func, validate_input_func):
     all_input = get_input_func(validate_input_func)
     return all_input
 
+def standardize_list(input_list, lookup_table):
+    standardized_user_input = [] 
+    for row in input_list:
+        try:
+            standardized_user_input.append(lookup_table["".join(row[:-1])] + [row[-1]])
+        except(KeyError):
+            print(f"Name {row[:-1]} does not match expected user input.")
+    return standardized_user_input
+
+def standardize_dict(input_dict, lookup_table):
+    standardized_user_input = [] 
+    for key, val in input_dict.items():
+        try:
+            standardized_user_input.append(lookup_table["".join(key)] + [val])
+        except(KeyError):
+            print(f"Name {key} does not match expected user input.")
+    return standardized_user_input
+   
 def standardize_batch(batch):
     input_lookup = create_lookup_table()
-    standardized_user_input = []
+    
     try:
         batch["user_input"]
     except(KeyError):
             print("Each input parameter batch must have a 'user_input' key")
-    for row in batch["user_input"]:
-        try:
-            standardized_user_input.append(input_lookup["".join(row[:-1])] + [row[-1]])
-        except(KeyError):
-            print(f"Name {row[:-1]} does not match expected user input.")
-    batch["user_input"] = standardized_user_input
-    
-    standardized_opgee_input = []
+
+    if isinstance(batch["user_input"], list):
+        batch["user_input"] = standardize_list(batch["user_input"], input_lookup)
+    elif isinstance(batch["user_input"], dict): 
+       batch["user_input"] = standardize_dict(batch["user_input"], input_lookup) 
     if "opgee_input" in batch:
-        for row in batch["opgee_input"]:
-            standardized_opgee_input.append(input_lookup["".join(row[:-1])] + [row[-1]]) 
-        batch["opgee_input"] = standardized_opgee_input
+        if isinstance(batch["opgee_input"], list):
+           batch["opgee_input"] = standardize_list(batch["opgee_input"], input_lookup)
+        elif isinstance(batch["opgee_input"], dict): 
+           batch["user_input"] = standardize_dict(batch["opgee_input"], input_lookup) 
     return batch
 
 def standardize_input(raw_input):
