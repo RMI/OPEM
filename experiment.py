@@ -19,13 +19,20 @@ def main():
                         "-", 
                         "Canada Athabasca DC SCO"]]
         }
+
+    script_input_dict = {"user_input": {("User Inputs & Results", 
+                        "Global:", 
+                        "Assay (Select Oil)", 
+                        "-"): 
+                        "Canada Athabasca DC SCO"}
+        }
     
 
 
 
     print("Found opem_input.csv, running model.")
 
-    results = run_model(script_input, return_dict=False)
+    results = run_model(script_input_dict, return_dict=False)
      
  
     print(results)

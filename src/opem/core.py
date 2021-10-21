@@ -833,19 +833,45 @@ class OPEM:
         # should move mass flow total to a higher level object. It is strangle to
         # find it only in the tanker_barge object.
         if return_dict:
-            return {"Selected Oil": self.product_slate.product_name,
-                "Total BOE Produced": self.total_boe_produced["row"]["col"],
-                "Sum: Kilograms of Product per Day":
+            # keys should be tuples based on input output sheet
+            return {("Selected Oil"): self.product_slate.product_name,
+                ("Total BOE Produced"): self.total_boe_produced["row"]["col"],
+                ("OPEM Transport", "Refinery Product Transport", "Sum: Kilograms of Product per Day"):
                     self.refinery_product_transport["Sum"]["Kilograms of Product per Day"],
-                    "Transport Emissions Intensity (kg CO2eq. /BOE)": self.refinery_product_transport["Sum"]["Transport Emissions Intensity (kg CO2eq. /BOE)"],
-                "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)": self.refinery_product_transport["Sum"]["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"],
-                "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)": self.refinery_product_transport["Sum"]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"],    
-                "Total Transport N2O Emissions Intensity (kg N2O / BOE)": self.refinery_product_transport["Sum"]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"],   
-                "Sum: Kilograms of Product per Day":
+                    ("OPEM Transport", "Refinery Product Transport", "Transport Emissions Intensity (kg CO2eq. /BOE)"): self.refinery_product_transport["Sum"]["Transport Emissions Intensity (kg CO2eq. /BOE)"],
+                ("OPEM Transport", "Refinery Product Transport", "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"): self.refinery_product_transport["Sum"]["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("OPEM Transport", "Refinery Product Transport", "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"): self.refinery_product_transport["Sum"]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"],    
+                ("OPEM Transport", "Refinery Product Transport", "Total Transport N2O Emissions Intensity (kg N2O / BOE)"): self.refinery_product_transport["Sum"]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"],   
+                ("OPEM Transport", "NGL Product Transport","Sum: Kilograms of Product per Day"):
                     self.ngl_transport["NGLs"]["Kilograms of Product per Day"],
-                "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)": self.ngl_transport["NGLs"]["Transport Emissions Intensity (kg CO2eq. /BOE)"],
-                "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)": self.ngl_transport["NGLs"]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"],    
-                "Total Transport N2O Emissions Intensity (kg N2O / BOE)": self.ngl_transport["NGLs"]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"],      
+                ("OPEM Transport", "NGL Product Transport", "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"): self.ngl_transport["NGLs"]["Transport Emissions Intensity (kg CO2eq. /BOE)"],
+                ("OPEM Transport", "NGL Product Transport", "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"): self.ngl_transport["NGLs"]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"],    
+                ("OPEM Transport", "NGL Product Transport", "Total Transport N2O Emissions Intensity (kg N2O / BOE)"): self.ngl_transport["NGLs"]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"],   
+                ("OPEM Combustion", "Refinery Product Combustion", "Total Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.refinery_product_combustion["Sum"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("OPEM Combustion", "Refinery Product Combustion", "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"): self.refinery_product_combustion["Sum"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("OPEM Combustion", "Refinery Product Combustion", "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"): self.refinery_product_combustion["Sum"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("OPEM Combustion", "Refinery Product Combustion","Total Combustion N2O Emissions Intensity (kg N2O / BOE)"): self.refinery_product_combustion["Sum"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("OPEM Combustion", "Coke Combustion (direct offtake and transport from upstream field)", "Total Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.coke_combustion["Coke"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("OPEM Combustion", "Coke Combustion (direct offtake and transport from upstream field)", "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"): self.coke_combustion["Coke"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("OPEM Combustion", "Coke Combustion (direct offtake and transport from upstream field)", "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"): self.coke_combustion["Coke"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("OPEM Combustion", "Coke Combustion (direct offtake and transport from upstream field)", "Total Combustion N2O Emissions Intensity (kg N2O / BOE)"): self.coke_combustion["Coke"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("OPEM Combustion", "Natural Gas Combustion (direct offtake and transport from upstream field)", "Total Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.natural_gas_combustion["Natural Gas"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("OPEM Combustion", "Natural Gas Combustion (direct offtake and transport from upstream field)", "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"): self.natural_gas_combustion["Natural Gas"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("OPEM Combustion", "Natural Gas Combustion (direct offtake and transport from upstream field)", "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"): self.natural_gas_combustion["Natural Gas"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("OPEM Combustion", "Natural Gas Combustion (direct offtake and transport from upstream field)","Total Combustion N2O Emissions Intensity (kg N2O / BOE)"): self.natural_gas_combustion["Natural Gas"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Total Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.ngl_combustion["Sum"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)","Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"): self.ngl_combustion["Sum"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"): self.ngl_combustion["Sum"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Total Combustion N2O Emissions Intensity (kg N2O / BOE)"): self.ngl_combustion["Sum"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("OPEM Combustion","Total Combustion emissions", "Total Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.total_combustion_emissions["Sum"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("OPEM Combustion","Total Combustion emissions", "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"): self.total_combustion_emissions["Sum"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("OPEM Combustion","Total Combustion emissions", "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"): self.total_combustion_emissions["Sum"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("OPEM Combustion","Total Combustion emissions", "Total Combustion N2O Emissions Intensity (kg N2O / BOE)"): self.total_combustion_emissions["Sum"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("OPEM Combustion", "Non-combusted product emissions", "Sum: BOED"): self.non_combusted_product_emissions["Sum"]["Volume or Mass of Product per Day"],
+                ("OPEM Combustion", "Non-combusted product emissions","Total Process Emissions Intensity (kg CO2eq./boe total)"): self.non_combusted_product_emissions["Sum"]["Total Process Emissions Intensity (kg CO2eq./boe total)"],
+                ("OPEM Combustion", "Non-combusted product emissions","Total Process CO2 Emissions Intensity (kg CO2/boe total)"): self.non_combusted_product_emissions["Sum"]["Total Process CO2 Emissions Intensity (kg CO2/boe total)"],
+                ("OPEM Combustion", "Non-combusted product emissions", "Total ProcessCH4  Emissions Intensity (kg CH4/boe total)"): self.non_combusted_product_emissions["Sum"]["Total ProcessCH4  Emissions Intensity (kg CH4/boe total)"],
+                ("OPEM Combustion", "Non-combusted product emissions", "Total Process N2O Emissions Intensity (kg N2O./boe total)"): self.non_combusted_product_emissions["Sum"]["Total Process N2O Emissions Intensity (kg N2O./boe total)"]   
                 }
         return [["Output Name", "RESULTS"],
                 ["Selected Oil", self.product_slate.product_name],
@@ -994,6 +1020,17 @@ class OPEM:
 #opem object. if it returns a list of lists it should not include
 # headers (keep that in the print function)
 # and it should return a dictionary if results_as_dict =True
+
+#need to finish return dict.
+# keys for return dict will be tuples based on io sheet
+# remove headers from output list of lists
+#make sure custom product slate entry works.
+# add latest input output excel to the package.
+# make example output (both list of lists and dict) for docs
+
+# make docs prettier?
+
+
 def run_model(input, return_dict=True):
     """Summary line.
 
@@ -1043,6 +1080,7 @@ def run_model(input, return_dict=True):
                    by the return_dict argument) containing results. If a list of 
                    param dictionaries are passed, a list will be returned, holding 
                    results objects (dictionary or list of lists) for each set of input params.
+                   See OPEM Input Output.xlsx, "Outputs" sheet, to find the name of each output.
        
 
     """
