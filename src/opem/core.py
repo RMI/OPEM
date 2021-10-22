@@ -1128,7 +1128,7 @@ def run_batch(user_input, opgee_input=None, product_slate=None, return_dict=True
                 combustion_ef=combustion_ef, petrochem_ef=petrochem_ef, product_slate=product_slate, opgee_input=opgee_input, constants=constants)
     print("Model run completed.")
 
-    print(opem.refinery_product_combustion)
+
     return opem.results(return_dict)
 
     
