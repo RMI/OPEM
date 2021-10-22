@@ -1,48 +1,48 @@
-﻿Output Name,RESULTS
-Selected Oil,Angola Kuito
-Total BOE Produced,1200000.0
---OPEM Transport--,
--Refinery Product Transport-,
-Sum: Kilograms of Product per Day,14654386.847655963
-Transport Emissions Intensity (kg CO2eq. /BOE),1.0187657029281287
-Total Transport CO2 Emissions Intensity (kg CO2 / BOE),1.0034917748617413
-Total Transport CH4 Emissions Intensity (kg CH4. / BOE),0.0002949031753625053
-Total Transport N2O Emissions Intensity (kg N2O / BOE),1.7608121154570586e-05
--NGL Product Transport-,
-Sum: Kilograms of Product per Day,80640000.0
-Transport Emissions Intensity (kg CO2eq. /BOE),5.38353276780074
-Total Transport CO2 Emissions Intensity (kg CO2 / BOE),5.29848218564719
-Total Transport CH4 Emissions Intensity (kg CH4. / BOE),0.0016901176610931376
-Total Transport N2O Emissions Intensity (kg N2O / BOE),9.257242173282831e-05
---OPEM Combustion--,
--Refinery Product Combustion-,
-Total Combustion Emissions Intensity (kg CO2eq. / BOE),39.210453355886735
-Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),38.975483276843654
-Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),1.317797754941341
-Total Combustion N2O Emissions Intensity (kg N2O / BOE),0.17306627014606796
--Coke Combustion (direct offtake and transport from upstream field)-,
-Total Combustion Emissions Intensity (kg CO2eq. / BOE),0.0
-Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),0.0
-Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),0.0
-Total Combustion N2O Emissions Intensity (kg N2O / BOE),0.0
--Natural Gas Combustion (direct offtake and transport from upstream field)-,
-Total Combustion Emissions Intensity (kg CO2eq. / BOE),4.542068333333333
-Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),4.536666666666667
-Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),8.583333333333335e-05
-Total Combustion N2O Emissions Intensity (kg N2O / BOE),8.333333333333334e-06
--NGL Combustion (direct offtake and transport from upstream field)-,
-Total Combustion Emissions Intensity (kg CO2eq. / BOE),0.0
-Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),0.0
-Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),0.0
-Total Combustion N2O Emissions Intensity (kg N2O / BOE),0.0
--Total Combustion emissions-,
-Total Combustion Emissions Intensity (kg CO2eq. / BOE),43.75252168922007
-Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),43.51214994351032
-Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),1.3178835882746744
-Total Combustion N2O Emissions Intensity (kg N2O / BOE),0.1730746034794013
---Non-combusted product emissions--,
-Sum: BOED,1000000.0
-Total Process Emissions Intensity (kg CO2eq./boe total),46.13019433394157
-Total Process CO2 Emissions Intensity (kg CO2/boe total),45.44538776157916
-Total ProcessCH4  Emissions Intensity (kg CH4/boe total),0.01440951319269583
-Total Process N2O Emissions Intensity (kg N2O./boe total),0.0006539702141300416
+﻿Output Name,RESULTS,RESULTS,RESULTS,RESULTS,RESULTS
+Selected Oil,Angola Kuito,Angola Kuito,Angola Kuito,Angola Kuito,Angola Kuito
+Total BOE Produced,1200000.0,1200000.0,1200000.0,1200000.0,1200000.0
+--OPEM Transport--,,,,,
+-Refinery Product Transport-,,,,,
+Sum: Kilograms of Product per Day,14654386.847655963,14654386.847655963,14654386.847655963,14654386.847655963,14654386.847655963
+Transport Emissions Intensity (kg CO2eq. /BOE),1.0187657029281287,1.0187657029281287,1.0187657029281287,1.0187657029281287,1.0187657029281287
+Total Transport CO2 Emissions Intensity (kg CO2 / BOE),1.0034917748617413,1.0034917748617413,1.0034917748617413,1.0034917748617413,1.0034917748617413
+Total Transport CH4 Emissions Intensity (kg CH4. / BOE),0.0002949031753625053,0.0002949031753625053,0.0002949031753625053,0.0002949031753625053,0.0002949031753625053
+Total Transport N2O Emissions Intensity (kg N2O / BOE),1.7608121154570586e-05,1.7608121154570586e-05,1.7608121154570586e-05,1.7608121154570586e-05,1.7608121154570586e-05
+-NGL Product Transport-,,,,,
+Sum: Kilograms of Product per Day,80640000.0,80640000.0,80640000.0,80640000.0,80640000.0
+Transport Emissions Intensity (kg CO2eq. /BOE),5.38353276780074,5.38353276780074,5.38353276780074,5.38353276780074,5.38353276780074
+Total Transport CO2 Emissions Intensity (kg CO2 / BOE),5.29848218564719,5.29848218564719,5.29848218564719,5.29848218564719,5.29848218564719
+Total Transport CH4 Emissions Intensity (kg CH4. / BOE),0.0016901176610931376,0.0016901176610931376,0.0016901176610931376,0.0016901176610931376,0.0016901176610931376
+Total Transport N2O Emissions Intensity (kg N2O / BOE),9.257242173282831e-05,9.257242173282831e-05,9.257242173282831e-05,9.257242173282831e-05,9.257242173282831e-05
+--OPEM Combustion--,,,,,
+-Refinery Product Combustion-,,,,,
+Total Combustion Emissions Intensity (kg CO2eq. / BOE),39.210453355886735,39.210453355886735,39.210453355886735,39.210453355886735,39.210453355886735
+Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),38.975483276843654,38.975483276843654,38.975483276843654,38.975483276843654,38.975483276843654
+Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),1.317797754941341,1.317797754941341,1.317797754941341,1.317797754941341,1.317797754941341
+Total Combustion N2O Emissions Intensity (kg N2O / BOE),0.17306627014606796,0.17306627014606796,0.17306627014606796,0.17306627014606796,0.17306627014606796
+-Coke Combustion (direct offtake and transport from upstream field)-,,,,,
+Total Combustion Emissions Intensity (kg CO2eq. / BOE),0.0,0.0,0.0,0.0,0.0
+Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),0.0,0.0,0.0,0.0,0.0
+Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),0.0,0.0,0.0,0.0,0.0
+Total Combustion N2O Emissions Intensity (kg N2O / BOE),0.0,0.0,0.0,0.0,0.0
+-Natural Gas Combustion (direct offtake and transport from upstream field)-,,,,,
+Total Combustion Emissions Intensity (kg CO2eq. / BOE),4.542068333333333,4.542068333333333,4.542068333333333,4.542068333333333,4.542068333333333
+Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),4.536666666666667,4.536666666666667,4.536666666666667,4.536666666666667,4.536666666666667
+Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),8.583333333333335e-05,8.583333333333335e-05,8.583333333333335e-05,8.583333333333335e-05,8.583333333333335e-05
+Total Combustion N2O Emissions Intensity (kg N2O / BOE),8.333333333333334e-06,8.333333333333334e-06,8.333333333333334e-06,8.333333333333334e-06,8.333333333333334e-06
+-NGL Combustion (direct offtake and transport from upstream field)-,,,,,
+Total Combustion Emissions Intensity (kg CO2eq. / BOE),0.0,0.0,0.0,0.0,0.0
+Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),0.0,0.0,0.0,0.0,0.0
+Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),0.0,0.0,0.0,0.0,0.0
+Total Combustion N2O Emissions Intensity (kg N2O / BOE),0.0,0.0,0.0,0.0,0.0
+-Total Combustion emissions-,,,,,
+Total Combustion Emissions Intensity (kg CO2eq. / BOE),43.75252168922007,43.75252168922007,43.75252168922007,43.75252168922007,43.75252168922007
+Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),43.51214994351032,43.51214994351032,43.51214994351032,43.51214994351032,43.51214994351032
+Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),1.3178835882746744,1.3178835882746744,1.3178835882746744,1.3178835882746744,1.3178835882746744
+Total Combustion N2O Emissions Intensity (kg N2O / BOE),0.1730746034794013,0.1730746034794013,0.1730746034794013,0.1730746034794013,0.1730746034794013
+--Non-combusted product emissions--,,,,,
+Sum: BOED,1000000.0,1000000.0,1000000.0,1000000.0,1000000.0
+Total Process Emissions Intensity (kg CO2eq./boe total),46.13019433394157,46.13019433394157,46.13019433394157,46.13019433394157,46.13019433394157
+Total Process CO2 Emissions Intensity (kg CO2/boe total),45.44538776157916,45.44538776157916,45.44538776157916,45.44538776157916,45.44538776157916
+Total ProcessCH4  Emissions Intensity (kg CH4/boe total),0.01440951319269583,0.01440951319269583,0.01440951319269583,0.01440951319269583,0.01440951319269583
+Total Process N2O Emissions Intensity (kg N2O./boe total),0.0006539702141300416,0.0006539702141300416,0.0006539702141300416,0.0006539702141300416,0.0006539702141300416
