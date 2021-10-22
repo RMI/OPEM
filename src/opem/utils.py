@@ -221,7 +221,6 @@ def write_csv_output(output, path="opem_output.csv"):
                for row in run:
                    results.append([row[0]])
                break
-        print(results)
         for run in output:
             for i in range(len(results)):
                 try:
