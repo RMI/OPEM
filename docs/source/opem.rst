@@ -2,8 +2,6 @@ opem package
 ============
 
 
-
-
 opem.core module
 ----------------
 
@@ -11,6 +9,3 @@ opem.core module
    :members: run_model
    :undoc-members:
    :show-inheritance:
-
-
-

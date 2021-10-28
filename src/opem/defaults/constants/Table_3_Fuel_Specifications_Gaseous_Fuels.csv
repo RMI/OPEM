@@ -1,6 +1,6 @@
 ﻿Fuel,"User Selection: LHV or HHV, Btu/ft3","LHV, Btu/ft3","HHV, Btu/ft3","Density, grams/ft3","C ratio, (% by wt)","S ratio, (ppm by wt)","S ratio, Actual ratio by wt",LHV/HHV
-Natural gas,NaN,444,3555,60,8.236,1,NaN,NaN
-Pure methane,NaN,281,5255,87.3,9.33,2,NaN,NaN
-Gaseous hydrogen,NaN,852,209,3.1,3,9,NaN,NaN
-Carbon dioxide,NaN,NaN,NaN,17,8.837,1,NaN,NaN
-Still gas (in refineries),NaN,899,3176,31.2,7.845,7,NaN,NaN
+Natural gas,NaN,833.977677471,3213.621005926,47.632726992,7.659978102,2.273582002,NaN,NaN
+Pure methane,NaN,422.696230003,4203.916277772,55.195926126,9.676741206,4.228891318,NaN,NaN
+Gaseous hydrogen,NaN,297.893671324,616.889568306,3.952130606,6.292448164,9.946665421,NaN,NaN
+Carbon dioxide,NaN,NaN,NaN,77,8.383,8,NaN,NaN
+Still gas (in refineries),NaN,504.339570243,9514.330040904,96.836825748,9.391862331,1.233919866,NaN,NaN
