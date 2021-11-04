@@ -65,4 +65,6 @@ If it can find 'opem_input.csv' the program will run and write results to a new 
 
 The input and output files are based on the 'OPEM 3.0 Input Outputs' excel workbook created by Raghav Muralidharan (included in this repo). Please refer to this workbook to see how the names in the input/output csv filed map to parameters in the OPEM3.0 workbook.
 
+HTML documentation can be found in the "documentation" folder (start at "index.html"). The opem_dev_usage_demo.py file shows how the opem library can be imported and used in scripts. 
+
 
