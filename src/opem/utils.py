@@ -17,31 +17,28 @@ else:
 from opem import defaults
 
 
-
 # param func_to_apply: function
-#      this is a user defined function that will return a value to be 
+#      this is a user defined function that will return a value to be
 #      written to the table cell that this function navigates to.
-#      it takes row_key and col_key as arguments 
+#      it takes row_key and col_key as arguments
 
 # param other_tables_keymap: dict
-#      should be of the form 
+#      should be of the form
 #      {
 #          other_table_1: {
-#              row_keymap: {"[target_table_key]": "[other_table_key]"}, 
+#              row_keymap: {"[target_table_key]": "[other_table_key]"},
 #              col_keymap: {"[target_table_key]": "[other_table_key]"}},
 
 #         other_table_1: {
-#              row_keymap: {"[target_table_key]": "[other_table_key]"}, 
+#              row_keymap: {"[target_table_key]": "[other_table_key]"},
 #              col_keymap: {"[target_table_key]": "[other_table_key]"}},
-            
+
 #      }
-#      for other_table name use the "full_table_name" table attribute. 
+#      for other_table name use the "full_table_name" table attribute.
 #       example: f"{self.product_slate.mass_flow_kg['full_table_name']}"
 
 # param extra: dict
 #       used to pass extra config into function
-
-
 
 
 def fill_calculated_cells(target_table_ref, func_to_apply, other_table_refs=None,  included_rows=[], included_cols=[], excluded_rows=[], excluded_cols=[], other_tables_keymap={}, extra={}):
@@ -87,7 +84,7 @@ def isfloat(value):
 
 
 def read_input_structure(table_name):
-    from opem.input.user_input import create_lookup_table
+    from opem.input.input import create_lookup_table
     lookup_table = create_lookup_table().values()
 
     inputs_table_format = [[""]]
@@ -151,16 +148,15 @@ def visit_dict(d, path=[]):
 def initialize_from_dataclass(target, source: Dict):
     # this allows us to get input from a dict generated from another dataclass
     target_keys = asdict(target).keys()
-   
+
     for key in source.keys():
-        
         if key in target_keys:
-            
+
             if type(source[key]) != dict:
                 if source[key] != '':
-                   
+
                     setattr(target, key, source[key])
-                    
+
             else:
                 for path in visit_dict(source[key]):
 
@@ -197,7 +193,7 @@ def initialize_from_list(target, source: List):
     target_keys = asdict(target).keys()
     for row in source:
         if row[0] in target_keys:
-         
+
             # test if this is a path to a primitive datatype (as opposed to nested
             # dictionary)
             if row[1] == "" and row[-1] != "":
@@ -218,18 +214,19 @@ def write_csv_output(output, path="opem_output.csv"):
         results = []
         for run in output:
             if run[0][0] == "Output Name":
-               for row in run:
-                   results.append([row[0]])
-               break
+                for row in run:
+                    results.append([row[0]])
+                break
         for run in output:
             for i in range(len(results)):
                 try:
-                   results[i].append(run[i][1])
+                    results[i].append(run[i][1])
                 except:
                     results[i].append("")
 
         for row in results:
             writer.writerow(row)
+
 
 def count_list(l):
     count = 0
@@ -237,8 +234,6 @@ def count_list(l):
         if isinstance(e, list):
             count = count + 1 + count_list(e)
     return count
-
-
 
 
 ######################### NOT USED #######################
@@ -253,11 +248,11 @@ def isAtomOrFlat(d):
 
 
 def leafPaths(nestedDicts, noDeeper=isAtomOrFlat):
-    
-        # For each leaf in NESTEDDICTS, this yields a 
-        # dictionary consisting of only the entries between the root
-        # and the leaf.
-    
+
+    # For each leaf in NESTEDDICTS, this yields a
+    # dictionary consisting of only the entries between the root
+    # and the leaf.
+
     for key, value in nestedDicts.items():
         if noDeeper(value):
             yield {key: value}

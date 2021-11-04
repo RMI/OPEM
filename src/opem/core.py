@@ -1,5 +1,5 @@
-from opem.input.user_input import standardize_input
-from opem.input.user_input_dto import UserInputDto
+from opem.input.input import standardize_input
+from opem.input.user_input import UserInput
 from opem.transport.pipeline_EF import PipelineEF
 from opem.transport.rail_EF import RailEF
 from opem.transport.tanker_barge_EF import TankerBargeEF
@@ -851,8 +851,7 @@ class OPEM:
                               included_rows=["Sum"])
 
     def results(self, return_dict=True):
-        # should move mass flow total to a higher level object. It is strangle to
-        # find it only in the tanker_barge object.
+
         if return_dict:
             # keys should be tuples based on input output sheet
             return {("Selected Oil"): self.product_slate.product_name,
@@ -1051,58 +1050,37 @@ class OPEM:
     non_combusted_product_emissions: Dict = field(
         default_factory=lambda: build_dict_from_defaults('Non_Combusted_Product_Emissions', 'results'))
 
-    # hold sum of product volume from product slate here
-    # product_volume_sum: int = None
-
-
-# @dataclass
-# class ResultsDto:
-#     transport: TransportResults
-#     combustion: CombustionResults
-#     opem_total: float
-
-# user_input = [ {"user_input": [[]], "opgee_input": [[]], "product_slate":[[]]}, ]
-# or
-# user_input = [ {"user_input": {}, "opgee_input": {}, "product_slate": {} ]
-
-# now make sure to change the .results() method on the
-# opem object. if it returns a list of lists it should not include
-# headers (keep that in the print function)
-# and it should return a dictionary if results_as_dict =True
-
-# need to finish return dict.
-# keys for return dict will be tuples based on io sheet
-# remove headers from output list of lists
-# make sure custom product slate entry works.
-# add latest input output excel to the package.
-# make example output (both list of lists and dict) for docs
-
-# make docs prettier?
-
 
 def run_model(input, return_dict=True):
     """This function orchestrates one or more runs of the OPEM model.
 
-    Example:
-        example_1 (dictionary holding lists of lists): 
-                { "user_input": [["User Inputs & Results" , "Global:" , "Assay (Select Oil)", "-" ,"Canada Athabasca DC SCO"]],
-                  "opgee_input": [["User Inputs & Results", "Global:", "Gas Production Volume (MCFD)", "-", 600000],
-                                   "User Inputs & Results", "Global:", "Oil Production Volume (BOED)", "-", 100000]]
-                   "product_slate": [["volume_flow_bbl", "Barrels of Crude per Day", "Flow", 99885.29447], 
-                                     ["volume_flow_bbl", "Gasoline", "Flow", 16267.50216], 
-                                     ["volume_flow_bbl", "Jet Fuel", "Flow", 29642.5287], 
-                                     ["volume_flow_bbl", "Diesel", "Flow", 18614.94977]],
-                                     ... }
 
-        example_2 (dictionary holding dictionaries): 
-                { "user_input": {("User Inputs & Results" , "Global:" , "Assay (Select Oil)", "-"): "Canada Athabasca DC SCO"},
-                  "opgee_input": {("User Inputs & Results", "Global:", "Gas Production Volume (MCFD)", "-"): 600000,
-                                  ("User Inputs & Results", "Global:", "Oil Production Volume (BOED)", "-"): 100000,
-                  "product_slate": {("volume_flow_bbl", "Barrels of Crude per Day", "Flow"): 99885.29447, 
-                                    ("volume_flow_bbl", "Gasoline", "Flow"): 16267.50216, 
-                                    ("volume_flow_bbl", "Jet Fuel", "Flow"): 29642.5287, 
-                                    ("volume_flow_bbl", "Diesel", "Flow"): 18614.94977,
-                                    ... }
+    Example:
+
+    example input #1 (dictionary holding lists of lists): 
+                { "user_input": 
+                      [["User Inputs & Results", 
+                        "Global:", "Assay (Select Oil)", "-",
+                        "Canada Athabasca DC SCO"]],
+                  "opgee_input": 
+                      [["User Inputs & Results", "Global:", "Gas Production Volume (MCFD)", "-", 600000],
+                       ["User Inputs & Results", "Global:", "Oil Production Volume (BOED)", "-", 100000]]
+                  "product_slate": 
+                      [["volume_flow_bbl", "Barrels of Crude per Day", "Flow", 99885.29447], 
+                       ["volume_flow_bbl", "Gasoline", "Flow", 16267.50216], 
+                       ["volume_flow_bbl", "Jet Fuel", "Flow", 29642.5287], 
+                       ["volume_flow_bbl", "Diesel", "Flow", 18614.94977]],
+                        ... }
+
+        example input #2 (dictionary holding dictionaries): 
+                {"user_input": {("User Inputs & Results", "Global:", "Assay (Select Oil)", "-"): "Canada Athabasca DC SCO"},
+                 "opgee_input": {("User Inputs & Results", "Global:", "Gas Production Volume (MCFD)", "-"): 600000,
+                        ("User Inputs & Results", "Global:", "Oil Production Volume (BOED)", "-"): 100000,
+                 "product_slate": {("volume_flow_bbl", "Barrels of Crude per Day", "Flow"): 99885.29447, 
+                        ("volume_flow_bbl", "Gasoline", "Flow"): 16267.50216, 
+                        ("volume_flow_bbl", "Jet Fuel", "Flow"): 29642.5287, 
+                        ("volume_flow_bbl", "Diesel", "Flow"): 18614.94977,
+                        ... }
 
     Args:
         input (list/dict): Either a single dictionary of input parameters, or a list of 
@@ -1119,13 +1097,11 @@ def run_model(input, return_dict=True):
                            the "opgee_input" should be omitted.
 
                            The "product_slate" key should provide complete product slate information for a single product (see product_slate_input.csv).
-                           If the "product_slate" key is omitted the program will use the value of the "Assay (Select Oil)" under "user_input" to 
-                           look up the product slate in an internal csv file. Omitting both "product_slate" and "Assay (Select Oil)" will result in an error. 
+                           If the "product_slate" key is omitted the program will use the value of the "Assay (Select Oil)" key under "user_input" to 
+                           look up the product slate in an internal csv file. If both are provided the value of "Assay (Select Oil)" will be ignored. 
+                           Omitting both "product_slate" and "Assay (Select Oil)" will result in an error. 
 
-
-
-        return_dict (bool): If true, the function will return model results in the 
-        form of a dictionary. Otherwise model results will be returned as a list of lists.
+        return_dict (bool): If true, the function will return model results in the form of a dictionary. Otherwise model results will be returned as a list of lists.
 
     Returns:
         list/dict: If a single param dictionary is passed as input,
@@ -1135,15 +1111,16 @@ def run_model(input, return_dict=True):
                    results objects (dictionary or list of lists) for each set of input params.
                    See OPEM Input Output.xlsx, "Outputs" sheet, to find the name of each output.
 
-
     """
     standardized_input = standardize_input(input)
+
     run_number = 1
     if isinstance(standardized_input, dict):
         print(f"Run Number {run_number}")
         try:
-            return run_batch(**standardized_input)
-        except:
+            return run_batch(**standardized_input, return_dict=return_dict)
+        except BaseException as err:
+            print(err)
             print("Error")
             return [[f"ERROR in run number {run_number}"]]
     results = []
@@ -1161,43 +1138,46 @@ def run_model(input, return_dict=True):
 
 
 def run_batch(user_input, opgee_input=None, product_slate=None, return_dict=True):
-    user_input_dto = UserInputDto(input_list=user_input)
+    user_input = UserInput(user_input=user_input)
     if opgee_input is not None:
-        opgee_input = OpgeeInput(input_list=opgee_input)
+        opgee_input = OpgeeInput(opgee_input=opgee_input)
     else:
-        opgee_input = OpgeeInput(input_list=user_input)
-    print(f"Oil Name: {user_input_dto.product_name}")
-    print("Fetching product slate . . .")
-    if product_slate is not None:
-        product_slate = ProductSlate(product_slate)
-    else:
-        product_slate = get_product_slate_csv(user_input_dto.product_name)
+        opgee_input = OpgeeInput(opgee_input=user_input)
 
-    constants = Constants(user_input=asdict(user_input_dto))
+    if product_slate is not None:
+        print("Processing product slate . . .")
+        product_slate = ProductSlate(product_slate_input=product_slate)
+        print(f"Oil Name: {product_slate.product_name}")
+    else:
+        print(f"Oil Name: {user_input.product_name}")
+        print("Fetching product slate . . .")
+        product_slate = get_product_slate_csv(user_input.product_name)
+
+    constants = Constants(user_input=asdict(user_input))
 
     print("Processing Tanker/Barge Emission Factors . . .")
 
     tanker_barge_ef = TankerBargeEF(
-        user_input=asdict(user_input_dto), constants=constants, product_slate=product_slate)
+        user_input=asdict(user_input), constants=constants, product_slate=product_slate)
 
     print("Processing Heavy-Duty Truck Emission Factors . . .")
 
     heavy_duty_truck_ef = HeavyDutyTruckEF(
-        user_input=asdict(user_input_dto), constants=constants)
+        user_input=asdict(user_input), constants=constants)
 
     print("Processing Rail Emission Factors . . .")
 
-    rail_ef = RailEF(user_input=asdict(user_input_dto), constants=constants)
+    rail_ef = RailEF(user_input=asdict(user_input), constants=constants)
 
     print("Processing Pipeline Emission Factors . . .")
 
     pipeline_ef = PipelineEF(user_input=asdict(
-        user_input_dto), constants=constants)
+        user_input), constants=constants)
 
     petrochem_ef = PetroChemEF(user_input=asdict(
-        user_input_dto), constants=constants)
+        user_input), constants=constants)
 
-    transport_ef = TransportEF(user_input=asdict(user_input_dto), pipeline_ef=pipeline_ef,
+    transport_ef = TransportEF(user_input=asdict(user_input), pipeline_ef=pipeline_ef,
                                rail_ef=rail_ef,
                                heavy_duty_truck_ef=heavy_duty_truck_ef,
                                tanker_barge_ef=tanker_barge_ef)
@@ -1205,10 +1185,10 @@ def run_batch(user_input, opgee_input=None, product_slate=None, return_dict=True
     print("Processing Combustion Emission Factors . . .")
 
     combustion_ef = CombustionEF(user_input=asdict(
-        user_input_dto), constants=constants)
+        user_input), constants=constants)
 
     print("Calculating results . . .")
-    opem = OPEM(user_input=asdict(user_input_dto), transport_ef=transport_ef,
+    opem = OPEM(user_input=asdict(user_input), transport_ef=transport_ef,
                 combustion_ef=combustion_ef, petrochem_ef=petrochem_ef, product_slate=product_slate, opgee_input=opgee_input, constants=constants)
     print("Model run completed.")
 
