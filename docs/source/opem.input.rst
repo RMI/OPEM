@@ -23,7 +23,7 @@ opem.input.opgee\_input module
 opem.input.user\_input module
 -----------------------------
 
-.. automodule:: opem.input.user_input
+.. automodule:: opem.input.input
    :members:
    :undoc-members:
    :show-inheritance:
@@ -31,7 +31,7 @@ opem.input.user\_input module
 opem.input.user\_input\_dto module
 ----------------------------------
 
-.. automodule:: opem.input.user_input_dto
+.. automodule:: opem.input.user_input
    :members:
    :undoc-members:
    :show-inheritance:
