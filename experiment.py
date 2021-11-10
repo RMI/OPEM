@@ -28,7 +28,7 @@ def main():
 
     print("Found opem_input.csv, running model.")
 
-    results = run_model(script_input_dict, return_dict=False)
+    results = run_model(script_input_dict, return_dict=True)
 
     print(results)
 

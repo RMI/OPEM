@@ -32,6 +32,7 @@ def standardize_list(input_list, lookup_table):
                 lookup_table["".join(row[:-1])] + [row[-1]])
         except(KeyError):
             print(f"Name {row[:-1]} does not match expected user input.")
+            print(row)
     return standardized_user_input
 
 

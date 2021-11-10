@@ -318,11 +318,13 @@ Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type 
 Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Jet Fuel,`,cargo_payload,Ocean Tanker,Jet Fuel
 Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Residual Oil,`,cargo_payload,Ocean Tanker,Residual Oil
 Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Petcoke,`,cargo_payload,Ocean Tanker,Petcoke
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Ocean Tanker,Liquefied Petroleum Gases (LPG),`,cargo_payload,Ocean Tanker,Liquefied Petroleum Gases (LPG)
 Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Gasoline,`,cargo_payload,Barge,Gasoline
 Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Diesel,`,cargo_payload,Barge,Diesel
 Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Jet Fuel,`,cargo_payload,Barge,Jet Fuel
 Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Residual Oil,`,cargo_payload,Barge,Residual Oil
 Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Petcoke,`,cargo_payload,Barge,Petcoke
+Tanker & Barge EF,Cargo Payload by Transportation Mode and by Product Fuel Type (short tons),Barge,Liquefied Petroleum Gases (LPG),`,cargo_payload,Barge,Liquefied Petroleum Gases (LPG)
 Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Ocean Tanker,Average Speed,`,tanker_barge_average_speed,Average Speed (miles/hour),Ocean Tanker
 Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Ocean Tanker,Origin to Destination Load Factor,`,tanker_barge_energy_consumption_origin_to_destination,Load Factor,Ocean Tanker
 Tanker & Barge EF,Calculation of Energy Consumption for Ocean Tanker and Barge,Ocean Tanker,Destination to Origin Load Factor,`,tanker_barge_energy_consumption_destination_to_origin,Load Factor,Ocean Tanker

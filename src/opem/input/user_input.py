@@ -14,6 +14,7 @@ class UserInput:
             # this allows us to get input from a dict generated from another dataclass
             initialize_from_dataclass(self, user_input)
         elif type(user_input) == list:
+
             initialize_from_list(self, user_input)
         else:
             raise ValueError("Please pass a list or dictionary to initialize")
