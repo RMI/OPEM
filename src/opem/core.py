@@ -60,7 +60,10 @@ def calc_opgee_coke_mass(row_key, col_key, target_table_ref=None, other_table_re
 
 
 def calc_total_boe(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-
+    print(other_table_refs["gas_vol"]["row"]["col"])
+    print(other_table_refs["oil_vol"])
+    print(other_table_refs["ngl_vol"]["row"]["col"])
+    print(other_table_refs["coke_mass"])
     return (other_table_refs["gas_vol"]["row"]["col"] +
             other_table_refs["oil_vol"] +
             other_table_refs["ngl_vol"]["row"]["col"] +
