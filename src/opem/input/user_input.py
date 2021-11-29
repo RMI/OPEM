@@ -28,6 +28,13 @@ class UserInput:
     upstream_field_selection: str = None
 
     ngl_volume_source: int = 2
+    gas_production_volume: int = 0
+    oil_production_volume: int = 0
+    ngl_c2_volume: int = 0
+    ngl_c3_volume: int = 0
+    ngl_c4_volume: int = 0
+    ngl_c5plus_volume: int = 0
+    opgee_coke_mass: int = 0
 
     # if ngl_volume_source==1 this must come from user input
     total_field_ngl_volume_user_input: int = None

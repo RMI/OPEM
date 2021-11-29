@@ -49,7 +49,6 @@ def calc_total_field_ngl(row_key, col_key, target_table_ref=None, other_table_re
             return 1000
         return other_table_refs["user_input_field_volume"]
     elif other_table_refs["ngl_volume_source"] == 2:
-
         return other_table_refs["c2"] + other_table_refs["c3"] + other_table_refs["c4"] + other_table_refs["c5"]
 
 
@@ -60,10 +59,6 @@ def calc_opgee_coke_mass(row_key, col_key, target_table_ref=None, other_table_re
 
 
 def calc_total_boe(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    print(other_table_refs["gas_vol"]["row"]["col"])
-    print(other_table_refs["oil_vol"])
-    print(other_table_refs["ngl_vol"]["row"]["col"])
-    print(other_table_refs["coke_mass"])
     return (other_table_refs["gas_vol"]["row"]["col"] +
             other_table_refs["oil_vol"] +
             other_table_refs["ngl_vol"]["row"]["col"] +
@@ -87,7 +82,6 @@ def calc_sum(row_key, col_key, target_table_ref=None, other_table_refs=None, oth
     for row in target_table_ref.items():
         if row[0] not in ["full_table_name", "row_index_name", "Sum", "NGLs"]:
             sum += row[1][col_key]
-
     return sum
 
 
@@ -108,7 +102,6 @@ def calc_em_intensity(row_key, col_key, target_table_ref=None, other_table_refs=
 
 
 def calc_ngl_product_slate(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-
     return (other_tables_keymap["opgee"][row_key] *
             other_table_refs[0][other_tables_keymap["constants"]
                                 [row_key]]["Density, grams/gal"] *
