@@ -142,8 +142,8 @@ def get_csv_input(validate_input_func):
 
         # all_user_input.append(batch)
         i += 1
-
-    return all_user_input
+    # skip first batch, it just lists defaults
+    return all_user_input[1:]
 
 
 def validate_input(row):
