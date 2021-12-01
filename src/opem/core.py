@@ -62,7 +62,7 @@ def calc_total_boe(row_key, col_key, target_table_ref=None, other_table_refs=Non
     return (other_table_refs["gas_vol"]["row"]["col"] +
             other_table_refs["oil_vol"] +
             other_table_refs["ngl_vol"]["row"]["col"] +
-            other_table_refs["coke_mass"])
+            other_table_refs["coke_mass"]["row"]["col"])
 
 
 def calc_product_slate(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -111,9 +111,6 @@ def calc_ngl_product_slate(row_key, col_key, target_table_ref=None, other_table_
 
 
 def fetch_upstream_coke(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    if other_table_refs["opgee_coke_mass"] == 0:
-
-        return other_table_refs["product_slate"]["Net Upstream Petcoke"]["Flow"]
     return other_table_refs["opgee_coke_mass"]
 
 # natural gas combustion
@@ -171,20 +168,6 @@ def calc_total_em_combust(row_key, col_key, target_table_ref=None, other_table_r
     if col_key == "Total Combustion CO2 Emissions (kg CO2 /day)":
         return result
     return result / 1000
-
-
-def calc_emissions_combustion(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
-    if row_key == "Coke":
-        return (target_table_ref["Combustion Results"][row_key]["Combustion Emission Factors"] *
-                target_table_ref["Combustion Results"][row_key]["% Combusted"] *
-                (other_table_refs["ProductSlate::mass_flow"]["Coke"]["Flow"] +
-                 other_table_refs["ProductSlate::mass_flow"]["Net Upstream Petcoke"]["Flow"]) /
-                other_table_refs["ProductSlate::volume_flow"]["Barrels of Crude per Day"]["Flow"])
-    else:
-        return (target_table_ref["Combustion Results"][row_key]["Combustion Emission Factors"] *
-                target_table_ref["Combustion Results"][row_key]["% Combusted"] *
-                other_table_refs["ProductSlate::volume_flow"][row_key]["Flow"] /
-                other_table_refs["ProductSlate::volume_flow"]["Barrels of Crude per Day"]["Flow"])
 
 
 def calc_total_em_nat_gas(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
@@ -305,7 +288,7 @@ class OPEM:
                               other_table_refs={"gas_vol": self.gas_production_volume_boed,
                                                 "oil_vol": self.opgee_input.oil_production_volume,
                                                 "ngl_vol": self.total_field_ngl_volume,
-                                                "coke_mass": self.opgee_input.opgee_coke_mass})
+                                                "coke_mass": self.opgee_coke_mass_boed})
 
         # Refinery Transport Table
         # calc_product_slate

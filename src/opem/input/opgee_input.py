@@ -27,7 +27,7 @@ class OpgeeInput:
     ngl_c4_volume: int = 0
     ngl_c5plus_volume: int = 0
     #total_field_ngl_volume: int = 0
-    opgee_coke_mass: int = 0
+    opgee_coke_mass: int = None
 
    # input obj, bypasses default constructor (implicit __init__) and is passed to __post_init__
     opgee_input: InitVar[List] = []

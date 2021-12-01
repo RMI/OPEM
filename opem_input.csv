@@ -2,13 +2,13 @@
 User Inputs & Results,Global:,Upstream Field Selection,-,,,
 User Inputs & Results,Global:,Gas Production Volume (MCFD),-,,500,1000
 User Inputs & Results,Global:,Oil Production Volume (BOED),-,,300,1000
-User Inputs & Results,Global:,NGL Volume source,-,2,1,2
+User Inputs & Results,Global:,NGL Volume source,-,2,2,2
 User Inputs & Results,Global:,NGL C2 Volume (BOED),-,0,88,99
 User Inputs & Results,Global:,NGL C3 Volume (BOED),-,0,1000,1000
 User Inputs & Results,Global:,NGL C4 Volume (BOED),-,0,1000,1000
 User Inputs & Results,Global:,NGL C5+ Volume (BOED),-,0,1000,1000
-User Inputs & Results,Global:,Total field NGL volume (BOED),-,0,1,
-User Inputs & Results,Global:,OPGEE Coke mass (kg/d),-,0,5,8
+User Inputs & Results,Global:,Total field NGL volume (BOED),-,0,1000,
+User Inputs & Results,Global:,OPGEE Coke mass (kg/d),-,0,,8
 User Inputs & Results,Global:,% Field NGL C2 Volume allocated to Ethylene converstion,-,1,1,1
 User Inputs & Results,Global:,"GWP selection (yr period, 100 or 20)",-,100,100,100
 ,,,,,,
