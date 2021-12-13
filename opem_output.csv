@@ -1,78 +1,89 @@
 ﻿Output Name,RESULTS,RESULTS
-Selected Oil,Algeria Hassi R’Mel,Angola Takula
-Total BOE Produced,3525.034558873733,4265.709631943627
-*-OPEM Transport-*,,
-*--Refinery Product Transport,,
-Sum: Kilograms of Product per Day,42332.36226044718,133828.4373186042
-Transport Emissions Intensity (kg CO2eq. /BOE),1.0475095038142268,2.509970887780215
-Total Transport CO2 Emissions Intensity (kg CO2 / BOE),1.034442462580961,2.4749438615433816
-Total Transport CH4 Emissions Intensity (kg CH4. / BOE),0.00022004338604591182,0.000643377157388763
-Total Transport N2O Emissions Intensity (kg N2O / BOE),2.4399017554296515e-05,5.93423076044165e-05
-*--NGL Product Transport,,
-Sum: Kilograms of Product per Day,284787.72,285674.76
-Transport Emissions Intensity (kg CO2eq. /BOE),6.461242112330551,5.355977168959354
-Total Transport CO2 Emissions Intensity (kg CO2 / BOE),6.3710336654847435,5.281199846990352
-Total Transport CH4 Emissions Intensity (kg CH4. / BOE),0.0016574763686108618,0.0013739472123212824
-Total Transport N2O Emissions Intensity (kg N2O / BOE),0.00015277039919803597,0.0001266373796202403
-*-OPEM Combustion-*,,
-*--Refinery Product Combustion,,
-*---CO2eq.,,
-Gasoline Combustion Emissions Intensity (kg CO2eq. / BOE),26.421898976695978,33.745918294921466
-Jet Fuel Combustion Emissions Intensity (kg CO2eq. / BOE),2.584009328799816,15.242239893953077
-Diesel Combustion Emissions Intensity (kg CO2eq. / BOE),0.15494946889871486,18.941293840359663
-Fuel Oil Combustion Emissions Intensity (kg CO2eq. / BOE),0.06465567907605238,9.974335962560419e-12
-Coke Combustion Emissions Intensity (kg CO2eq. / BOE),1.1663298994464061e-18,1.585181271480304e-20
-Residual fuels Combustion Emissions Intensity (kg CO2eq. / BOE),0.031790917820806716,32.05425082067112
-Liquefied Petroleum Gases (LPG) Combustion Emissions Intensity (kg CO2eq. / BOE),0.8225571348015854,0.9086188197134742
-Total Combustion Emissions Intensity (kg CO2eq. / BOE),30.07986150609295,100.89232166962876
-*---CO2,,
-Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),29.968938707563918,100.54359967532152
-*---CH4,,
-Gasoline Combustion Emissions Intensity (kg CH4. / BOE),0.0011393143466337373,0.0014551266314220728
-Jet Fuel Combustion Emissions Intensity (kg CH4. / BOE),0.00010828883577532829,0.0006387610115521809
-Diesel Combustion Emissions Intensity (kg CH4. / BOE),6.20191167554772e-06,0.0007581325205786557
-Fuel Oil Combustion Emissions Intensity (kg CH4. / BOE),2.5869209282001122e-06,3.990804646270213e-16
-Coke Combustion Emissions Intensity (kg CH4. / BOE),3.57211764423734e-22,4.854933404225543e-24
-Residual fuels Combustion Emissions Intensity (kg CH4. / BOE),1.265187070300559e-06,0.0012756669661151384
-Liquefied Petroleum Gases (LPG) Combustion Emissions Intensity (kg CH4. / BOE),4.0375856414361776e-05,4.4600261122271416e-05
-Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),0.0012980330584974758,0.004172287390790718
-*---N2O,,
-Total Combustion N2O Emissions Intensity (kg N2O / BOE),0.0002716294595249283,0.000843597632390746
-*--Coke Combustion (direct offtake and transport from upstream field),,
-Coke Combustion Emissions Intensity (kg CO2eq. / BOE),9.800863523179542,0.0064799230685658555
-Coke Combustion CO2 Emissions Intensity (kg CO2 / BOE),9.605470983543594,0.006350737653217688
-Coke Combustion CH4 Emissions Intensity (kg CH4. / BOE),0.003001709682357373,1.9846055166305276e-06
-Coke Combustion N2O Emissions Intensity (kg N2O / BOE),0.0003939743958094052,2.6047947405775675e-07
-*--Natural Gas Combustion (direct offtake and transport from upstream field),,
-Natural Gas Combustion Emissions Intensity (kg CO2eq. / BOE),1.2883419791070123,2.1292822961935807
-Natural Gas Combustion CO2 Emissions Intensity (kg CO2 / BOE),1.286985018415296,2.1270396056468477
-Natural Gas Combustion CH4 Emissions Intensity (kg CH4. / BOE),2.434964307435259e-05,4.024340179677174e-05
-Natural Gas Combustion N2O Emissions Intensity (kg N2O / BOE),2.3640430169274358e-06,3.907126388036091e-06
-*--NGL Combustion (direct offtake and transport from upstream field),,
-*---CO2eq.,,
-Ethane Combustion Emissions Intensity (kg CO2eq. / BOE),0.0,0.0
-Propane Combustion Emissions Intensity (kg CO2eq. / BOE),68.40690381119111,56.52909382163654
-Butane Combustion Emissions Intensity (kg CO2eq. / BOE),79.77181366694013,65.92066133481167
-Pentanes Plus Combustion Emissions Intensity (kg CO2eq. / BOE),92.08275680103112,76.09399795271618
-Total NGL Combustion Emissions Intensity (kg CO2eq. / BOE),240.2614742791624,198.5437531091644
-*---CO2,,
-Total NGL Combustion CO2 Emissions Intensity (kg CO2 / BOE),239.36786601876383,197.8053062218256
-*---CH4,,
-Ethane Combustion Emissions Intensity (kg CH4. / BOE),0.0,0.0
-Propane Combustion Emissions Intensity (kg CH4. / BOE),0.003216989737434855,0.0026584087944197562
-Butane Combustion Emissions Intensity (kg CH4. / BOE),0.0036935808096474256,0.003052247134333794
-Pentanes Plus Combustion Emissions Intensity (kg CH4. / BOE),0.003931876345753711,0.0032491663042908134
-Total NGL Combustion CH4 Emissions Intensity (kg CH4. / BOE),0.010842446892835991,0.008959822233044364
-*---CH4,,
-Total NGL Combustion N2O Emissions Intensity (kg N2O / BOE),0.00214465982495657,0.0017722725296131711
-*--Total Combustion emissions,,
-Total Combustion Emissions Intensity (kg CO2eq. / BOE),281.4305412875419,301.57183699805535
-Total Combustion CO2 Emissions Intensity (kg CO2 / BOE),280.22926072828665,300.48229624044717
-Total Combustion CH4 Emissions Intensity (kg CH4. / BOE),0.015166539276765192,0.013174337631148485
-Total Combustion N2O Emissions Intensity (kg N2O / BOE),0.002812627723307831,0.0026200377678660108
-*-Non-combusted product emissions-*,,
-Sum: BOED,88.0,99.0
-Total Process Emissions Intensity (kg CO2eq./boe total),1.3795561168748323,1.282519518067355
-Total Process CO2 Emissions Intensity (kg CO2/boe total),1.3614144393398726,1.2656539080030265
-Total ProcessCH4  Emissions Intensity (kg CH4/boe total),0.00043166799296142315,0.0004013048976594963
-Total Process N2O Emissions Intensity (kg N2O./boe total),1.959108583440305e-05,1.8213068432238676e-05
+Oil_Selected,Algeria Hassi R’Mel,Angola Takula
+,,
+*-Totals-*,,
+Total_BOE_Produced,3525.034558873733,4265.709631943627
+Total_Emissions_kgCO2e/BOE,290.3188490205615,310.7203045728623
+Total_CO2_Emissions_kgCO2/BOE,288.9961512956922,309.5040938569839
+Total_CH4_Emissions_kgCH4/BOE,0.017475727024383388,0.015592966898518027
+Total_N2O_Emissions_kgN2O/BOE,0.0004683899621116639,0.0010477903880476414
+*-Transport Emissions do not include gas transport-*,,
+Total_MassTransported_kg,327120.08226044715,419503.1973186042
+Total_TransportEmissions_kgCO2e/BOE,7.508751616144777,7.865948056739569
+Total_CO2_TransportEmissions_kgCO2/BOE,7.405476128065704,7.756143708533733
+Total_CH4_TransportEmissions_kgCH4/BOE,0.0018775197546567737,0.0020173243697100456
+Total_N2O_TransportEmissions_kgN2O/BOE,0.00017716941675233248,0.0001859796872246568
+,,
+Total_CombustionEmissions_kgCO2e/BOE,281.4305412875419,301.57183699805535
+Total_CO2_CombustionEmissions_kgCO2/BOE,280.22926072828665,300.48229624044717
+Total_CH4_CombustionEmissions_kgCH4/BOE,0.015166539276765192,0.013174337631148485
+Total_N2O_CombustionEmissions_kgN2O/BOE,0.0002716294595249283,0.000843597632390746
+,,
+*-Transport Emissions-*,,
+RefineryLiquids_TransportEmissions_kgCO2e/BOE,0.7335733413693065,2.5067744605444964
+RefineryLiquids_CO2_TransportEmissions_kgCO2/BOE,2549.7688105278066,10543.879547128432
+RefineryLiquids_CH4_TransportEmissions_kgCH4/BOE,0.00018818060936645048,0.0006430527377794046
+RefineryLiquids_N2O_TransportEmissions_kgN2O/BOE,1.7344697854326862e-05,5.92704821114792e-05
+Solids_TransportEmissions_kgCO2e/BOE,0.3139361624449204,0.0031964272357188463
+Solids_CO2_TransportEmissions_kgCO2/BOE,82.27918665843931,0.0
+Solids_CH4_TransportEmissions_kgCH4/BOE,6.072451517812687e-06,0.0
+Solids_N2O_TransportEmissions_kgN2O/BOE,5.597007957733149e-07,0.0
+UpstreamNGL_TransportEmissions_kgCO2e/BOE,6.461242112330551,5.355977168959354
+UpstreamNGL_CO2_TransportEmissions_kgCO2/BOE,6.3710336654847435,5.281199846990352
+UpstreamNGL_CH4_TransportEmissions_kgCH4/BOE,0.0016574763686108618,0.0013739472123212824
+UpstreamNGL_N2O_TransportEmissions_kgN2O/BOE,0.00015277039919803597,0.0001266373796202403
+,,
+*-Refinery Product Combustion-*,,
+RefineryProducts_CombustedVolume_BOE,287.9056662445435,1039.0496906727276
+Gasoline_CombustionEmissions_kgCO2e/BOE,26.421898976695978,33.745918294921466
+Gasoline_CO2_CombustionEmissions_kgCO2/BOE,26.324157798537396,33.621083747067885
+Gasoline_CH4_CombustionEmissions_kgCH4/BOE,0.0011393143466337373,0.0014551266314220728
+Gasoline_N2O_CombustionEmissions_kgN2O/BOE,0.00023985565192289208,0.0003063424487204363
+Jet_CombustionEmissions_kgCO2e/BOE,2.584009328799816,15.242239893953077
+Jet_CO2_CombustionEmissions_kgCO2/BOE,2.5751613385596364,15.190048445448204
+Jet_CH4_CombustionEmissions_kgCH4/BOE,0.00010828883577532829,0.0006387610115521809
+Jet_N2O_CombustionEmissions_kgN2O/BOE,2.1129528931771375e-05,0.00012463629493701092
+Diesel_CombustionEmissions_kgCO2e/BOE,0.15494946889871486,18.941293840359663
+Diesel_CO2_CombustionEmissions_kgCO2/BOE,0.15444272733498107,18.87934886611726
+Diesel_CH4_CombustionEmissions_kgCH4/BOE,6.20191167554772e-06,0.0007581325205786557
+Diesel_N2O_CombustionEmissions_kgN2O/BOE,1.2101291074239456e-06,0.0001479282966982743
+FuelOil_CombustionEmissions_kgCO2e/BOE,0.06465567907605238,9.974335962560419e-12
+FuelOil_CO2_CombustionEmissions_kgCO2/BOE,0.06443784857516645,9.940731573436713e-12
+FuelOil_CH4_CombustionEmissions_kgCH4/BOE,2.5869209282001122e-06,3.990804646270213e-16
+FuelOil_N2O_CombustionEmissions_kgN2O/BOE,5.291429171318412e-07,8.163009503734526e-17
+ResidFuel_CombustionEmissions_kgCO2e/BOE,0.031790917820806716,32.05425082067112
+ResidFuel_CO2_CombustionEmissions_kgCO2/BOE,0.03168590729397177,31.94837046248357
+ResidFuel_CH4_CombustionEmissions_kgCH4/BOE,1.265187070300559e-06,0.0012756669661151384
+ResidFuel_N2O_CombustionEmissions_kgN2O/BOE,2.530374140601118e-07,0.00025513339322302754
+RefineryLPG_CombustionEmissions_kgCO2e/BOE,0.8225571348015854,0.9086188197134742
+RefineryLPG_CO2_CombustionEmissions_kgCO2/BOE,0.8190530872627676,0.9047481541946485
+RefineryLPG_CH4_CombustionEmissions_kgCH4/BOE,4.0375856414361776e-05,4.4600261122271416e-05
+RefineryLPG_N2O_CombustionEmissions_kgN2O/BOE,8.651969231648955e-06,9.557198811915302e-06
+RefineryCoke_CombustionEmissions_kgCO2e/BOE,1.1663298994464061e-18,1.585181271480304e-20
+RefineryCoke_CO2_CombustionEmissions_kgCO2/BOE,1.1430776461559488e-18,1.5535786893521735e-20
+RefineryCoke_CH4_CombustionEmissions_kgCH4/BOE,3.57211764423734e-22,4.854933404225543e-24
+RefineryCoke_N2O_CombustionEmissions_kgN2O/BOE,4.6884044080615087e-23,6.372100093046025e-25
+,,
+*-Other Upstream Product Combustion-*,,
+UpgraderCoke_CombustedMass_kg,9999.0,8.0
+UpgraderCoke_CombustionEmissions_kgCO2e/BOE,9.800863523179542,0.0064799230685658555
+UpgraderCoke_CO2_CombustionEmissions_kgCO2/BOE,9.605470983543594,0.006350737653217688
+UpgraderCoke_CH4_CombustionEmissions_kgCH4/BOE,0.003001709682357373,1.9846055166305276e-06
+UpgraderCoke_N2O_CombustionEmissions_kgN2O/BOE,0.0003939743958094052,2.6047947405775675e-07
+UpstreamNGLProd_CombustedVolume_BOE,3088.0,3099.0
+UpstreamNGLProd_CombustionEmissions_kgCO2e/BOE,240.2614742791624,198.5437531091644
+UpstreamNGLProd_CO2_CombustionEmissions_kgCO2/BOE,239.36786601876383,197.8053062218256
+UpstreamNGLProd_CH4_CombustionEmissions_kgCH4/BOE,0.010842446892835991,0.008959822233044364
+UpstreamNGLProd_N2O_CombustionEmissions_kgN2O/BOE,0.00214465982495657,0.0017722725296131711
+NatGas_CombustedVolume_BOE,83.33333333333333,166.66666666666666
+NatGas_CombustionEmissions_kgCO2e/BOE,1.2883419791070123,2.1292822961935807
+NatGas_CO2_CombustionEmissions_kgCO2/BOE,1.286985018415296,2.1270396056468477
+NatGas_CH4_CombustionEmissions_kgCH4/BOE,2.434964307435259e-05,4.024340179677174e-05
+NatGas_N2O_CombustionEmissions_kgN2O/BOE,2.3640430169274358e-06,3.907126388036091e-06
+,,
+*-Petrochemical Conversion emissions (Ethane to Ethylene)-*,,
+PetchemFeed_BOE,88.0,99.0
+Ethane_ConversionEmissions_kgCO2e/BOE,1.3795561168748323,1.282519518067355
+Ethane_ConversionEmissions_kgCO2/BOE,1.3614144393398726,1.2656539080030265
+Ethane_ConversionEmissions_kgCH4/BOE,0.00043166799296142315,0.0004013048976594963
+Ethane_ConversionEmissions_kgN2O/BOE,1.959108583440305e-05,1.8213068432238676e-05

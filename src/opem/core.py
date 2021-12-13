@@ -8,6 +8,8 @@ from opem.transport import HeavyDutyTruckEF
 from dataclasses import InitVar, dataclass, field, asdict
 from typing import Dict
 from math import isnan
+import traceback
+
 from opem.combustion.combustion_EF import CombustionEF
 from opem.constants import Constants
 from opem.input import get_product_slate_csv
@@ -831,221 +833,394 @@ class OPEM:
 
     def results(self, return_dict=True):
 
+        transport_emissions_co2e = (self.refinery_product_transport["Sum"]
+                                    ["Transport Emissions Intensity (kg CO2eq. /BOE)"] +
+                                    self.ngl_transport["NGLs"]
+                                    ["Transport Emissions Intensity (kg CO2eq. /BOE)"])
+        transport_emissions_co2 = (self.refinery_product_transport["Sum"]
+                                   ["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"] +
+                                   self.ngl_transport["NGLs"]
+                                   ["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"])
+        transport_emissions_ch4 = (self.refinery_product_transport["Sum"]
+                                   ["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"] +
+                                   self.ngl_transport["NGLs"]
+                                   ["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"])
+        transport_emissions_n2o = (self.refinery_product_transport["Sum"]
+                                   ["Total Transport N2O Emissions Intensity (kg N2O / BOE)"] +
+                                   self.ngl_transport["NGLs"]
+                                   ["Total Transport N2O Emissions Intensity (kg N2O / BOE)"])
+        total_emissions_co2e = (transport_emissions_co2e +
+                                self.total_combustion_emissions["Sum"]
+                                ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"] +
+                                self.non_combusted_product_emissions["Sum"]
+                                ["Total Process Emissions Intensity (kg CO2eq./boe total)"])
+        total_emissions_co2 = (transport_emissions_co2 +
+                               self.total_combustion_emissions["Sum"]
+                               ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"] +
+                               self.non_combusted_product_emissions["Sum"]
+                               ["Total Process CO2 Emissions Intensity (kg CO2/boe total)"])
+        total_emissions_ch4 = (transport_emissions_ch4 +
+                               self.total_combustion_emissions["Sum"]
+                               ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"] +
+                               self.non_combusted_product_emissions["Sum"]
+                               ["Total ProcessCH4  Emissions Intensity (kg CH4/boe total)"])
+        total_emissions_n2o = (transport_emissions_n2o +
+                               self.refinery_product_combustion["Sum"]
+                               ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"] +
+                               self.non_combusted_product_emissions["Sum"]
+                               ["Total Process N2O Emissions Intensity (kg N2O./boe total)"])
+
+        liquids = ["Gasoline", "Jet Fuel",
+                   "Diesel", "Fuel Oil", "Residual fuels", "Liquefied Petroleum Gases (LPG)", "Petrochemical Feedstocks", "Surplus RFG", "Surplus NCR H2"]
+        ref_liquids_transport_co2e = 0
+        for liquid in liquids:
+            ref_liquids_transport_co2e += self.refinery_product_transport[
+                liquid]["Transport Emissions Intensity (kg CO2eq. /BOE)"]
+        ref_liquids_transport_co2 = 0
+        for liquid in liquids:
+            ref_liquids_transport_co2 += self.refinery_product_transport[
+                liquid]["Total Transport CO2 Emissions (kg CO2/ day)"]
+        ref_liquids_transport_ch4 = 0
+        for liquid in liquids:
+            ref_liquids_transport_ch4 += self.refinery_product_transport[
+                liquid]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"]
+        ref_liquids_transport_n2o = 0
+        for liquid in liquids:
+            ref_liquids_transport_n2o += self.refinery_product_transport[
+                liquid]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"]
+
+        solids = ["Coke", "Asphalt",
+                  "Sulphur", ]
+        solids_transport_co2e = 0
+        for solid in solids:
+            solids_transport_co2e += self.refinery_product_transport[
+                solid]["Transport Emissions Intensity (kg CO2eq. /BOE)"]
+        solids_transport_co2 = 0
+        for solid in solids:
+            solids_transport_co2 += self.refinery_product_transport[
+                liquid]["Total Transport CO2 Emissions (kg CO2/ day)"]
+        solids_transport_ch4 = 0
+        for solid in solids:
+            solids_transport_ch4 += self.refinery_product_transport[
+                liquid]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"]
+        solids_transport_n2o = 0
+        for solid in solids:
+            solids_transport_n2o += self.refinery_product_transport[
+                liquid]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"]
+
+        ref_combust_fuels = ["Gasoline", "Jet Fuel",
+                             "Diesel", "Fuel Oil", "Residual fuels", "Liquefied Petroleum Gases (LPG)"]
+        ref_combust_vol = 0
+        for fuel in ref_combust_fuels:
+            ref_combust_vol += self.refinery_product_combustion[fuel]["Volume or Mass of Product per Day"]
+
         if return_dict:
             # keys should be tuples based on input output sheet
-            return {("Selected Oil"): self.product_slate.product_name,
-                    ("Total BOE Produced"): self.total_boe_produced["row"]["col"],
-                    ("OPEM Transport", "Refinery Product Transport", "Sum: Kilograms of Product per Day"):
-                    self.refinery_product_transport["Sum"]["Kilograms of Product per Day"],
-                    ("OPEM Transport", "Refinery Product Transport", "Transport Emissions Intensity (kg CO2eq. /BOE)"): self.refinery_product_transport["Sum"]["Transport Emissions Intensity (kg CO2eq. /BOE)"],
-                    ("OPEM Transport", "Refinery Product Transport", "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"): self.refinery_product_transport["Sum"]["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"],
-                    ("OPEM Transport", "Refinery Product Transport", "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"): self.refinery_product_transport["Sum"]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Transport", "Refinery Product Transport", "Total Transport N2O Emissions Intensity (kg N2O / BOE)"): self.refinery_product_transport["Sum"]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"],
-                    ("OPEM Transport", "NGL Product Transport", "Sum: Kilograms of Product per Day"):
-                    self.ngl_transport["NGLs"]["Kilograms of Product per Day"],
-                    ("OPEM Transport", "NGL Product Transport", "Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"): self.ngl_transport["NGLs"]["Transport Emissions Intensity (kg CO2eq. /BOE)"],
-                    ("OPEM Transport", "NGL Product Transport", "Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"): self.ngl_transport["NGLs"]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Transport", "NGL Product Transport", "Total Transport N2O Emissions Intensity (kg N2O / BOE)"): self.ngl_transport["NGLs"]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"],
+            return {
+                ("Oil_Selected"): self.product_slate.product_name,
+                ("Total_BOE_Produced"): self.total_boe_produced["row"]["col"],
+                ("Total_Emissions_kgCO2e/BOE"): total_emissions_co2e,
+                ("Total_CO2_Emissions_kgCO2/BOE"): total_emissions_co2,
+                ("Total_CH4_Emissions_kgCH4/BOE"): total_emissions_ch4,
+                ("Total_N2O_Emissions_kgN2O/BOE"): total_emissions_n2o,
+                ("Total_MassTransported_kg"): self.refinery_product_transport["Sum"]
+                ["Kilograms of Product per Day"] +
+                self.ngl_transport["NGLs"]["Kilograms of Product per Day"],
+                ("Total_TransportEmissions_kgCO2e/BOE"): transport_emissions_co2e,
+                ("Total_CO2_TransportEmissions_kgCO2/BOE"): transport_emissions_co2,
+                ("Total_CH4_TransportEmissions_kgCH4/BOE"): transport_emissions_ch4,
+                ("Total_N2O_TransportEmissions_kgN2O/BOE"): transport_emissions_n2o,
+                ("Total_CombustionEmissions_kgCO2e/BOE"): self.total_combustion_emissions["Sum"]
+                ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("Total_CO2_CombustionEmissions_kgCO2/BOE"): self.total_combustion_emissions["Sum"]
+                ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("Total_CH4_CombustionEmissions_kgCH4/BOE"): self.total_combustion_emissions["Sum"]
+                ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("Total_N2O_CombustionEmissions_kgN2O/BOE"): self.refinery_product_combustion["Sum"]
+                ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("RefineryLiquids_TransportEmissions_kgCO2e/BOE"):
+                    ref_liquids_transport_co2e,
+                ("RefineryLiquids_CO2_TransportEmissions_kgCO2/BOE"):
+                    ref_liquids_transport_co2,
+                ("RefineryLiquids_CH4_TransportEmissions_kgCH4/BOE"):
+                    ref_liquids_transport_ch4,
+                ("RefineryLiquids_N2O_TransportEmissions_kgN2O/BOE"):
+                    ref_liquids_transport_n2o,
+                ("Solids_TransportEmissions_kgCO2e/BOE"):
+                    solids_transport_co2e,
+                ("Solids_CO2_TransportEmissions_kgCO2/BOE"):
+                    solids_transport_co2,
+                ("Solids_CH4_TransportEmissions_kgCH4/BOE"):
+                    solids_transport_ch4,
+                ("Solids_N2O_TransportEmissions_kgN2O/BOE"):
+                    solids_transport_n2o,
+                ("UpstreamNGL_TransportEmissions_kgCO2e/BOE"): self.ngl_transport["NGLs"]
+                ["Transport Emissions Intensity (kg CO2eq. /BOE)"],
+                ("UpstreamNGL_CO2_TransportEmissions_kgCO2/BOE"): self.ngl_transport["NGLs"]
+                ["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("UpstreamNGL_CH4_TransportEmissions_kgCH4/BOE"): self.ngl_transport["NGLs"]
+                ["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("UpstreamNGL_N2O_TransportEmissions_kgN2O/BOE"): self.ngl_transport["NGLs"]
+                ["Total Transport N2O Emissions Intensity (kg N2O / BOE)"],
+                ("RefineryProducts_CombustedVolume_BOE"): ref_combust_vol,
+                ("Gasoline_CombustionEmissions_kgCO2e/BOE"): self.refinery_product_combustion["Gasoline"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("Gasoline_CO2_CombustionEmissions_kgCO2/BOE"): self.refinery_product_combustion["Gasoline"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("Gasoline_CH4_CombustionEmissions_kgCH4/BOE"): self.refinery_product_combustion["Gasoline"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("Gasoline_N2O_CombustionEmissions_kgN2O/BOE"): self.refinery_product_combustion["Gasoline"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("Jet_CombustionEmissions_kgCO2e/BOE"): self.refinery_product_combustion["Jet Fuel"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("Jet_CO2_CombustionEmissions_kgCO2/BOE"): self.refinery_product_combustion["Jet Fuel"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("Jet_CH4_CombustionEmissions_kgCH4/BOE"): self.refinery_product_combustion["Jet Fuel"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("Jet_N2O_CombustionEmissions_kgN2O/BOE"): self.refinery_product_combustion["Jet Fuel"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("Diesel_CombustionEmissions_kgCO2e/BOE"): self.refinery_product_combustion["Diesel"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("Diesel_CO2_CombustionEmissions_kgCO2/BOE"): self.refinery_product_combustion["Diesel"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("Diesel_CH4_CombustionEmissions_kgCH4/BOE"): self.refinery_product_combustion["Diesel"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("Diesel_N2O_CombustionEmissions_kgN2O/BOE"): self.refinery_product_combustion["Diesel"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("FuelOil_CombustionEmissions_kgCO2e/BOE"): self.refinery_product_combustion["Fuel Oil"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("FuelOil_CO2_CombustionEmissions_kgCO2/BOE"): self.refinery_product_combustion["Fuel Oil"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("FuelOil_CH4_CombustionEmissions_kgCH4/BOE"): self.refinery_product_combustion["Fuel Oil"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("FuelOil_N2O_CombustionEmissions_kgN2O/BOE"): self.refinery_product_combustion["Fuel Oil"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("ResidFuel_CombustionEmissions_kgCO2e/BOE"): self.refinery_product_combustion["Residual fuels"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("ResidFuel_CO2_CombustionEmissions_kgCO2/BOE"): self.refinery_product_combustion["Residual fuels"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("ResidFuel_CH4_CombustionEmissions_kgCH4/BOE"): self.refinery_product_combustion["Residual fuels"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("ResidFuel_N2O_CombustionEmissions_kgN2O/BOE"): self.refinery_product_combustion["Residual fuels"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("RefineryLPG_CombustionEmissions_kgCO2e/BOE"): self.refinery_product_combustion["Liquefied Petroleum Gases (LPG)"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("RefineryLPG_CO2_CombustionEmissions_kgCO2/BOE"): self.refinery_product_combustion["Liquefied Petroleum Gases (LPG)"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("RefineryLPG_CH4_CombustionEmissions_kgCH4/BOE"): self.refinery_product_combustion["Liquefied Petroleum Gases (LPG)"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("RefineryLPG_N2O_CombustionEmissions_kgN2O/BOE"): self.refinery_product_combustion["Liquefied Petroleum Gases (LPG)"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("RefineryCoke_CombustionEmissions_kgCO2e/BOE"): self.refinery_product_combustion["Coke"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("RefineryCoke_CO2_CombustionEmissions_kgCO2/BOE"): self.refinery_product_combustion["Coke"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("RefineryCoke_CH4_CombustionEmissions_kgCH4/BOE"): self.refinery_product_combustion["Coke"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("RefineryCoke_N2O_CombustionEmissions_kgN2O/BOE"): self.refinery_product_combustion["Coke"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("UpgraderCoke_CombustedMass_kg"): self.opgee_input.opgee_coke_mass,
+                ("UpgraderCoke_CombustionEmissions_kgCO2e/BOE"):
+                    self.coke_combustion["Coke"][
+                        "Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("UpgraderCoke_CO2_CombustionEmissions_kgCO2/BOE"): self.coke_combustion["Coke"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("UpgraderCoke_CH4_CombustionEmissions_kgCH4/BOE"): self.coke_combustion["Coke"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("UpgraderCoke_N2O_CombustionEmissions_kgN2O/BOE"): self.coke_combustion["Coke"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("UpstreamNGLProd_CombustedVolume_BOE"):
+                    self.ngl_combustion["Sum"]["Volume or Mass of Product per Day"],
+                ("UpstreamNGLProd_CombustionEmissions_kgCO2e/BOE"):
+                    self.ngl_combustion["Sum"][
+                        "Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("UpstreamNGLProd_CO2_CombustionEmissions_kgCO2/BOE"):
+                    self.ngl_combustion["Sum"][
+                        "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("UpstreamNGLProd_CH4_CombustionEmissions_kgCH4/BOE"):
+                    self.ngl_combustion["Sum"][
+                        "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("UpstreamNGLProd_N2O_CombustionEmissions_kgN2O/BOE"):
+                    self.ngl_combustion["Sum"][
+                        "Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("NatGas_CombustedVolume_BOE"):
+                    self.gas_production_volume_boed["row"]["col"],
+                ("NatGas_CombustionEmissions_kgCO2e/BOE"):
+                    self.natural_gas_combustion["Natural Gas"][
+                        "Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
+                ("NatGas_CO2_CombustionEmissions_kgCO2/BOE"):
+                    self.natural_gas_combustion["Natural Gas"][
+                        "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
+                ("NatGas_CH4_CombustionEmissions_kgCH4/BOE"): self.natural_gas_combustion["Natural Gas"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
+                ("NatGas_N2O_CombustionEmissions_kgN2O/BOE"): self.natural_gas_combustion["Natural Gas"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
+                ("PetchemFeed_BOE"): self.non_combusted_product_emissions["Sum"]
+                    ["Volume or Mass of Product per Day"],
+                ("Ethane_ConversionEmissions_kgCO2e/BOE"): self.non_combusted_product_emissions["Sum"]
+                    ["Total Process Emissions Intensity (kg CO2eq./boe total)"],
+                ("Ethane_ConversionEmissions_kgCO2/BOE"): self.non_combusted_product_emissions["Sum"]
+                    ["Total Process CO2 Emissions Intensity (kg CO2/boe total)"],
+                ("Ethane_ConversionEmissions_kgCH4/BOE"): self.non_combusted_product_emissions["Sum"]
+                    ["Total ProcessCH4  Emissions Intensity (kg CH4/boe total)"],
+                ("Ethane_ConversionEmissions_kgN2O/BOE"): self.non_combusted_product_emissions["Sum"]
+                ["Total Process N2O Emissions Intensity (kg N2O./boe total)"], }
 
-                    ("OPEM Combustion", "Refinery Product Combustion", "Gasoline Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.refinery_product_combustion["Gasoline"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Jet Fuel Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.refinery_product_combustion["Jet Fuel"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Diesel Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.refinery_product_combustion["Diesel"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Fuel Oil Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.refinery_product_combustion["Fuel Oil"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Coke Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.refinery_product_combustion["Coke"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Residual fuels Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.refinery_product_combustion["Residual fuels"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Liquefied Petroleum Gases (LPG) Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.refinery_product_combustion["Liquefied Petroleum Gases (LPG)"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Total Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.refinery_product_combustion["Sum"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-
-                    ("OPEM Combustion", "Refinery Product Combustion", "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"): self.refinery_product_combustion["Sum"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
-
-                    ("OPEM Combustion", "Refinery Product Combustion", "Gasoline Combustion Emissions Intensity (kg CH4. / BOE)"): self.refinery_product_combustion["Gasoline"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Jet Fuel Combustion Emissions Intensity (kg CH4. / BOE)"): self.refinery_product_combustion["Jet Fuel"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Diesel Combustion Emissions Intensity (kg CH4. / BOE)"): self.refinery_product_combustion["Diesel"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Fuel Oil Combustion Emissions Intensity (kg CH4. / BOE)"): self.refinery_product_combustion["Fuel Oil"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Coke Combustion Emissions Intensity (kg CH4. / BOE)"): self.refinery_product_combustion["Coke"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Residual fuels Combustion Emissions Intensity (kg CH4. / BOE)"): self.refinery_product_combustion["Residual fuels"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Liquefied Petroleum Gases (LPG) Combustion Emissions Intensity (kg CH4. / BOE)"): self.refinery_product_combustion["Liquefied Petroleum Gases (LPG)"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "Refinery Product Combustion", "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"): self.refinery_product_combustion["Sum"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-
-                    ("OPEM Combustion", "Refinery Product Combustion", "Total Combustion N2O Emissions Intensity (kg N2O / BOE)"): self.refinery_product_combustion["Sum"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
-
-                    ("OPEM Combustion", "Coke Combustion (direct offtake and transport from upstream field)", "Coke Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.coke_combustion["Coke"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "Coke Combustion (direct offtake and transport from upstream field)", "Coke Combustion CO2 Emissions Intensity (kg CO2 / BOE)"): self.coke_combustion["Coke"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
-                    ("OPEM Combustion", "Coke Combustion (direct offtake and transport from upstream field)", "Coke Combustion CH4 Emissions Intensity (kg CH4. / BOE)"): self.coke_combustion["Coke"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "Coke Combustion (direct offtake and transport from upstream field)", "Coke Combustion N2O Emissions Intensity (kg N2O / BOE)"): self.coke_combustion["Coke"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
-
-                    ("OPEM Combustion", "Natural Gas Combustion (direct offtake and transport from upstream field)", "Natural Gas Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.natural_gas_combustion["Natural Gas"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "Natural Gas Combustion (direct offtake and transport from upstream field)", "Natural Gas Combustion CO2 Emissions Intensity (kg CO2 / BOE)"): self.natural_gas_combustion["Natural Gas"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
-                    ("OPEM Combustion", "Natural Gas Combustion (direct offtake and transport from upstream field)", "Natural Gas Combustion CH4 Emissions Intensity (kg CH4. / BOE)"): self.natural_gas_combustion["Natural Gas"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "Natural Gas Combustion (direct offtake and transport from upstream field)", "Natural Gas Combustion N2O Emissions Intensity (kg N2O / BOE)"): self.natural_gas_combustion["Natural Gas"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
-
-                    ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Ethane Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.ngl_combustion["Ethane"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Propane Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.ngl_combustion["Propane"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Butane Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.ngl_combustion["Butane"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Pentanes Plus Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.ngl_combustion["Pentanes Plus"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Total NGL Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.ngl_combustion["Sum"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-
-                    ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Total NGL Combustion CO2 Emissions Intensity (kg CO2 / BOE)"): self.ngl_combustion["Sum"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
-
-                    ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Ethane Combustion Emissions Intensity (kg CH4. / BOE)"): self.ngl_combustion["Ethane"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Propane Combustion Emissions Intensity (kg CH4. / BOE)"): self.ngl_combustion["Propane"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Butane Combustion Emissions Intensity (kg CH4. / BOE)"): self.ngl_combustion["Butane"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Pentanes Plus Combustion Emissions Intensity (kg CH4. / BOE)"): self.ngl_combustion["Pentanes Plus"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Total NGL Combustion CH4 Emissions Intensity (kg CH4. / BOE)"): self.ngl_combustion["Sum"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-
-                    ("OPEM Combustion", "NGL Combustion (direct offtake and transport from upstream field)", "Total NGL Combustion N2O Emissions Intensity (kg N2O / BOE)"): self.ngl_combustion["Sum"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
-
-                    ("OPEM Combustion", "Total Combustion emissions", "Total Combustion Emissions Intensity (kg CO2eq. / BOE)"): self.total_combustion_emissions["Sum"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"],
-                    ("OPEM Combustion", "Total Combustion emissions", "Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"): self.total_combustion_emissions["Sum"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
-                    ("OPEM Combustion", "Total Combustion emissions", "Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"): self.total_combustion_emissions["Sum"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                    ("OPEM Combustion", "Total Combustion emissions", "Total Combustion N2O Emissions Intensity (kg N2O / BOE)"): self.total_combustion_emissions["Sum"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
-
-                    ("OPEM Combustion", "Non-combusted product emissions", "Sum: BOED"): self.non_combusted_product_emissions["Sum"]["Volume or Mass of Product per Day"],
-                    ("OPEM Combustion", "Non-combusted product emissions", "Total Process Emissions Intensity (kg CO2eq./boe total)"): self.non_combusted_product_emissions["Sum"]["Total Process Emissions Intensity (kg CO2eq./boe total)"],
-                    ("OPEM Combustion", "Non-combusted product emissions", "Total Process CO2 Emissions Intensity (kg CO2/boe total)"): self.non_combusted_product_emissions["Sum"]["Total Process CO2 Emissions Intensity (kg CO2/boe total)"],
-                    ("OPEM Combustion", "Non-combusted product emissions", "Total ProcessCH4  Emissions Intensity (kg CH4/boe total)"): self.non_combusted_product_emissions["Sum"]["Total ProcessCH4  Emissions Intensity (kg CH4/boe total)"],
-                    ("OPEM Combustion", "Non-combusted product emissions", "Total Process N2O Emissions Intensity (kg N2O./boe total)"): self.non_combusted_product_emissions["Sum"]["Total Process N2O Emissions Intensity (kg N2O./boe total)"]
-                    }
         return [["Output Name", "RESULTS"],
-                ["Selected Oil", self.product_slate.product_name],
-                ["Total BOE Produced", self.total_boe_produced["row"]["col"]],
-                ["*-OPEM Transport-*", ""],
-                ["*--Refinery Product Transport", ""],
-                ["Sum: Kilograms of Product per Day",
-                    self.refinery_product_transport["Sum"]["Kilograms of Product per Day"]],
-                ["Transport Emissions Intensity (kg CO2eq. /BOE)", self.refinery_product_transport["Sum"]
+                ["Oil_Selected", self.product_slate.product_name],
+                ["", ""],
+                ["*-Totals-*", ""],
+                ["Total_BOE_Produced", self.total_boe_produced["row"]["col"]],
+                ["Total_Emissions_kgCO2e/BOE", total_emissions_co2e],
+                ["Total_CO2_Emissions_kgCO2/BOE", total_emissions_co2],
+                ["Total_CH4_Emissions_kgCH4/BOE", total_emissions_ch4],
+                ["Total_N2O_Emissions_kgN2O/BOE", total_emissions_n2o],
+                ["*-Transport Emissions do not include gas transport-*", ],
+                ["Total_MassTransported_kg", self.refinery_product_transport["Sum"]
+                    ["Kilograms of Product per Day"]+self.ngl_transport["NGLs"]["Kilograms of Product per Day"]],
+                ["Total_TransportEmissions_kgCO2e/BOE", transport_emissions_co2e],
+                ["Total_CO2_TransportEmissions_kgCO2/BOE", transport_emissions_co2],
+                ["Total_CH4_TransportEmissions_kgCH4/BOE", transport_emissions_ch4],
+                ["Total_N2O_TransportEmissions_kgN2O/BOE", transport_emissions_n2o],
+                ["", ""],
+                ["Total_CombustionEmissions_kgCO2e/BOE", self.total_combustion_emissions[
+                    "Sum"]
+                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["Total_CO2_CombustionEmissions_kgCO2/BOE", self.total_combustion_emissions["Sum"]
+                 ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["Total_CH4_CombustionEmissions_kgCH4/BOE", self.total_combustion_emissions["Sum"]
+                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["Total_N2O_CombustionEmissions_kgN2O/BOE", self.refinery_product_combustion["Sum"]
+                 ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["", ""],
+                ["*-Transport Emissions-*", ""],
+                ["RefineryLiquids_TransportEmissions_kgCO2e/BOE",
+                    ref_liquids_transport_co2e],
+                ["RefineryLiquids_CO2_TransportEmissions_kgCO2/BOE",
+                    ref_liquids_transport_co2],
+                ["RefineryLiquids_CH4_TransportEmissions_kgCH4/BOE",
+                    ref_liquids_transport_ch4],
+                ["RefineryLiquids_N2O_TransportEmissions_kgN2O/BOE",
+                    ref_liquids_transport_n2o],
+                ["Solids_TransportEmissions_kgCO2e/BOE",
+                    solids_transport_co2e],
+                ["Solids_CO2_TransportEmissions_kgCO2/BOE",
+                    solids_transport_co2],
+                ["Solids_CH4_TransportEmissions_kgCH4/BOE",
+                    solids_transport_ch4],
+                ["Solids_N2O_TransportEmissions_kgN2O/BOE",
+                    solids_transport_n2o],
+                ["UpstreamNGL_TransportEmissions_kgCO2e/BOE", self.ngl_transport["NGLs"]
                  ["Transport Emissions Intensity (kg CO2eq. /BOE)"]],
-                ["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)", self.refinery_product_transport["Sum"]
+                ["UpstreamNGL_CO2_TransportEmissions_kgCO2/BOE", self.ngl_transport["NGLs"]
                  ["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"]],
-                ["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)", self.refinery_product_transport["Sum"]
+                ["UpstreamNGL_CH4_TransportEmissions_kgCH4/BOE", self.ngl_transport["NGLs"]
                  ["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Total Transport N2O Emissions Intensity (kg N2O / BOE)", self.refinery_product_transport["Sum"]
+                ["UpstreamNGL_N2O_TransportEmissions_kgN2O/BOE", self.ngl_transport["NGLs"]
                  ["Total Transport N2O Emissions Intensity (kg N2O / BOE)"]],
-                ["*--NGL Product Transport", ""],
-                ["Sum: Kilograms of Product per Day",
-                    self.ngl_transport["NGLs"]["Kilograms of Product per Day"]],
-                ["Transport Emissions Intensity (kg CO2eq. /BOE)", self.ngl_transport["NGLs"]
-                 ["Transport Emissions Intensity (kg CO2eq. /BOE)"]],
-                ["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)", self.ngl_transport["NGLs"]
-                 ["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"]],
-                ["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)", self.ngl_transport["NGLs"]
-                 ["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Total Transport N2O Emissions Intensity (kg N2O / BOE)", self.ngl_transport["NGLs"]
-                 ["Total Transport N2O Emissions Intensity (kg N2O / BOE)"]],
-
-                ["*-OPEM Combustion-*", ""],
-                ["*--Refinery Product Combustion", ""],
-                ["*---CO2eq.", ""],
-                ["Gasoline Combustion Emissions Intensity (kg CO2eq. / BOE)", self.refinery_product_combustion["Gasoline"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Jet Fuel Combustion Emissions Intensity (kg CO2eq. / BOE)", self.refinery_product_combustion["Jet Fuel"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Diesel Combustion Emissions Intensity (kg CO2eq. / BOE)", self.refinery_product_combustion["Diesel"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Fuel Oil Combustion Emissions Intensity (kg CO2eq. / BOE)", self.refinery_product_combustion["Fuel Oil"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Coke Combustion Emissions Intensity (kg CO2eq. / BOE)", self.refinery_product_combustion["Coke"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Residual fuels Combustion Emissions Intensity (kg CO2eq. / BOE)", self.refinery_product_combustion["Residual fuels"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Liquefied Petroleum Gases (LPG) Combustion Emissions Intensity (kg CO2eq. / BOE)",
-                 self.refinery_product_combustion["Liquefied Petroleum Gases (LPG)"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)", self.refinery_product_combustion["Sum"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["*---CO2", ""],
-                ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)", self.refinery_product_combustion["Sum"]
-                 ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
-                ["*---CH4", ""],
-                ["Gasoline Combustion Emissions Intensity (kg CH4. / BOE)", self.refinery_product_combustion["Gasoline"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Jet Fuel Combustion Emissions Intensity (kg CH4. / BOE)", self.refinery_product_combustion["Jet Fuel"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Diesel Combustion Emissions Intensity (kg CH4. / BOE)", self.refinery_product_combustion["Diesel"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Fuel Oil Combustion Emissions Intensity (kg CH4. / BOE)", self.refinery_product_combustion["Fuel Oil"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Coke Combustion Emissions Intensity (kg CH4. / BOE)", self.refinery_product_combustion["Coke"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Residual fuels Combustion Emissions Intensity (kg CH4. / BOE)", self.refinery_product_combustion["Residual fuels"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Liquefied Petroleum Gases (LPG) Combustion Emissions Intensity (kg CH4. / BOE)",
-                 self.refinery_product_combustion["Liquefied Petroleum Gases (LPG)"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)", self.refinery_product_combustion["Sum"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["*---N2O", ""],
-                ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)", self.refinery_product_combustion["Sum"]
-                 ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
-
-                ["*--Coke Combustion (direct offtake and transport from upstream field)", ""],
-                ["Coke Combustion Emissions Intensity (kg CO2eq. / BOE)", self.coke_combustion["Coke"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Coke Combustion CO2 Emissions Intensity (kg CO2 / BOE)", self.coke_combustion["Coke"]
-                 ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
-                ["Coke Combustion CH4 Emissions Intensity (kg CH4. / BOE)", self.coke_combustion["Coke"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Coke Combustion N2O Emissions Intensity (kg N2O / BOE)", self.coke_combustion["Coke"]
-                 ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
-
-                ["*--Natural Gas Combustion (direct offtake and transport from upstream field)", ""],
-                ["Natural Gas Combustion Emissions Intensity (kg CO2eq. / BOE)", self.natural_gas_combustion["Natural Gas"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Natural Gas Combustion CO2 Emissions Intensity (kg CO2 / BOE)", self.natural_gas_combustion["Natural Gas"]
-                 ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
-                ["Natural Gas Combustion CH4 Emissions Intensity (kg CH4. / BOE)", self.natural_gas_combustion["Natural Gas"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Natural Gas Combustion N2O Emissions Intensity (kg N2O / BOE)", self.natural_gas_combustion["Natural Gas"]
-                 ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
-
-                ["*--NGL Combustion (direct offtake and transport from upstream field)", ""],
-                ["*---CO2eq.", ""],
-                ["Ethane Combustion Emissions Intensity (kg CO2eq. / BOE)", self.ngl_combustion["Ethane"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Propane Combustion Emissions Intensity (kg CO2eq. / BOE)", self.ngl_combustion["Propane"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Butane Combustion Emissions Intensity (kg CO2eq. / BOE)", self.ngl_combustion["Butane"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Pentanes Plus Combustion Emissions Intensity (kg CO2eq. / BOE)", self.ngl_combustion["Pentanes Plus"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Total NGL Combustion Emissions Intensity (kg CO2eq. / BOE)", self.ngl_combustion["Sum"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["*---CO2", ""],
-                ["Total NGL Combustion CO2 Emissions Intensity (kg CO2 / BOE)", self.ngl_combustion["Sum"]
-                 ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
-                ["*---CH4", ""],
-                ["Ethane Combustion Emissions Intensity (kg CH4. / BOE)", self.ngl_combustion["Ethane"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Propane Combustion Emissions Intensity (kg CH4. / BOE)", self.ngl_combustion["Propane"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Butane Combustion Emissions Intensity (kg CH4. / BOE)", self.ngl_combustion["Butane"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Pentanes Plus Combustion Emissions Intensity (kg CH4. / BOE)", self.ngl_combustion["Pentanes Plus"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Total NGL Combustion CH4 Emissions Intensity (kg CH4. / BOE)", self.ngl_combustion["Sum"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["*---CH4", ""],
-                ["Total NGL Combustion N2O Emissions Intensity (kg N2O / BOE)", self.ngl_combustion["Sum"]
-                 ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
-
-                ["*--Total Combustion emissions", ""],
-                ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)", self.total_combustion_emissions["Sum"]
-                 ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
-                ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)", self.total_combustion_emissions["Sum"]
-                 ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
-                ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)", self.total_combustion_emissions["Sum"]
-                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)", self.total_combustion_emissions["Sum"]
-                 ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
-
-                ["*-Non-combusted product emissions-*", ""],
-                ["Sum: BOED", self.non_combusted_product_emissions["Sum"]
+                ["", ""],
+                ["*-Refinery Product Combustion-*", ""],
+                ["RefineryProducts_CombustedVolume_BOE", ref_combust_vol],
+                ["Gasoline_CombustionEmissions_kgCO2e/BOE", self.refinery_product_combustion["Gasoline"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["Gasoline_CO2_CombustionEmissions_kgCO2/BOE", self.refinery_product_combustion["Gasoline"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["Gasoline_CH4_CombustionEmissions_kgCH4/BOE", self.refinery_product_combustion["Gasoline"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["Gasoline_N2O_CombustionEmissions_kgN2O/BOE", self.refinery_product_combustion["Gasoline"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["Jet_CombustionEmissions_kgCO2e/BOE", self.refinery_product_combustion["Jet Fuel"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["Jet_CO2_CombustionEmissions_kgCO2/BOE", self.refinery_product_combustion["Jet Fuel"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["Jet_CH4_CombustionEmissions_kgCH4/BOE", self.refinery_product_combustion["Jet Fuel"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["Jet_N2O_CombustionEmissions_kgN2O/BOE", self.refinery_product_combustion["Jet Fuel"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["Diesel_CombustionEmissions_kgCO2e/BOE", self.refinery_product_combustion["Diesel"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["Diesel_CO2_CombustionEmissions_kgCO2/BOE", self.refinery_product_combustion["Diesel"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["Diesel_CH4_CombustionEmissions_kgCH4/BOE", self.refinery_product_combustion["Diesel"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["Diesel_N2O_CombustionEmissions_kgN2O/BOE", self.refinery_product_combustion["Diesel"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["FuelOil_CombustionEmissions_kgCO2e/BOE", self.refinery_product_combustion["Fuel Oil"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["FuelOil_CO2_CombustionEmissions_kgCO2/BOE", self.refinery_product_combustion["Fuel Oil"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["FuelOil_CH4_CombustionEmissions_kgCH4/BOE", self.refinery_product_combustion["Fuel Oil"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["FuelOil_N2O_CombustionEmissions_kgN2O/BOE", self.refinery_product_combustion["Fuel Oil"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["ResidFuel_CombustionEmissions_kgCO2e/BOE", self.refinery_product_combustion["Residual fuels"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["ResidFuel_CO2_CombustionEmissions_kgCO2/BOE", self.refinery_product_combustion["Residual fuels"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["ResidFuel_CH4_CombustionEmissions_kgCH4/BOE", self.refinery_product_combustion["Residual fuels"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["ResidFuel_N2O_CombustionEmissions_kgN2O/BOE", self.refinery_product_combustion["Residual fuels"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["RefineryLPG_CombustionEmissions_kgCO2e/BOE", self.refinery_product_combustion["Liquefied Petroleum Gases (LPG)"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["RefineryLPG_CO2_CombustionEmissions_kgCO2/BOE", self.refinery_product_combustion["Liquefied Petroleum Gases (LPG)"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["RefineryLPG_CH4_CombustionEmissions_kgCH4/BOE", self.refinery_product_combustion["Liquefied Petroleum Gases (LPG)"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["RefineryLPG_N2O_CombustionEmissions_kgN2O/BOE", self.refinery_product_combustion["Liquefied Petroleum Gases (LPG)"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["RefineryCoke_CombustionEmissions_kgCO2e/BOE", self.refinery_product_combustion["Coke"]
+                    ["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["RefineryCoke_CO2_CombustionEmissions_kgCO2/BOE", self.refinery_product_combustion["Coke"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["RefineryCoke_CH4_CombustionEmissions_kgCH4/BOE", self.refinery_product_combustion["Coke"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["RefineryCoke_N2O_CombustionEmissions_kgN2O/BOE", self.refinery_product_combustion["Coke"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["", ""],
+                ["*-Other Upstream Product Combustion-*", ""],
+                ["UpgraderCoke_CombustedMass_kg", self.opgee_input.opgee_coke_mass],
+                ["UpgraderCoke_CombustionEmissions_kgCO2e/BOE",
+                    self.coke_combustion["Coke"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["UpgraderCoke_CO2_CombustionEmissions_kgCO2/BOE", self.coke_combustion["Coke"]
+                    ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["UpgraderCoke_CH4_CombustionEmissions_kgCH4/BOE", self.coke_combustion["Coke"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["UpgraderCoke_N2O_CombustionEmissions_kgN2O/BOE", self.coke_combustion["Coke"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["UpstreamNGLProd_CombustedVolume_BOE",
+                    self.ngl_combustion["Sum"]["Volume or Mass of Product per Day"]],
+                ["UpstreamNGLProd_CombustionEmissions_kgCO2e/BOE",
+                    self.ngl_combustion["Sum"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["UpstreamNGLProd_CO2_CombustionEmissions_kgCO2/BOE",
+                    self.ngl_combustion["Sum"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["UpstreamNGLProd_CH4_CombustionEmissions_kgCH4/BOE",
+                    self.ngl_combustion["Sum"]["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["UpstreamNGLProd_N2O_CombustionEmissions_kgN2O/BOE",
+                    self.ngl_combustion["Sum"]["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["NatGas_CombustedVolume_BOE",
+                    self.gas_production_volume_boed["row"]["col"]],
+                ["NatGas_CombustionEmissions_kgCO2e/BOE",
+                    self.natural_gas_combustion["Natural Gas"]["Total Combustion Emissions Intensity (kg CO2eq. / BOE)"]],
+                ["NatGas_CO2_CombustionEmissions_kgCO2/BOE",
+                    self.natural_gas_combustion["Natural Gas"]["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
+                ["NatGas_CH4_CombustionEmissions_kgCH4/BOE", self.natural_gas_combustion["Natural Gas"]
+                    ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
+                ["NatGas_N2O_CombustionEmissions_kgN2O/BOE", self.natural_gas_combustion["Natural Gas"]
+                    ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
+                ["", ""],
+                ["*-Petrochemical Conversion emissions (Ethane to Ethylene)-*", ""],
+                ["PetchemFeed_BOE", self.non_combusted_product_emissions["Sum"]
                     ["Volume or Mass of Product per Day"]],
-                ["Total Process Emissions Intensity (kg CO2eq./boe total)", self.non_combusted_product_emissions["Sum"]
-                 ["Total Process Emissions Intensity (kg CO2eq./boe total)"]],
-                ["Total Process CO2 Emissions Intensity (kg CO2/boe total)", self.non_combusted_product_emissions["Sum"]
-                 ["Total Process CO2 Emissions Intensity (kg CO2/boe total)"]],
-                ["Total ProcessCH4  Emissions Intensity (kg CH4/boe total)", self.non_combusted_product_emissions["Sum"]
-                 ["Total ProcessCH4  Emissions Intensity (kg CH4/boe total)"]],
-                ["Total Process N2O Emissions Intensity (kg N2O./boe total)", self.non_combusted_product_emissions["Sum"]["Total Process N2O Emissions Intensity (kg N2O./boe total)"]]]
+                ["Ethane_ConversionEmissions_kgCO2e/BOE", self.non_combusted_product_emissions["Sum"]
+                    ["Total Process Emissions Intensity (kg CO2eq./boe total)"]],
+                ["Ethane_ConversionEmissions_kgCO2/BOE", self.non_combusted_product_emissions["Sum"]
+                    ["Total Process CO2 Emissions Intensity (kg CO2/boe total)"]],
+                ["Ethane_ConversionEmissions_kgCH4/BOE", self.non_combusted_product_emissions["Sum"]
+                    ["Total ProcessCH4  Emissions Intensity (kg CH4/boe total)"]],
+                ["Ethane_ConversionEmissions_kgN2O/BOE", self.non_combusted_product_emissions["Sum"]
+                 ["Total Process N2O Emissions Intensity (kg N2O./boe total)"]], ]
+
     constants: Constants
     transport_ef: TransportEF
     petrochem_ef: PetroChemEF
@@ -1200,10 +1375,12 @@ def run_model(input, return_dict=True):
         print(f"Run Number {run_number}")
         try:
             results.append(run_batch(**batch, return_dict=return_dict))
-        except:
+        except Exception as err:
             print("")
             print("Error! Please check your inputs.")
             results.append([["", f"ERROR in run number {run_number}"]])
+            print(err)
+            print(traceback.format_exc())
         run_number += 1
     return results
 

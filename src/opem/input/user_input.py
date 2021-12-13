@@ -2,6 +2,7 @@ from dataclasses import InitVar, asdict, dataclass, field
 from typing import Any, Dict, List
 from opem.utils import build_dict_from_defaults, initialize_from_dataclass, initialize_from_list, read_input_structure
 
+
 # hold validated user input
 
 
