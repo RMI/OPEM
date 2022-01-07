@@ -8,3 +8,6 @@ build/
 __pycache__/
 *.so
 *~
+
+.DS_STORE
+.vscode
