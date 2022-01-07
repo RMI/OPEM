@@ -17,7 +17,7 @@ from opem.input.opgee_input import OpgeeInput
 from opem.products.product_slate import ProductSlate
 from opem.transport.petrochem_EF import PetroChemEF
 
-from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells, count_list
+from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells
 from opem.transport.transport_EF import TransportEF
 
 
