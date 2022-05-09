@@ -200,8 +200,8 @@ def calc_truck_emission_factors_forward_backward(row_key, col_key, target_table_
     fuel_sum = 0
     for key, row in other_table_refs[1].items():
         if key not in ["full_table_name", "row_index_name"]:
-            fuel_sum += row["100 year GWP"] * \
-                other_table_refs[2][key][col_key]
+            fuel_sum += row["User Selection"] * \
+                other_table_refs[2][key][col_key]  # ["100 year GWP"]
     return consump_per_payload * fuel_sum
 
 

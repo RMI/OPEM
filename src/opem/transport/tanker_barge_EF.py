@@ -77,7 +77,7 @@ def calc_barge_tanker_emissions(row_key, col_key, target_table_ref=None, other_t
     for key, row in other_table_refs[0].items():
         if key not in ['full_table_name', 'row_index_name']:
             result += row[col_key] * \
-                other_table_refs[1][key]['100 year GWP']
+                other_table_refs[1][key]['User Selection']  # ['100 year GWP']
     result = (result * other_table_refs[2]
               [extra["trip_details"]][row_key])/1000000
     return result
