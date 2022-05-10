@@ -12,7 +12,7 @@ def calc_pipeline_emissions_factors(row_key, col_key, target_table_ref=None, oth
     for key, row in other_table_refs[0].items():
         if key not in ['full_table_name', 'row_index_name']:
             result += row[col_key] * \
-                other_table_refs[1][key]['100 year GWP']
+                other_table_refs[1][key]['User Selection']  # ['100 year GWP']
     result = (result * other_table_refs[2]["Oil Product Pipeline"][extra["trip_details"]]) / \
         1000000/other_table_refs[3]["kg per short ton"]["Conversion Factor"] / \
         other_table_refs[3]["km per mile"]["Conversion Factor"]
