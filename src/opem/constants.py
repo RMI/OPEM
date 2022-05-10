@@ -22,11 +22,12 @@ def hv_ratio(row_key, col_key, target_table_ref=None, other_table_refs=None, oth
 def s_ratio(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     return target_table_ref[row_key]["S ratio, (ppm by wt)"]/1000000
 
+
 def fill_gwp_selection(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     if other_table_refs == 100:
-       return target_table_ref[row_key]["100 year GWP"] 
+        return target_table_ref[row_key]["100 year GWP"]
     elif other_table_refs == 20:
-        return target_table_ref[row_key]["20 year GWP"]  
+        return target_table_ref[row_key]["20 year GWP"]
 
 
 @dataclass

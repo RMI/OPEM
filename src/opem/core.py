@@ -1,3 +1,5 @@
+import csv
+
 from opem.input.input import standardize_input
 from opem.input.user_input import UserInput
 from opem.transport.pipeline_EF import PipelineEF
@@ -17,7 +19,7 @@ from opem.input.opgee_input import OpgeeInput
 from opem.products.product_slate import ProductSlate
 from opem.transport.petrochem_EF import PetroChemEF
 
-from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells
+from opem.utils import initialize_from_dataclass, initialize_from_list, build_dict_from_defaults, fill_calculated_cells, count_list
 from opem.transport.transport_EF import TransportEF
 
 
@@ -783,11 +785,19 @@ class OPEM:
                                                 "%_allocated_ethylene": self.percent_ngl_c2_to_ethylene})
 
         # lookup emission factors non-combusted products
+        # 100 year GWP vs User selection fix
+        if user_input["GWP"] == 20:
+            ethylene_conversion = self.petrochem_ef.ethylene_conversion_20yr_gwp["Sum"]["kg CO2e/bbl Natural Gas Liquids (HHV)"]
+        elif user_input["GWP"] == 100:
+            ethylene_conversion = self.petrochem_ef.ethylene_conversion_100yr_gwp["Sum"]["kg CO2e/bbl Natural Gas Liquids (HHV)"]
+        else:
+            raise Exception("User input for GWP must be either 100 or 20")
+
         fill_calculated_cells(target_table_ref=self.non_combusted_product_emissions,
                               func_to_apply=fetch_emission_factors_non_combusted,
                               included_cols=["Emission Factors"],
                               excluded_rows=["Sum"],
-                              other_table_refs=self.petrochem_ef.ethylene_conversion_100yr_gwp["Sum"]["kg CO2e/bbl Natural Gas Liquids (HHV)"])
+                              other_table_refs=ethylene_conversion)
 
         fill_calculated_cells(target_table_ref=self.non_combusted_product_emissions,
                               func_to_apply=calc_total_em_non_combust,
@@ -879,7 +889,7 @@ class OPEM:
         ref_liquids_transport_co2 = 0
         for liquid in liquids:
             ref_liquids_transport_co2 += self.refinery_product_transport[
-                liquid]["Total Transport CO2 Emissions (kg CO2/ day)"]
+                liquid]["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"]
         ref_liquids_transport_ch4 = 0
         for liquid in liquids:
             ref_liquids_transport_ch4 += self.refinery_product_transport[
@@ -898,15 +908,15 @@ class OPEM:
         solids_transport_co2 = 0
         for solid in solids:
             solids_transport_co2 += self.refinery_product_transport[
-                liquid]["Total Transport CO2 Emissions (kg CO2/ day)"]
+                solid]["Total Transport CO2 Emissions Intensity (kg CO2 / BOE)"]
         solids_transport_ch4 = 0
         for solid in solids:
             solids_transport_ch4 += self.refinery_product_transport[
-                liquid]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"]
+                solid]["Total Transport CH4 Emissions Intensity (kg CH4. / BOE)"]
         solids_transport_n2o = 0
         for solid in solids:
             solids_transport_n2o += self.refinery_product_transport[
-                liquid]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"]
+                solid]["Total Transport N2O Emissions Intensity (kg N2O / BOE)"]
 
         ref_combust_fuels = ["Gasoline", "Jet Fuel",
                              "Diesel", "Fuel Oil", "Residual fuels", "Liquefied Petroleum Gases (LPG)"]
@@ -1439,6 +1449,7 @@ def run_batch(user_input, opgee_input=None, product_slate=None, return_dict=True
     print("Calculating results . . .")
     opem = OPEM(user_input=asdict(user_input), transport_ef=transport_ef,
                 combustion_ef=combustion_ef, petrochem_ef=petrochem_ef, product_slate=product_slate, opgee_input=opgee_input, constants=constants)
+
     print("Model run completed.")
 
     return opem.results(return_dict)
