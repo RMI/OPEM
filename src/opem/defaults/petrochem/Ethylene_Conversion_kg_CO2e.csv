@@ -5,9 +5,9 @@ NOx,0.45,g,NaN,NaN
 PM10,47.93,mg,NaN,NaN
 PM2.5,43.57,mg,NaN,NaN
 SOx,35.22,mg,NaN,NaN
-CH4,0.13,g,NaN,NaN
-N2O,5.9,mg,NaN,NaN
-CO2,0.41,kg,NaN,NaN
+CH4,0.396993442,g,NaN,NaN
+N2O,18.01739468,mg,NaN,NaN
+CO2,1.252056241,kg,NaN,NaN
 BC,2.9,mg,NaN,NaN
 POC,13.61,mg,NaN,NaN
 Sum,NaN,NaN,NaN,NaN
