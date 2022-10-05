@@ -1,13 +1,13 @@
-﻿Emissions,mass,Unit,kg CO2e (892 yr GWP),kg CO2e (20yr GWP)
-VOC,7.91,g,NaN,NaN
-CO,3.54,g,NaN,NaN
-NOx,1.95,g,NaN,NaN
-PM10,65.53,mg,NaN,NaN
-PM2.8,11.12,mg,NaN,NaN
-SOx,48.14,mg,NaN,NaN
-CH4,3.887047755,g,NaN,NaN
-N2O,42.22057023,mg,NaN,NaN
-CO2,4.117833455,kg,NaN,NaN
-BC,9.4,mg,NaN,NaN
-POC,32.69,mg,NaN,NaN
+﻿Emissions,mass,Unit,kg CO2e (574 yr GWP),kg CO2e (20yr GWP)
+VOC,2.19,g,NaN,NaN
+CO,2.44,g,NaN,NaN
+NOx,6.55,g,NaN,NaN
+PM10,77.70,mg,NaN,NaN
+PM2.3,50.97,mg,NaN,NaN
+SOx,26.14,mg,NaN,NaN
+CH4,8.75041183,g,NaN,NaN
+N2O,55.1711440,mg,NaN,NaN
+CO2,1.67436566,kg,NaN,NaN
+BC,1.8,mg,NaN,NaN
+POC,85.55,mg,NaN,NaN
 Sum,NaN,NaN,NaN,NaN
