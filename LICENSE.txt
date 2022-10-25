@@ -1,1 +1,54 @@
-TODO
+Copyright © 2012-2022 RMI. All rights reserved.
+
+Authors:
+Deborah Gordon
+Eugene Tan
+Jonathan Koomey
+Zachary Schmidt
+Raghav Muralidharan
+Fran Reuland
+Yuan Wang
+Joseph Fallurin
+
+Licensed under the MIT open source license: https://opensource.org/licenses/MIT.
+
+
+
+The Oil Products Emissions Model (OPEM) Program (Software), source code, binary files, and
+
+operating manuals are being provided free of charge. Software may be downloaded, modified and redistributed freely under the following terms and conditions:
+
+Redistributions of any of the following: Software's source code, executables, and any other materials provided must
+
+* retain the above copyright notice
+
+* require that the source and executable with any modifications be made publicly available under these same terms
+
+and conditions and
+
+* be sent to: Deborah Gordon, RMI, dgordon@rmi.org 
+
+* include this entire Agreement with any redistribution
+
+
+
+Neither the name of RMI nor the names of the contributors may be used to endorse or promote products derived from this Software without specific prior written permission.
+
+
+
+Software is being provided “AS IS” and With All Faults. Users acknowledge that RMI or contributors will not provide any maintenance or support for Software.
+
+RMI makes no representations and extends no warranties of any kind, either express or implied.
+
+
+
+RMI disclaims any express or implied warranty of merchantability, or fitness for a particular purpose, of non-infringement, or arising out of any course of dealing.
+
+
+
+RMI is not liable for any special, consequential, lost profits, expectation, punitive or other indirect damages in connection with any claim arising out of or related to the use of Software whether grounded in tort (including negligence), strict liability, contract, or otherwise; and,
+
+Users will indemnify, hold harmless and defend RMI against any claim of any kind arising out of or related to the exercise of any rights in this Agreement.
+
+
+
