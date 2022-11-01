@@ -26,7 +26,7 @@ Redistributions of any of the following: Software's source code, executables, an
 
 and conditions and
 
-* be sent to: Deborah Gordon, RMI, dgordon@rmi.org 
+* be sent to: OCIPlus@rmi.org
 
 * include this entire Agreement with any redistribution
 
