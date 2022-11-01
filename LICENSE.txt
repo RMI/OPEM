@@ -50,7 +50,7 @@ RMI is not liable for any special, consequential, lost profits, expectation, pun
 
 Users will indemnify, hold harmless and defend RMI against any claim of any kind arising out of or related to the exercise of any rights in this Agreement.
 
-The license was last updated on Nov 1st, 2022
+The license was last updated on Nov 1st, 2022.
 
 
 
