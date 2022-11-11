@@ -609,7 +609,7 @@ class OPEM:
                               included_cols=[
                                   "Volume or Mass of Product per Day"],
                               # excluded_rows=["Sum"],
-                              other_table_refs={"gas_prod_vol": self.gas_production_volume_boed["row"]["col"]})
+                              other_table_refs={"gas_prod_vol": self.opgee_input.gas_production_volume})
 
         # look up combustion factors
         fill_calculated_cells(target_table_ref={"Combustion Results": self.natural_gas_combustion, "has_wrapper": True},
