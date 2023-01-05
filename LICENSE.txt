@@ -10,9 +10,6 @@ Fran Reuland
 Yuan Wang
 Joseph Fallurin
 
-Licensed under the MIT open source license: https://opensource.org/licenses/MIT.
-
-
 
 The Oil Products Emissions Model (OPEM) Program (Software), source code, binary files, and
 
