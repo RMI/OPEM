@@ -1,3 +1,12 @@
+OPEM models Downstream Oil Product Transport and Oil and Gas End Use Emissions
+
+OPEM estimates two emissions sources: the transport of petroleum products by shipping entities and the end use of all petroleum products by various consumers. The combustion of natural gas and petroleum products by consumers (Scope 3 emissions) is increasingly being considered in this sector’s climate impacts.
+
+OPEM considers all associated oil and gas products that are consumed. Historically, petroleum end use centered only on transport fuels, including gasoline and diesel, and ignored or incompletely and inconsistently reported GHG emissions from petroleum co-products like petcoke, fuel oil, residual fuels, asphalt, and petrochemical feedstocks. OPEM v.3.0 includes these co-products, as well as gas and natural gas liquids that were produced along with each barrel of crude.
+
+OPEM estimates emissions using combustion, transport, and process emissions factors reported by the U.S. Environmental Protection Agency for GHG inventories and Argonne National Laboratory’s GREET model. Emissions factors are documented here. Note that the EPA assumes high fuel quality and near-complete fuel combustion in the calculation of published combustion emissions factors. Depending on the quality of the engine in which a fuel is burned, EPA emissions factors may result in a best-case (lowest emissions) estimate. The model also assumes some percentage of ethane is converted to ethylene for petrochemical use, and assumes a conversion process emissions intensity, but does not include emissions associated with further processing and use of the ethylene product, nor does it include other petrochemical processes.
+
+
 Instructions:
 
 There are two ways to install the OPEM package: 
