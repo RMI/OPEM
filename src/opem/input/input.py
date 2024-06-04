@@ -1,6 +1,7 @@
 import codecs
 import csv
 import json
+from pathlib import Path
 import sys
 
 if sys.version_info >= (3, 9):
@@ -194,9 +195,11 @@ def get_product_slate_json(product_name: str):
 def get_product_slate_csv(product_name: str):
     # read user selection from csv input and fetch respective slate
     # slate objects stored as dataclass with default values
-
-    ref = pkg_resources.files(
-        product_slates).joinpath("all_product_slates.csv")
+    ref = Path('all_product_slates.csv')
+    if not ref.is_file():
+        print("No all_product_slates.csv found in working directory. Using default product slates . . .")
+        ref = pkg_resources.files(
+            product_slates).joinpath("all_product_slates.csv")
     # if only 'utf-8' is specified then BOM character '\ufeff' is included in output
     utf8_reader = codecs.getreader("utf-8-sig")
     with ref.open('rb') as csvfile:
