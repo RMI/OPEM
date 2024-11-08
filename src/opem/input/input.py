@@ -13,8 +13,8 @@ else:
     import importlib_resources as pkg_resources
 
 from opem.input import input_lookup
-from opem.products import product_slates
 
+from opem import products
 from opem.products.product_slate import ProductSlate
 from opem.utils import isfloat
 
@@ -174,32 +174,12 @@ def create_lookup_table():
     return lookup_table
 
 
-def get_product_slate_json(product_name: str):
-    # read user selection from csv input and fetch respective slate
-    # slate objects stored as dataclass with default values
-
-    with pkg_resources.read_text(
-            product_slates, f"{product_name}.json") as json_file:
-        product_slate_json = json.load(json_file)
-    try:
-        # product slate has default vals in its dictionaries
-        # so we don't unpack the json. Send it as an object
-        # to be processed by __post__init function
-        return ProductSlate(user_input=product_slate_json)
-    except TypeError:
-        print(
-            'Problem initializing product slate. Please check your input parameters')
-        raise
-
-
 def get_product_slate_csv(product_name: str):
     # read user selection from csv input and fetch respective slate
     # slate objects stored as dataclass with default values
     ref = Path('all_product_slates.csv')
     if not ref.is_file():
-        print("No all_product_slates.csv found in working directory. Using default product slates . . .")
-        ref = pkg_resources.files(
-            product_slates).joinpath("all_product_slates.csv")
+        raise FileNotFoundError("No all_product_slates.csv found in working directory.")
     # if only 'utf-8' is specified then BOM character '\ufeff' is included in output
     utf8_reader = codecs.getreader("utf-8-sig")
     with ref.open('rb') as csvfile:
