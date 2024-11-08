@@ -1,13 +1,13 @@
 ﻿Emissions,,Unit,kg CO2e/bbl Natural Gas Liquids (LHV),kg CO2e/bbl Natural Gas Liquids (HHV),kg CO2e/bbl total input (LHV),kg CO2e/bbl total input (HHV)
-VOC,7.86,g,NaN,NaN,NaN,NaN
-CO,9.86,g,NaN,NaN,NaN,NaN
-NOx,5.93,g,NaN,NaN,NaN,NaN
-PM10,56.82,mg,NaN,NaN,NaN,NaN
-PM2.2,17.41,mg,NaN,NaN,NaN,NaN
-SOx,25.67,mg,NaN,NaN,NaN,NaN
-CH4,1.663848586,g,NaN,NaN,NaN,NaN
-N2O,66.46231491,mg,NaN,NaN,NaN,NaN
-CO2,1.878344320,kg,NaN,NaN,NaN,NaN
-BC,1.7,mg,NaN,NaN,NaN,NaN
-POC,73.59,mg,NaN,NaN,NaN,NaN
+VOC,0.31,g,NaN,NaN,NaN,NaN
+CO,0.28,g,NaN,NaN,NaN,NaN
+NOx,0.45,g,NaN,NaN,NaN,NaN
+PM10,47.93,mg,NaN,NaN,NaN,NaN
+PM2.5,43.57,mg,NaN,NaN,NaN,NaN
+SOx,35.22,mg,NaN,NaN,NaN,NaN
+CH4,0.481648314,g,NaN,NaN,NaN,NaN
+N2O,21.85942347,mg,NaN,NaN,NaN,NaN
+CO2,1.519044682,kg,NaN,NaN,NaN,NaN
+BC,2.9,mg,NaN,NaN,NaN,NaN
+POC,13.61,mg,NaN,NaN,NaN,NaN
 Sum,,,NaN,NaN,NaN,NaN
