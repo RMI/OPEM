@@ -242,16 +242,16 @@ class PipelineEF:
     # STATIC
 
     pipeline_emission_factors_combustion_pipeline_turbine: Dict = field(default_factory=lambda: build_dict_from_defaults(
-        'Emission_Factors_of_Fuel_Combustion_Feedstock_and_Fuel_Transportation_From_Product_Origin_to_Product_Destination_Pipeline_Turbine', 'pipeline'))
+        'EF_Fuel_Comb_Pipe_Turbine', 'pipeline'))
 
     # PipelineEF sheet, table: Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Reciprocating Engine: Current
     # STATIC
 
     pipeline_emission_factors_combustion_pipeline_recip_engine_current: Dict = field(default_factory=lambda: build_dict_from_defaults(
-        'Emission_Factors_of_Fuel_Combustion-_Feedstock_and_Fuel_Transportation_From_Product_Origin_to_Product_Destination_Pipeline_Reciprocating_Engine_Current', 'pipeline'))
+        'EF_Fuel_Comb_Pipe_Recip_Engine_Current', 'pipeline'))
 
     # PipelineEF sheet, table: Emission Factors of Fuel Combustion- Feedstock and Fuel Transportation From Product Origin to Product Destination (grams per mmBtu of fuel burned) -- Pipeline Reciprocating Engine: Future
     # STATIC
 
     pipeline_emission_factors_combustion_pipeline_recip_engine_future: Dict = field(default_factory=lambda: build_dict_from_defaults(
-        'Emission_Factors_of_Fuel_Combustion-_Feedstock_and_Fuel_Transportation_From_Product_Origin_to_Product_Destination_Pipeline_Reciprocating_Engine_Future', 'pipeline'))
+        'EF_Fuel_Comb_Pipe_Recip_Engine_Future', 'pipeline'))

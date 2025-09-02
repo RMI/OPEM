@@ -169,10 +169,10 @@ class RailEF:
     # STATIC
     rail_emission_factors_combustion_origin_to_destination: Dict = field(
         default_factory=lambda: build_dict_from_defaults(
-            "Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Origin_to_Product_Destination_Locomotive", 'rail'))
+            "EF_Fuel_Comb_Rail_Orig_to_Dest_Loco", 'rail'))
 
 # RailEF sheet, table: EEmission Factors of Fuel Combustion for Feedstock and Fuel Transportation: Trip From Product Destination Back to Product Origin (grams per mmBtu of fuel burned)
     # STATIC
     rail_emission_factors_combustion_destination_to_origin: Dict = field(
         default_factory=lambda: build_dict_from_defaults(
-            'Emission_Factors_of_Fuel_Combustion_for_Feedstock_and_Fuel_Transportation_Trip_From_Product_Destination_Back_to_Product_Origin_Locomotive', 'rail'))
+            'EF_Fuel_Comb_Rail_Dest_to_Orig_Loco', 'rail'))

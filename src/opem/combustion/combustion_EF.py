@@ -147,7 +147,7 @@ class CombustionEF:
     # CALCULATED
     product_combustion_emission_factors_derived_solids: Dict = field(
         default_factory=lambda: build_dict_from_defaults(
-            'Product_Combustion_Emission_Factors_Fossil_Fuel_Derived_Fuels_Solid', 'combustion'))
+            'Prod_Comb_EF_Fossil_Fuel_Solid', 'combustion'))
 
     # Prod CombustEF sheet, table: Product Combustion Emission Factors -- Natural Gas
     # CALCULATED
