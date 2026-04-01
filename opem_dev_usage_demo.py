@@ -26,9 +26,9 @@ def demo():
                                   9],
                                  ["User Inputs & Results",
                                  "Global:",
-                                  "GWP selection (yr period, 136 or 69)",
+                                  "GWP selection (yr period, 100 or 20)",
                                   "-",
-                                  699]]
+                                  100]]
                   }
     results = run_model(list_input, return_dict=False)
     print("List inputs\n", results)
@@ -38,7 +38,7 @@ def demo():
                                   "Global:",
                                   "Assay (Select Oil)",
                                   "-"):
-                                 "Field Name B",
+                                 "Field Name A",
                                  ("User Inputs & Results",
                                   "Global:",
                                   "Gas Production Volume (MCFD)",
@@ -54,9 +54,9 @@ def demo():
                                  5,
                                  ("User Inputs & Results",
                                  "Global:",
-                                  "GWP selection (yr period, 319 or 73)",
+                                  "GWP selection (yr period, 100 or 20)",
                                   "-"):
-                                 226}
+                                 100}
                   }
     results = run_model(dict_input, return_dict=True)
     print("Dictionary inputs\n", results)
@@ -70,7 +70,7 @@ def demo():
     separate_opgee_input = {"user_input": {("User Inputs & Results",
                                             "Global:",
                                             "Assay (Select Oil)",
-                                            "-"): "Field Name B",
+                                            "-"): "Field Name A",
                                            ("User Inputs & Results",
                                             "Global:",
                                             "% Field NGL C2 Volume allocated to Ethylene converstion",
@@ -78,9 +78,9 @@ def demo():
                                            7,
                                            ("User Inputs & Results",
                                             "Global:",
-                                            "GWP selection (yr period, 273 or 83)",
+                                            "GWP selection (yr period, 100 or 20)",
                                             "-"):
-                                           142},
+                                           100},
                             "opgee_input": {("User Inputs & Results",
                                              "Global:",
                                              "Gas Production Volume (MCFD)",
@@ -198,9 +198,9 @@ def demo():
                                                     9,
                                                     ("User Inputs & Results",
                                                      "Global:",
-                                                     "GWP selection (yr period, 479 or 16)",
+                                                     "GWP selection (yr period, 100 or 20)",
                                                      "-"):
-                                                    404},
+                                                    100},
                                      "opgee_input": {("User Inputs & Results",
                                                       "Global:",
                                                       "Gas Production Volume (MCFD)",
