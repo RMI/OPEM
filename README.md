@@ -65,7 +65,7 @@ source venv/bin/activate
 Use pip to install OPEM from the downloaded file. For example, if you have a .whl file in your current working directory:
 
 ```
-pip install opem-1.0.4a0-py3-none-any.whl
+pip install opem-1.3.4-py3-none-any.whl
 ```
 
 
