@@ -882,7 +882,7 @@ class OPEM:
                                self.non_combusted_product_emissions["Sum"]
                                ["Total ProcessCH4  Emissions Intensity (kg CH4/boe total)"])
         total_emissions_n2o = (transport_emissions_n2o +
-                               self.refinery_product_combustion["Sum"]
+                               self.total_combustion_emissions["Sum"]
                                ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"] +
                                self.non_combusted_product_emissions["Sum"]
                                ["Total Process N2O Emissions Intensity (kg N2O./boe total)"])
@@ -953,7 +953,7 @@ class OPEM:
                 ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"],
                 ("Total_CH4_CombustionEmissions_kgCH4/BOE"): self.total_combustion_emissions["Sum"]
                 ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"],
-                ("Total_N2O_CombustionEmissions_kgN2O/BOE"): self.refinery_product_combustion["Sum"]
+                ("Total_N2O_CombustionEmissions_kgN2O/BOE"): self.total_combustion_emissions["Sum"]
                 ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"],
                 ("RefineryLiquids_TransportEmissions_kgCO2e/BOE"):
                     ref_liquids_transport_co2e,
@@ -1107,7 +1107,7 @@ class OPEM:
                  ["Total Combustion CO2 Emissions Intensity (kg CO2 / BOE)"]],
                 ["Total_CH4_CombustionEmissions_kgCH4/BOE", self.total_combustion_emissions["Sum"]
                  ["Total Combustion CH4 Emissions Intensity (kg CH4. / BOE)"]],
-                ["Total_N2O_CombustionEmissions_kgN2O/BOE", self.refinery_product_combustion["Sum"]
+                ["Total_N2O_CombustionEmissions_kgN2O/BOE", self.total_combustion_emissions["Sum"]
                  ["Total Combustion N2O Emissions Intensity (kg N2O / BOE)"]],
                 ["", ""],
                 ["*-Transport Emissions-*", ""],
