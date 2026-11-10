@@ -190,11 +190,18 @@ def calc_total_em_nat_gas(row_key, col_key, target_table_ref=None, other_table_r
 
 def calc_total_em_sum_ngl(row_key, col_key, target_table_ref=None, other_table_refs=None, other_tables_keymap=None, extra=None):
     if other_table_refs[0] == 1:
+        volume = target_table_ref[row_key]["Volume or Mass of Product per Day"]  # bbl/day
+        pct_combusted = target_table_ref[row_key]["% Combusted"]
         if col_key == "Total Combustion Emissions (kg CO2eq/day)":
-            return (target_table_ref[row_key]["Volume or Mass of Product per Day"] *
+            return (volume *
                     target_table_ref[row_key]["Combustion Emission Factors"] *
-                    target_table_ref[row_key]["% Combusted"])
-        return (other_table_refs[1]["Natural Gas Liquid Average Estimate"][extra[col_key]])
+                    pct_combusted)
+        # NGL average factors are per gallon: kg CO2/gal, g CH4/gal, g N2O/gal
+        ef_per_gal = other_table_refs[1]["Natural Gas Liquid Average Estimate"][extra[col_key]]
+        result = ef_per_gal * volume * pct_combusted * 42  # 42 gal/bbl
+        if col_key == "Total Combustion CO2 Emissions (kg CO2 /day)":
+            return result
+        return result / 1000  # g -> kg for CH4 and N2O
     else:
         em_sum = 0
         for row, col in target_table_ref.items():
