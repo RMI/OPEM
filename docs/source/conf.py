@@ -24,7 +24,7 @@ copyright = '2021, RMI'
 author = 'RMI'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0.4-alpha'
+release = '1.3.4'
 
 
 # -- General configuration ---------------------------------------------------
