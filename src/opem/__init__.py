@@ -18,7 +18,7 @@ from opem import input
 
 def main():
 
-    print("Welcome to OPEM V.1.2")
+    print("Welcome to OPEM V.1.3.4")
 
     user_input = input.initialize_model_inputs(
         input.get_csv_input, input.validate_input)
